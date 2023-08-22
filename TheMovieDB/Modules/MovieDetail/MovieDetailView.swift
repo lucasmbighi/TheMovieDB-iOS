@@ -78,7 +78,7 @@ struct MovieDetailView: View {
             .font(.system(size: 16, weight: .bold))
             .foregroundColor(.white)
             .padding(12)
-            .background(.black.opacity(0.4))
+            .background(Color("moviedetail.genre.foreground"))
             .cornerRadius(40)
     }
 }
@@ -90,6 +90,7 @@ struct MovieDetailView_Previews: PreviewProvider {
         viewModel.genres = GenreListResponse.fromLocalJSON.genres
         return NavigationView {
             MovieDetailView(viewModel: viewModel)
+                .preferredColorScheme(.dark)
         }
     }
 }

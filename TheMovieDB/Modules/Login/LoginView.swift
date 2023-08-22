@@ -21,44 +21,44 @@ struct LoginView: View {
     }
     
     var body: some View {
-        VStack {
-            TextField("username", text: $viewModel.username)
-                .textInputAutocapitalization(.never)
-                .textFieldStyle(.roundedBorder)
-                .focused($focusedField, equals: .username)
-                .disabled(viewModel.viewState == .loading)
-            
-            SecureField("password", text: $viewModel.password)
-                .textFieldStyle(.roundedBorder)
-                .focused($focusedField, equals: .password)
-                .disabled(viewModel.viewState == .loading)
-            Spacer()
-            Button {
-                Task {
-                    await viewModel.login()
-                }
-            } label: {
-                switch viewModel.viewState {
-                case .loading:
-                    ProgressView()
-                case .ready:
-                    Text("Login")
+        NavigationView {
+            VStack {
+                TextField("username", text: $viewModel.username)
+                    .textInputAutocapitalization(.never)
+                    .textFieldStyle(.roundedBorder)
+                    .focused($focusedField, equals: .username)
+                    .disabled(viewModel.isLoading)
+                
+                SecureField("password", text: $viewModel.password)
+                    .textFieldStyle(.roundedBorder)
+                    .focused($focusedField, equals: .password)
+                    .disabled(viewModel.isLoading)
+                Spacer()
+                ButtonView(
+                    isLoading: $viewModel.isLoading,
+                    action: {
+                        Task {
+                            await viewModel.login()
+                        }
+                    },
+                    text: "Login"
+                )
+                .disabled(viewModel.username.isEmpty || viewModel.password.isEmpty)
+            }
+            .padding()
+            .sheet(item: $viewModel.errorMessage) { errorMessage in
+                Text(errorMessage)
+                Button("OK") {
+                    viewModel.errorMessage = nil
                 }
             }
-            .disabled(viewModel.username.isEmpty || viewModel.password.isEmpty)
-        }
-        .padding()
-        .sheet(item: $viewModel.errorMessage) { errorMessage in
-            Text(errorMessage)
-            Button("OK") {
-                viewModel.errorMessage = nil
-            }
-        }
-        .task {
-            if viewModel.hasBiometry {
-                await viewModel.loginWithBiometry()
-            } else {
-                focusedField = .username
+            .navigationTitle("Login")
+            .task {
+                if viewModel.hasBiometry {
+                    await viewModel.loginWithBiometry()
+                } else {
+                    focusedField = .username
+                }
             }
         }
     }
@@ -68,8 +68,8 @@ struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = LoginViewModel()
         
-        viewModel.viewState = .ready
-        viewModel.errorMessage = "Erro ao carregar objeto"
+//        viewModel.isLoading = false
+//        viewModel.errorMessage = "Erro ao carregar objeto"
         
         return LoginView(viewModel: viewModel)
     }
