@@ -55,7 +55,11 @@ struct LoginView: View {
             }
         }
         .task {
-            focusedField = .username
+            if viewModel.hasBiometry {
+                await viewModel.loginWithBiometry()
+            } else {
+                focusedField = .username
+            }
         }
     }
 }

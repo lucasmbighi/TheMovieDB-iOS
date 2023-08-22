@@ -15,9 +15,12 @@ protocol AuthServiceProtocol: ServiceType {
     var sessionId: String? { get set }
     
     var client: APIClient<Request> { get set }
+    var biometryHelper: BiometryHelper { get set }
+    var keychainWrapper: KeychainWrapper { get set }
     
     var username: String? { get set }
     var password: String? { get set }
+    var hasBiometry: Bool { get }
     var accountDetails: AccountDetailResponse? { get set }
     
     func getRequestToken() async throws -> RequestTokenResponse
@@ -27,6 +30,8 @@ protocol AuthServiceProtocol: ServiceType {
     @MainActor
     @discardableResult
     func authenticate(username: String, password: String) async throws -> SessionResponse
+    
+    func authenticateWithBiometry() async throws
     func getAccountDetails() async throws -> AccountDetailResponse
 }
 
@@ -35,13 +40,21 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
     @Published var sessionId: String?
     
     var client: APIClient<LoginRequest>
+    var biometryHelper: BiometryHelper
+    var keychainWrapper: KeychainWrapper
     
     static let shared = AuthService()
     
     var accountDetails: AccountDetailResponse?
     
-    init() {
-        self.client = .init()
+    init(
+        client: APIClient<LoginRequest> = .init(),
+        biometryHelper: BiometryHelper = .init(),
+        keychainWrapper: KeychainWrapper = .standard
+    ) {
+        self.client = client
+        self.biometryHelper = biometryHelper
+        self.keychainWrapper = keychainWrapper
     }
     
     func getRequestToken() async throws -> RequestTokenResponse {
@@ -63,16 +76,27 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
     @MainActor
     @discardableResult
     func authenticate(username: String, password: String) async throws -> SessionResponse {
-        self.username = username
-        self.password = password
-        
         let token = try await getRequestToken()
         let res = try await validateToken(token: token.requestToken, username: username, password: password)
         let session = try await newSession(res.requestToken)
         
         self.sessionId = session.sessionId
         
+        if !hasBiometry {
+            let hasSuccessOnBiometry = try await biometryHelper.authenticate()
+            if hasSuccessOnBiometry {
+                self.username = username
+                self.password = password
+            }
+        }
+            
         return session
+    }
+    
+    func authenticateWithBiometry() async throws {
+        let hasSuccessOnBiometry = try await biometryHelper.authenticate()
+        guard hasSuccessOnBiometry else { throw BiometryHelper.BiometryError.failed }
+        try await authenticate(username: username ?? "", password: password ?? "")
     }
     
     func getAccountDetails() async throws -> AccountDetailResponse {
@@ -83,17 +107,19 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
     }
 }
 
-//MARK: Static properties
+//MARK: Computed properties
 extension AuthService {
     var isLoggedIn: Bool { sessionId != nil }
     
     var username: String? {
-        get { KeychainWrapper.standard.string(forKey: "username") }
-        set { KeychainWrapper.standard.set(newValue ?? "", forKey: "username") }
+        get { keychainWrapper.string(forKey: "username") }
+        set { keychainWrapper.set(newValue ?? "", forKey: "username") }
     }
     
     var password: String? {
-        get { KeychainWrapper.standard.string(forKey: "password") }
-        set { KeychainWrapper.standard.set(newValue ?? "", forKey: "password") }
+        get { keychainWrapper.string(forKey: "password") }
+        set { keychainWrapper.set(newValue ?? "", forKey: "password") }
     }
+    
+    var hasBiometry: Bool { username != nil && password != nil }
 }
