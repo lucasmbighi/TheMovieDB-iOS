@@ -41,4 +41,20 @@ final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
         }
         viewState = .ready
     }
+    
+    @MainActor
+    func loginWithBiometry() async {
+        viewState = .loading
+        do {
+            try await authService.authenticateWithBiometry()
+        } catch {
+            errorMessage = (error as? NetworkError)?.errorDescription
+        }
+        viewState = .ready
+    }
+}
+
+//MARK: Computed properties
+extension LoginViewModel {
+    var hasBiometry: Bool { authService.hasBiometry }
 }

@@ -37,6 +37,7 @@
 		528B2F642A8AB1710055F4FA /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B2F632A8AB1710055F4FA /* ProfileService.swift */; };
 		528B2F662A8AB8B00055F4FA /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B2F652A8AB8B00055F4FA /* ProfileRequest.swift */; };
 		528B2F682A8ACDCB0055F4FA /* AccountDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B2F672A8ACDCB0055F4FA /* AccountDetailResponse.swift */; };
+		52985FDE2A955690001A721D /* BiometryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52985FDD2A955690001A721D /* BiometryHelper.swift */; };
 		52A676EF2A8EAE7F00A33AE1 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A676EE2A8EAE7F00A33AE1 /* KeychainWrapper.swift */; };
 		52A676F12A8EB00100A33AE1 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A676F02A8EB00100A33AE1 /* KeychainItemAccessibility.swift */; };
 		52B89A9C2A8D2BB50089E802 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B89A9B2A8D2BB50089E802 /* LoginTests.swift */; };
@@ -111,6 +112,7 @@
 		528B2F632A8AB1710055F4FA /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		528B2F652A8AB8B00055F4FA /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
 		528B2F672A8ACDCB0055F4FA /* AccountDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailResponse.swift; sourceTree = "<group>"; };
+		52985FDD2A955690001A721D /* BiometryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometryHelper.swift; sourceTree = "<group>"; };
 		52A676EE2A8EAE7F00A33AE1 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainWrapper.swift; path = ../../../../../Downloads/KeychainWrapper.swift; sourceTree = "<group>"; };
 		52A676F02A8EB00100A33AE1 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		52B89A9B2A8D2BB50089E802 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 		5219AC272A86636D00A677AE /* TheMovieDB */ = {
 			isa = PBXGroup;
 			children = (
+				52985FDC2A955684001A721D /* Helpers */,
 				52ECAD372A93E8440042D1C2 /* Components */,
 				528B2F472A8A59DE0055F4FA /* Extensions */,
 				52B89A9E2A8D2BE30089E802 /* App */,
@@ -318,6 +321,14 @@
 				52ECAD592A9521D70042D1C2 /* GenreListResponse.json */,
 			);
 			path = JSONs;
+			sourceTree = "<group>";
+		};
+		52985FDC2A955684001A721D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				52985FDD2A955690001A721D /* BiometryHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		52B89A9D2A8D2BC10089E802 /* Login */ = {
@@ -489,6 +500,7 @@
 				52B89AA02A8D2CD10089E802 /* ViewState.swift in Sources */,
 				528B2F492A8A59F30055F4FA /* RequestType+DefaultValues.swift in Sources */,
 				52ECAD562A9518800042D1C2 /* MovieListRequest.swift in Sources */,
+				52985FDE2A955690001A721D /* BiometryHelper.swift in Sources */,
 				52ECAD322A93DE380042D1C2 /* Data+fromAsset.swift in Sources */,
 				528B2F4F2A8A5A8F0055F4FA /* HTTPMethod.swift in Sources */,
 				528B2F3F2A86BD170055F4FA /* RequestTokenRequest.swift in Sources */,
@@ -682,6 +694,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TheMovieDB/Resources/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need Face ID";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -712,6 +725,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TheMovieDB/Resources/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need Face ID";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
