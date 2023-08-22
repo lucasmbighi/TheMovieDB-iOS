@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoginViewModelProtocol {
-    var viewState: ViewState { get set }
+    var isLoading: Bool { get set }
     var username: String { get set }
     var password: String { get set }
     var errorMessage: String? { get set }
@@ -18,7 +18,7 @@ protocol LoginViewModelProtocol {
 }
 
 final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
-    @Published var viewState: ViewState = .ready
+    @Published var isLoading: Bool = false
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var errorMessage: String? = nil
@@ -33,24 +33,24 @@ final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
     
     @MainActor
     func login() async {
-        viewState = .loading
+        isLoading = true
         do {
             try await authService.authenticate(username: username, password: password)
         } catch {
             errorMessage = (error as? NetworkError)?.errorDescription
         }
-        viewState = .ready
+        isLoading = false
     }
     
     @MainActor
     func loginWithBiometry() async {
-        viewState = .loading
+        isLoading = true
         do {
             try await authService.authenticateWithBiometry()
         } catch {
             errorMessage = (error as? NetworkError)?.errorDescription
         }
-        viewState = .ready
+        isLoading = false
     }
 }
 

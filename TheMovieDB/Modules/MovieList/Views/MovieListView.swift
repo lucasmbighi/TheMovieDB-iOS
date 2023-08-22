@@ -29,7 +29,10 @@ struct MovieListView: View {
                     .padding(20)
                     .background(
                         LinearGradient(
-                            colors: [.white, .white.opacity(0.8), .clear],
+                            colors: [
+                                Color("movielist.section.background").opacity(0.66),
+                                Color("movielist.section.background").opacity(0.33),
+                                .clear],
                             startPoint: .top, endPoint: .bottom
                         )
                     )
@@ -37,7 +40,7 @@ struct MovieListView: View {
             }
         }
         .task {
-            await viewModel.fetchMovieList()
+//            await viewModel.fetchMovieList()
         }
     }
     
@@ -48,7 +51,7 @@ struct MovieListView: View {
             Text(section.title)
                 .bold()
                 .foregroundColor(.white)
-                .padding(16)
+                .padding(12)
                 .background(viewModel.isSelected(section) ? .green : .gray)
                 .cornerRadius(40)
         }
@@ -73,7 +76,11 @@ struct MovieListView: View {
                     }
                 }
             } else {
-                Text("Nothing to see")
+                VStack {
+                    Spacer()
+                    Text("Nothing to see")
+                    Spacer()
+                }
             }
         }
     }
@@ -83,8 +90,9 @@ struct MovieListView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = MovieListViewModel()
         
-        viewModel.moviesList = MovieListResponse.fromLocalJSON
+//        viewModel.moviesList = MovieListResponse.fromLocalJSON
         
         return MovieListView(viewModel: viewModel)
+            .preferredColorScheme(.light)
     }
 }
