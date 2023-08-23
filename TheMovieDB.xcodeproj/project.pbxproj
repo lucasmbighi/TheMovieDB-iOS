@@ -43,6 +43,8 @@
 		52985FE42A95753E001A721D /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52985FE32A95753E001A721D /* ButtonView.swift */; };
 		52A676EF2A8EAE7F00A33AE1 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A676EE2A8EAE7F00A33AE1 /* KeychainWrapper.swift */; };
 		52A676F12A8EB00100A33AE1 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A676F02A8EB00100A33AE1 /* KeychainItemAccessibility.swift */; };
+		52B5E1932A958CAC0049EE31 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B5E1922A958CAC0049EE31 /* TabBarView.swift */; };
+		52B5E1962A96519C0049EE31 /* HiddenModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B5E1952A96519C0049EE31 /* HiddenModifier.swift */; };
 		52B89A9C2A8D2BB50089E802 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B89A9B2A8D2BB50089E802 /* LoginTests.swift */; };
 		52B89AA02A8D2CD10089E802 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B89A9F2A8D2CD10089E802 /* ViewState.swift */; };
 		52B89AA22A8D2E950089E802 /* LoginViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B89AA12A8D2E950089E802 /* LoginViewModelTest.swift */; };
@@ -121,6 +123,8 @@
 		52985FE32A95753E001A721D /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		52A676EE2A8EAE7F00A33AE1 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainWrapper.swift; path = ../../../../../Downloads/KeychainWrapper.swift; sourceTree = "<group>"; };
 		52A676F02A8EB00100A33AE1 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
+		52B5E1922A958CAC0049EE31 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		52B5E1952A96519C0049EE31 /* HiddenModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenModifier.swift; sourceTree = "<group>"; };
 		52B89A9B2A8D2BB50089E802 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		52B89A9F2A8D2CD10089E802 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		52B89AA12A8D2E950089E802 /* LoginViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTest.swift; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 		5219AC272A86636D00A677AE /* TheMovieDB */ = {
 			isa = PBXGroup;
 			children = (
+				52B5E1942A9651830049EE31 /* ViewModifiers */,
 				52985FDC2A955684001A721D /* Helpers */,
 				52ECAD372A93E8440042D1C2 /* Components */,
 				528B2F472A8A59DE0055F4FA /* Extensions */,
@@ -338,6 +343,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		52B5E1942A9651830049EE31 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				52B5E1952A96519C0049EE31 /* HiddenModifier.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		52B89A9D2A8D2BC10089E802 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,6 +394,7 @@
 				52ECAD422A94F2EE0042D1C2 /* FiveStarRating.swift */,
 				52ECAD382A93E8990042D1C2 /* ImageAsync.swift */,
 				52985FE32A95753E001A721D /* ButtonView.swift */,
+				52B5E1922A958CAC0049EE31 /* TabBarView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -520,6 +534,7 @@
 				52ECAD4A2A950D2A0042D1C2 /* MovieService.swift in Sources */,
 				52ECAD3B2A93F43D0042D1C2 /* ImageCache.swift in Sources */,
 				528B2F4B2A8A5A3E0055F4FA /* Authorization.swift in Sources */,
+				52B5E1962A96519C0049EE31 /* HiddenModifier.swift in Sources */,
 				528B2F442A86D8110055F4FA /* ProfileView.swift in Sources */,
 				52ECAD3D2A94DEE10042D1C2 /* Date.swift in Sources */,
 				528B2F512A8A5ACE0055F4FA /* Parameter.swift in Sources */,
@@ -554,6 +569,7 @@
 				52ECAD462A95009B0042D1C2 /* MovieDetailView.swift in Sources */,
 				5219AC292A86636D00A677AE /* TheMovieDBApp.swift in Sources */,
 				528B2F662A8AB8B00055F4FA /* ProfileRequest.swift in Sources */,
+				52B5E1932A958CAC0049EE31 /* TabBarView.swift in Sources */,
 				52ECAD282A93BFF20042D1C2 /* Decodable+FromLocalJSON.swift in Sources */,
 				5219AC5F2A86865000A677AE /* LoginViewModel.swift in Sources */,
 			);
