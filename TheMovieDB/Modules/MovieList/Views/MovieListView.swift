@@ -40,7 +40,7 @@ struct MovieListView: View {
             }
         }
         .task {
-//            await viewModel.fetchMovieList()
+            await viewModel.fetchMovieList()
         }
     }
     
@@ -63,23 +63,21 @@ struct MovieListView: View {
     }
     
     private var movieList: some View {
-        Group {
-            if let movies = viewModel.moviesList?.results {
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                        ForEach(movies) { movie in
-                            let viewModel = MovieViewModel(movie: movie)
-                            NavigationLink(destination: MovieDetailView(viewModel: viewModel)) {
-                                MovieListItemView(viewModel: viewModel)
-                            }
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                if let movies = viewModel.moviesList?.results {
+                    ForEach(movies) { movie in
+                        let viewModel = MovieViewModel(movie: movie)
+                        NavigationLink(destination: MovieDetailView(viewModel: viewModel)) {
+                            MovieListItemView(viewModel: viewModel)
                         }
                     }
-                }
-            } else {
-                VStack {
-                    Spacer()
-                    Text("Nothing to see")
-                    Spacer()
+                } else {
+                    ForEach(0..<4, id: \.self) { _ in
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(.gray)
+                            .frame(minHeight: 287.016)
+                    }
                 }
             }
         }
@@ -90,7 +88,7 @@ struct MovieListView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = MovieListViewModel()
         
-//        viewModel.moviesList = MovieListResponse.fromLocalJSON
+        viewModel.moviesList = MovieListResponse.fromLocalJSON
         
         return MovieListView(viewModel: viewModel)
             .preferredColorScheme(.light)
