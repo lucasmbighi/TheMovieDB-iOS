@@ -40,6 +40,7 @@ final class MovieListViewModel: MovieListViewModelProtocol, ObservableObject {
     
     @MainActor
     func fetchMovieList() async {
+        moviesList = nil
         do {
             moviesList = try await service.fetchMovieList(of: selectedSection)
         } catch {

@@ -13,7 +13,11 @@ protocol MovieViewModelProtocol {
     var imageService: ImageService { get set }
     var genres: [GenreResponse] { get set }
     
-    init(movie: MovieResponse, movieService: any MovieServiceProtocol, imageService: ImageService)
+    init(
+        movie: MovieResponse,
+        movieService: any MovieServiceProtocol,
+        imageService: ImageService
+    )
     
     func fetchPosterData() async -> Data
     func fetchBackdropData() async -> Data
