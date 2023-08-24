@@ -36,12 +36,12 @@ struct LoginView: View {
                 Spacer()
                 ButtonView(
                     isLoading: $viewModel.isLoading,
+                    text: "Login",
                     action: {
                         Task {
                             await viewModel.login()
                         }
-                    },
-                    text: "Login"
+                    }
                 )
                 .disabled(viewModel.username.isEmpty || viewModel.password.isEmpty)
             }
@@ -55,7 +55,7 @@ struct LoginView: View {
             .navigationTitle("Login")
             .task {
                 if viewModel.hasBiometry {
-                    await viewModel.loginWithBiometry()
+                    viewModel.fillCredentials()
                 } else {
                     focusedField = .username
                 }

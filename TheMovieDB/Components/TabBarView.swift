@@ -17,8 +17,8 @@ struct TabBarView: View {
         ZStack {
             pages
             tabBar
+                .ignoresSafeArea(edges: .bottom)
         }
-        .ignoresSafeArea(edges: .bottom)
     }
     
     private func isSelected(_ index: Int) -> Bool { selectedIndex == index }

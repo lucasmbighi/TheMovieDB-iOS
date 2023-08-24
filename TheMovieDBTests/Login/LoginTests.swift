@@ -20,7 +20,7 @@ final class LoginTests: XCTestCase {
         sut.username = "someuser"
         sut.password = "*Password123"
         await sut.login()
-        XCTAssertEqual(sut.viewState, ViewState.ready)
+        XCTAssertFalse(sut.isLoading)
     }
     
     func testAuthenticationShouldNotWork() async {

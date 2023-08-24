@@ -10,8 +10,8 @@ import SwiftUI
 struct ButtonView: View {
     
     @Binding var isLoading: Bool
-    let action: () -> Void
     let text: String
+    let action: () -> Void
     
     var body: some View {
         Button(action: action) {
@@ -40,6 +40,6 @@ struct ButtonView: View {
 
 struct ButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        ButtonView(isLoading: .constant(true), action: {}, text: "Login")
+        ButtonView(isLoading: .constant(true), text: "Login", action: {})
     }
 }

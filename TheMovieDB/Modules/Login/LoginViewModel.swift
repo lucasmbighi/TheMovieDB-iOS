@@ -14,7 +14,8 @@ protocol LoginViewModelProtocol {
     var errorMessage: String? { get set }
     var authService: any AuthServiceProtocol { get set }
     
-    func login() async
+    @MainActor func login() async
+    func fillCredentials()
 }
 
 final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
@@ -35,22 +36,20 @@ final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
     func login() async {
         isLoading = true
         do {
-            try await authService.authenticate(username: username, password: password)
+            if hasBiometry {
+                try await authService.authenticateWithBiometry()
+            } else {
+                try await authService.authenticate(username: username, password: password)
+            }
         } catch {
             errorMessage = (error as? NetworkError)?.errorDescription
         }
         isLoading = false
     }
     
-    @MainActor
-    func loginWithBiometry() async {
-        isLoading = true
-        do {
-            try await authService.authenticateWithBiometry()
-        } catch {
-            errorMessage = (error as? NetworkError)?.errorDescription
-        }
-        isLoading = false
+    func fillCredentials() {
+        username = authService.username ?? ""
+        password = authService.password ?? ""
     }
 }
 

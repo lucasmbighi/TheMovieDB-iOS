@@ -16,27 +16,29 @@ struct MovieListView: View {
     }
     
     var body: some View {
-        movieList
-        .navigationTitle("Watch Now")
-        .navigationBarTitleDisplayMode(.large)
-        .safeAreaInset(edge: .top) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(viewModel.sections) { section in
-                        sectionButton(section)
+        NavigationView {
+            movieList
+                .navigationTitle("Watch Now")
+                .navigationBarTitleDisplayMode(.large)
+                .safeAreaInset(edge: .top) {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(viewModel.sections) { section in
+                                sectionButton(section)
+                            }
+                        }
+                        .padding(20)
+                        .background(
+                            LinearGradient(
+                                colors: [
+                                    Color("movielist.section.background").opacity(0.66),
+                                    Color("movielist.section.background").opacity(0.33),
+                                    .clear],
+                                startPoint: .top, endPoint: .bottom
+                            )
+                        )
                     }
                 }
-                .padding(20)
-                .background(
-                    LinearGradient(
-                        colors: [
-                            Color("movielist.section.background").opacity(0.66),
-                            Color("movielist.section.background").opacity(0.33),
-                            .clear],
-                        startPoint: .top, endPoint: .bottom
-                    )
-                )
-            }
         }
         .task {
             await viewModel.fetchMovieList()
