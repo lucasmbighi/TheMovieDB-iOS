@@ -10,7 +10,7 @@ import Foundation
 
 final class LoginViewModelTest: LoginViewModelProtocol {
     
-    var viewState: TheMovieDB.ViewState = .ready
+    var isLoading: Bool = false
     var username: String = ""
     var password: String = ""
     var errorMessage: String?
@@ -21,13 +21,25 @@ final class LoginViewModelTest: LoginViewModelProtocol {
         self.authService = authService
     }
     
+    @MainActor
     func login() async {
-        viewState = .loading
+        isLoading = true
         do {
             try await authService.authenticate(username: username, password: password)
         } catch {
             errorMessage = (error as? NetworkError)?.errorDescription
         }
-        viewState = .ready
+        isLoading = false
+    }
+    
+    @MainActor
+    func loginWithBiometry() async {
+        isLoading = true
+        do {
+            try await authService.authenticateWithBiometry()
+        } catch {
+            errorMessage = (error as? NetworkError)?.errorDescription
+        }
+        isLoading = false
     }
 }

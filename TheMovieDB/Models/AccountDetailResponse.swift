@@ -7,12 +7,23 @@
 
 import Foundation
 
-struct AccountDetailResponse {
-    let accountId: Int
+struct AccountDetailResponse: Decodable {
+    let avatar: Avatar
+    let id: Int
+    let name: String
+    let username: String
 }
 
-extension AccountDetailResponse: Decodable {
-    enum CodingKeys: String, CodingKey {
-        case accountId = "id"
+extension AccountDetailResponse {
+    struct Avatar: Decodable {
+        struct TMDB: Decodable {
+            let avatarPath: String
+            
+            enum CodingKeys: String, CodingKey {
+                case avatarPath = "avatar_path"
+            }
+        }
+        
+        let tmdb: TMDB
     }
 }

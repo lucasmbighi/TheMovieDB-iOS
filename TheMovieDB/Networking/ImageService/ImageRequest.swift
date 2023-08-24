@@ -14,7 +14,12 @@ struct ImageRequest {
 
 extension ImageRequest {
     enum ImageType {
-        case backdrop(BackdropSize), logo(LogoSize), poster(PosterSize), profile(ProfileSize), still(StillSize)
+        case backdrop(BackdropSize),
+             logo(LogoSize),
+             poster(PosterSize),
+             profile(ProfileSize),
+             still(StillSize),
+             avatar(AvatarSize)
         
         enum BackdropSize: String {
             case w300, w780, w1280, original
@@ -36,6 +41,10 @@ extension ImageRequest {
             case w92, w185, w300, original
         }
         
+        enum AvatarSize: String {
+            case w200, original
+        }
+        
         var size: String {
             switch self {
             case .backdrop(let size): return size.rawValue
@@ -43,16 +52,7 @@ extension ImageRequest {
             case .poster(let size): return size.rawValue
             case .profile(let size): return size.rawValue
             case .still(let size): return size.rawValue
-            }
-        }
-        
-        var placeholderName: String {
-            switch self {
-            case .backdrop: return "backdrop-placeholder"
-            case .logo: return "logo-placeholder"
-            case .poster: return "poster-placeholder"
-            case .profile: return "profile-placeholder"
-            case .still: return "still-placeholder"
+            case .avatar(let size): return size.rawValue
             }
         }
     }

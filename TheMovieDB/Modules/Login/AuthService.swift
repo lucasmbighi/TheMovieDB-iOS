@@ -33,6 +33,7 @@ protocol AuthServiceProtocol: ServiceType {
     
     func authenticateWithBiometry() async throws
     func getAccountDetails() async throws -> AccountDetailResponse
+    func logout() async throws
 }
 
 final class AuthService: ObservableObject, AuthServiceProtocol {
@@ -89,7 +90,6 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
                 self.password = password
             }
         }
-            
         return session
     }
     
@@ -104,6 +104,11 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
             return try await client.request(.accountDetails(sessionId: sessionId ?? ""))
         }
         return accountDetails
+    }
+    
+    @MainActor
+    func logout() async throws {
+        sessionId = nil
     }
 }
 

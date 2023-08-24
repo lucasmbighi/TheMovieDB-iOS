@@ -18,26 +18,27 @@ struct MovieListView: View {
     var body: some View {
         NavigationView {
             movieList
-            .navigationTitle("Watch Now")
-            .safeAreaInset(edge: .top) {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(viewModel.sections) { section in
-                            sectionButton(section)
+                .navigationTitle("Watch Now")
+                .navigationBarTitleDisplayMode(.large)
+                .safeAreaInset(edge: .top) {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(viewModel.sections) { section in
+                                sectionButton(section)
+                            }
                         }
-                    }
-                    .padding(20)
-                    .background(
-                        LinearGradient(
-                            colors: [
-                                Color("movielist.section.background").opacity(0.66),
-                                Color("movielist.section.background").opacity(0.33),
-                                .clear],
-                            startPoint: .top, endPoint: .bottom
+                        .padding(20)
+                        .background(
+                            LinearGradient(
+                                colors: [
+                                    Color("movielist.section.background").opacity(0.66),
+                                    Color("movielist.section.background").opacity(0.33),
+                                    .clear],
+                                startPoint: .top, endPoint: .bottom
+                            )
                         )
-                    )
+                    }
                 }
-            }
         }
         .task {
             await viewModel.fetchMovieList()
@@ -73,7 +74,7 @@ struct MovieListView: View {
                         }
                     }
                 } else {
-                    ForEach(0..<4, id: \.self) { _ in
+                    ForEach(0..<6, id: \.self) { _ in
                         RoundedRectangle(cornerRadius: 20)
                             .fill(.gray)
                             .frame(minHeight: 287.016)

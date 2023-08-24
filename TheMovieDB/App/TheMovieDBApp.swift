@@ -19,7 +19,30 @@ struct TheMovieDBApp: App {
     var body: some Scene {
         WindowGroup {
             if authService.isLoggedIn {
-                MovieListView(viewModel: .init())
+//                MovieListView(viewModel: .init())
+                TabBarView(items: [
+                    TabBarItem(
+                        name: "Home",
+                        icon: Image(systemName: "house"),
+                        selectedIcon: Image(systemName: "house.fill"),
+                        color: .blue,
+                        content: MovieListView(viewModel: .init())
+                    ),
+                    TabBarItem(
+                        name: "My Lists",
+                        icon: Image(systemName: "bookmark"),
+                        selectedIcon: Image(systemName: "bookmark.fill"),
+                        color: .yellow,
+                        content: Text("My Lists will appear here")
+                    ),
+                    TabBarItem(
+                        name: "Profile",
+                        icon: Image(systemName: "person"),
+                        selectedIcon: Image(systemName: "person.fill"),
+                        color: .green,
+                        content: ProfileView(viewModel: .init())
+                    )
+                ])
             } else {
                 LoginView(viewModel: .init())
             }

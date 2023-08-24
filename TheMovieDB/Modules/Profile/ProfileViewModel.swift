@@ -7,29 +7,74 @@
 
 import Foundation
 
-final class ProfileViewModel: ObservableObject {
+protocol ProfileViewModelProtocol {
+    var service: ProfileService { get set }
+    var authService: any AuthServiceProtocol { get set }
+    var imageService: ImageService { get set }
+    var accountDetails: AccountDetailResponse? { get set }
+    var avatarData: Data { get set }
+    var errorMessage: String? { get set }
+    var showLogoutAlert: Bool { get set }
+    var isLoading: Bool { get set }
     
-    let service: ProfileService
-    let authService: any AuthServiceProtocol
+    init(
+        service: ProfileService,
+        authService: any AuthServiceProtocol,
+        imageService: ImageService
+    )
+    
+    @MainActor func getAccountDetails() async
+    @MainActor func fetchAvatarData() async
+    @MainActor func logout() async throws
+}
+
+final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
+    
+    var service: ProfileService
+    var authService: any AuthServiceProtocol
+    var imageService: ImageService
+    
+    @Published var accountDetails: AccountDetailResponse?
+    @Published var avatarData: Data = Data.fromAsset(withName: "avatar-w200-placeholder")
+    @Published var errorMessage: String?
+    @Published var showLogoutAlert: Bool = false
+    @Published var isLoading: Bool = false
     
     init(
         service: ProfileService = .init(),
-        authService: AuthService = .shared
+        authService: any AuthServiceProtocol = AuthService.shared,
+        imageService: ImageService = .init()
     ) {
         self.service = service
         self.authService = authService
+        self.imageService = imageService
     }
     
+    @MainActor
     func getAccountDetails() async {
         do {
-            let accountDetails = try await authService.getAccountDetails()
-            print(accountDetails)
-            
-//            if loginResponse.success {
-//                print("Sucesso")
-//            }
+            accountDetails = try await authService.getAccountDetails()
+            await fetchAvatarData()
         } catch {
-            print(error)
+            errorMessage = (error as? NetworkError)?.errorDescription
         }
     }
+    
+    @MainActor
+    func fetchAvatarData() async {
+        let avatarData = try? await imageService.imageData(ofType: .avatar(.w200), atPath: avatarPath)
+        self.avatarData = avatarData ?? Data.fromAsset(withName: "avatar-w200-placeholder")
+    }
+    
+    @MainActor
+    func logout() async throws {
+        isLoading = true
+        try await authService.logout()
+    }
+}
+
+//MARK: Computed properties
+extension ProfileViewModel {
+    var avatarPath: String { accountDetails?.avatar.tmdb.avatarPath ?? "" }
+    var name: String { accountDetails?.name ?? accountDetails?.username ?? "" }
 }
