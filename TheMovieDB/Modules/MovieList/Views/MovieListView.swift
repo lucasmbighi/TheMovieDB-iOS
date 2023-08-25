@@ -9,7 +9,12 @@ import SwiftUI
 
 struct MovieListView: View {
     
+    enum FocusedField {
+        case search
+    }
+    
     @ObservedObject private var viewModel: MovieListViewModel
+    @FocusState private var focusedField: FocusedField?
     
     init(viewModel: MovieListViewModel) {
         self.viewModel = viewModel
@@ -20,27 +25,30 @@ struct MovieListView: View {
             movieList
                 .navigationTitle("Watch Now")
                 .navigationBarTitleDisplayMode(.large)
-                .safeAreaInset(edge: .top) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(viewModel.sections) { section in
-                                sectionButton(section)
+                .toolbar {
+                    Button {
+                        withAnimation {
+                            viewModel.isSearching.toggle()
+                        }
+                    } label: {
+                        Image(systemName: "magnifyingglass")
+                    }
+                    .onChange(of: viewModel.isSearching) { isSearching in
+                        focusedField = viewModel.isSearching ? .search : nil
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { //Force to show animation
+                            Task {
+                                await isSearching ? viewModel.search() : viewModel.fetchMovieList()
                             }
                         }
-                        .padding(20)
-                        .background(
-                            LinearGradient(
-                                colors: [
-                                    Color("movielist.section.background").opacity(0.66),
-                                    Color("movielist.section.background").opacity(0.33),
-                                    .clear],
-                                startPoint: .top, endPoint: .bottom
-                            )
-                        )
                     }
+                }
+                .safeAreaInset(edge: .top) {
+                    safeAreaInset
                 }
         }
         .task {
+            viewModel.searchQuery = ""
+            viewModel.isSearching = false
             await viewModel.fetchMovieList()
         }
     }
@@ -64,22 +72,121 @@ struct MovieListView: View {
     }
     
     private var movieList: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                if let movies = viewModel.moviesList?.results {
-                    ForEach(movies) { movie in
-                        let viewModel = MovieViewModel(movie: movie)
-                        NavigationLink(destination: MovieDetailView(viewModel: viewModel)) {
-                            MovieListItemView(viewModel: viewModel)
-                        }
+        Group {
+            if let movies = viewModel.moviesList?.results {
+                if movies.isEmpty {
+                    VStack {
+                        Spacer()
+                        Text("Nothing found 🔎 👀")
+                        Spacer()
                     }
                 } else {
-                    ForEach(0..<6, id: \.self) { _ in
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(.gray)
-                            .frame(minHeight: 287.016)
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                            ForEach(movies) { movie in
+                                let viewModel = MovieViewModel(movie: movie)
+                                NavigationLink(destination: MovieDetailView(viewModel: viewModel)) {
+                                    MovieListItemView(viewModel: viewModel)
+                                }
+                            }
+                        }
+                    }
+                    .simultaneousGesture(
+                        DragGesture().onChanged { _ in focusedField = nil }
+                    )
+                }
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                        ForEach(0..<6, id: \.self) { _ in
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.gray)
+                                .frame(minHeight: 287.016)
+                        }
                     }
                 }
+            }
+        }
+    }
+    
+    private var safeAreaInset: some View {
+        Group {
+            if viewModel.isSearching {
+                VStack {
+                    TextField("", text: $viewModel.searchQuery)
+                        .textFieldStyle(.roundedBorder)
+                        .focused($focusedField, equals: .search)
+                        .transition(.opacity)
+                        .onChange(of: viewModel.searchQuery) { _ in
+                            Task {
+                                await viewModel.search()
+                            }
+                        }
+                        .onSubmit {
+                            Task {
+                                await viewModel.search()
+                            }
+                        }
+                        .submitLabel(.search)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ToggleButtonView(
+                                isOn: $viewModel.adult,
+                                text: "Adult",
+                                onColor: .blue,
+                                offColor: .gray
+                            )
+                            .onChange(of: viewModel.adult) { _ in
+                                Task {
+                                    await viewModel.search()
+                                }
+                            }
+                            
+                            DropdownButtonView(
+                                placeholder: "Year",
+                                selection: $viewModel.year,
+                                options: $viewModel.availableYears
+                            )
+                            .onChange(of: viewModel.year) { _ in
+                                Task {
+                                    await viewModel.search()
+                                }
+                            }
+                            
+                            DropdownButtonView(
+                                placeholder: "Primary Release Year",
+                                selection: $viewModel.primaryReleaseYear,
+                                options: $viewModel.availableYears
+                            )
+                            .onChange(of: viewModel.primaryReleaseYear) { _ in
+                                Task {
+                                    await viewModel.search()
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding(10)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(viewModel.sections) { section in
+                            sectionButton(section)
+                        }
+                    }
+                    .padding(20)
+                    .background(
+                        LinearGradient(
+                            colors: [
+                                Color("movielist.section.background").opacity(0.66),
+                                Color("movielist.section.background").opacity(0.33),
+                                .clear],
+                            startPoint: .top, endPoint: .bottom
+                        )
+                    )
+                }
+                .transition(.opacity)
             }
         }
     }

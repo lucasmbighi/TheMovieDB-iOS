@@ -29,7 +29,7 @@ extension RequestType {
         components.host = urlHost
         components.path = urlPath
         if case let .dict(dictionary) = parameters {
-            components.queryItems = dictionary.map { URLQueryItem(name: $0.key, value: $0.value) }
+            components.queryItems = dictionary.map { URLQueryItem(name: $0.key, value: $0.value as? String) }
         }
         return components
     }

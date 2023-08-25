@@ -49,8 +49,12 @@ final class MovieViewModel: ObservableObject, MovieViewModelProtocol {
     }
     
     func fetchBackdropData() async -> Data {
-        let backdropData = try? await imageService.imageData(ofType: .backdrop(.w780), atPath: movie.backdropPath)
-        return backdropData ?? Data.fromAsset(withName: "poster-placeholder")
+        let placeholderData = Data.fromAsset(withName: "poster-placeholder")
+        if let backdropPath = movie.backdropPath {
+            let backdropData = try? await imageService.imageData(ofType: .backdrop(.w780), atPath: backdropPath)
+            return backdropData ?? placeholderData
+        }
+        return placeholderData
     }
     
     @MainActor

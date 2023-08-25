@@ -13,6 +13,14 @@ protocol MovieListServiceProtocol: ServiceType {
     var client: APIClient<Request> { get set }
     
     func fetchMovieList(of section: MovieListSection) async throws -> MovieListResponse
+    func searchMovie(
+        query: String,
+        adult: Bool,
+        language: String,
+        primaryReleaseYear: String,
+        region: String,
+        year: String
+    ) async throws -> MovieListResponse
 }
 
 final class MovieListService: MovieListServiceProtocol {
@@ -24,5 +32,23 @@ final class MovieListService: MovieListServiceProtocol {
     
     func fetchMovieList(of section: MovieListSection) async throws -> MovieListResponse {
         return try await client.request(MovieListRequest(from: section))
+    }
+    
+    func searchMovie(
+        query: String,
+        adult: Bool,
+        language: String,
+        primaryReleaseYear: String,
+        region: String,
+        year: String
+    ) async throws -> MovieListResponse {
+        return try await client.request(.search(
+            query: query,
+            adult: adult,
+            language: language,
+            primaryReleaseYear: primaryReleaseYear,
+            region: region,
+            year: year
+        ))
     }
 }

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct TabBarView: View {
     
-    @State private var selectedIndex = 0
+    @State private var currentIndex: Int = 0
+    @State private var insertionTransitionEdge: Edge = .trailing
+    @State private var removalTransitionEdge: Edge = .leading
     
     let items: [TabBarItem]
     
@@ -21,10 +23,10 @@ struct TabBarView: View {
         }
     }
     
-    private func isSelected(_ index: Int) -> Bool { selectedIndex == index }
+    private func isSelected(_ index: Int) -> Bool { currentIndex == index }
     private func selectIndex(_ index: Int) {
-        withAnimation {
-            selectedIndex = index
+        withAnimation(.spring()) {
+            currentIndex = index
         }
     }
     
@@ -38,6 +40,8 @@ struct TabBarView: View {
                         index: index,
                         isSelected: isSelected(index),
                         onSelect: { selectedIndex in
+                            insertionTransitionEdge = selectedIndex > currentIndex ? .trailing : .leading
+                            removalTransitionEdge = selectedIndex > currentIndex ? .leading : .trailing
                             selectIndex(selectedIndex)
                         }
                     )
@@ -48,7 +52,7 @@ struct TabBarView: View {
             .background(.ultraThinMaterial)
             .cornerRadius(50)
             .padding(16)
-            .animation(.easeIn, value: selectedIndex)
+            .animation(.easeIn, value: currentIndex)
         }
     }
     
@@ -59,8 +63,8 @@ struct TabBarView: View {
                 AnyView(view)
                     .transition(
                         .asymmetric(
-                            insertion: .move(edge: .leading),
-                            removal: .move(edge: .leading)
+                            insertion: .move(edge: insertionTransitionEdge),
+                            removal: .move(edge: removalTransitionEdge)
                         )
                     )
                     .isHidden(!isSelected(index))
@@ -100,42 +104,3 @@ struct TabBarView_Previews: PreviewProvider {
     }
 }
 
-struct TabBarItem: Identifiable {
-    var id: UUID = UUID()
-    let name: String
-    let icon: Image
-    let selectedIcon: Image
-    let color: Color
-    let content: any View
-}
-
-struct TabBarItemView: View {
-    
-    let item: TabBarItem
-    let index: Int
-    let isSelected: Bool
-    let onSelect: (Int) -> Void
-    
-    var body: some View {
-        HStack {
-            (isSelected ? item.selectedIcon : item.icon)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 30, height: 30)
-            Spacer()
-                .isHidden(!isSelected)
-            Text(item.name)
-                .font(.system(size: 16, weight: .bold))
-                .isHidden(!isSelected)
-            Spacer()
-                .isHidden(!isSelected)
-        }
-        .onTapGesture {
-            onSelect(index)
-        }
-        .foregroundColor(isSelected ? .white : item.color)
-        .padding(14)
-        .background(item.color.opacity(isSelected ? 1 : 0.2))
-        .cornerRadius(30)
-    }
-}
