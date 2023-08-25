@@ -8,7 +8,7 @@
 import Foundation
 
 struct MovieResponse: Identifiable, Hashable {
-    let backdropPath: String
+    let backdropPath: String?
     let genreIds: [Int]
     let id: Int
     let overview: String
