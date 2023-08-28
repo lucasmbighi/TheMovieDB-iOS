@@ -21,6 +21,7 @@
 		525A8EFB2A8C1FD100B29C36 /* MovieListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EFA2A8C1FD100B29C36 /* MovieListViewModel.swift */; };
 		525A8EFD2A8C1FFA00B29C36 /* MovieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EFC2A8C1FFA00B29C36 /* MovieResponse.swift */; };
 		525A8EFF2A8C213000B29C36 /* MovieListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EFE2A8C213000B29C36 /* MovieListResponse.swift */; };
+		52810C1F2A9CFCEE00455C84 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 52810C1E2A9CFCEE00455C84 /* SkeletonUI */; };
 		528872E42A98DC5600F23405 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528872E32A98DC5600F23405 /* DateExtensions.swift */; };
 		528872E62A98DE4200F23405 /* DropdownButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528872E52A98DE4200F23405 /* DropdownButtonView.swift */; };
 		528872E82A98FE2900F23405 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528872E72A98FE2900F23405 /* ArrayExtensions.swift */; };
@@ -130,7 +131,6 @@
 		528B2F632A8AB1710055F4FA /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		528B2F652A8AB8B00055F4FA /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
 		528B2F672A8ACDCB0055F4FA /* AccountDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailResponse.swift; sourceTree = "<group>"; };
-		528D550F2A97C42000A28947 /* ScrollStatusByIntrospectModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollStatusByIntrospectModifier.swift; sourceTree = "<group>"; };
 		528D55112A97D79900A28947 /* ToggleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonView.swift; sourceTree = "<group>"; };
 		52985FDD2A955690001A721D /* BiometryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometryHelper.swift; sourceTree = "<group>"; };
 		52985FDF2A9571B2001A721D /* MovieDetailAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = MovieDetailAssets.xcassets; sourceTree = "<group>"; };
@@ -177,6 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52810C1F2A9CFCEE00455C84 /* SkeletonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,7 +370,6 @@
 			isa = PBXGroup;
 			children = (
 				52B5E1952A96519C0049EE31 /* HiddenModifier.swift */,
-				528D550F2A97C42000A28947 /* ScrollStatusByIntrospectModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -471,6 +471,9 @@
 			dependencies = (
 			);
 			name = TheMovieDB;
+			packageProductDependencies = (
+				52810C1E2A9CFCEE00455C84 /* SkeletonUI */,
+			);
 			productName = TheMovieDB;
 			productReference = 5219AC252A86636D00A677AE /* TheMovieDB.app */;
 			productType = "com.apple.product-type.application";
@@ -522,6 +525,9 @@
 				Base,
 			);
 			mainGroup = 5219AC1C2A86636D00A677AE;
+			packageReferences = (
+				52810C1D2A9CFCEE00455C84 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+			);
 			productRefGroup = 5219AC262A86636D00A677AE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -900,6 +906,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		52810C1D2A9CFCEE00455C84 /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CSolanaM/SkeletonUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		52810C1E2A9CFCEE00455C84 /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52810C1D2A9CFCEE00455C84 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5219AC1D2A86636D00A677AE /* Project object */;
 }

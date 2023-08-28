@@ -25,3 +25,17 @@ extension String {
         return formatter.date(from: self)
     }
 }
+
+//MARK: Extension - Init from Int
+extension String {
+    init(_ intValue: Int) {
+        self = "\(intValue)"
+    }
+}
+
+//MARK: Extension - Init from Bool
+extension String {
+    init(_ boolValue: Bool) {
+        self = boolValue.description
+    }
+}

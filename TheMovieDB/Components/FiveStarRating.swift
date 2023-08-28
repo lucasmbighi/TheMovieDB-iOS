@@ -133,8 +133,6 @@ private struct ForegroundStars: View {
 
 
 struct FiveStarView_Previews: PreviewProvider {
-
-
     static var previews: some View {
         VStack {
             FiveStarView(rating: 3.3)
