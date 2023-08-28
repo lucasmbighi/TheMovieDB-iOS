@@ -6,13 +6,19 @@
 //
 
 import SwiftUI
+import SkeletonUI
 
 struct MovieListItemView: View {
     
     @ObservedObject private var viewModel: MovieViewModel
+    private let isLoading: Bool
     
-    init(viewModel: MovieViewModel) {
+    init(
+        viewModel: MovieViewModel,
+        isLoading: Bool
+    ) {
         self.viewModel = viewModel
+        self.isLoading = isLoading
     }
     
     var body: some View {
@@ -22,10 +28,14 @@ struct MovieListItemView: View {
         )
         .overlay(alignment: .bottom, content: {
             VStack(alignment: .leading) {
-                text(viewModel.movieTitle, weight: .bold) + text(viewModel.movieReleaseYear)
+                (text(viewModel.movieTitle, weight: .bold) + text(viewModel.movieReleaseYear))
+                    .skeleton(with: isLoading, lines: 1)
+                    .frame(height: isLoading ? 24 : nil)
                 FiveStarView(rating: Decimal(viewModel.movieRating))
+                    .skeleton(with: isLoading)
                     .frame(width: 80, height: 15, alignment: .leading)
                 text(viewModel.movieOverview, size: 14)
+                    .skeleton(with: isLoading, lines: 3)
                     .frame(height: 60)
             }
             .padding(10)
@@ -49,8 +59,8 @@ struct MovieListItemView_Previews: PreviewProvider {
         
         return ScrollView {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                MovieListItemView(viewModel: MovieViewModel(movie: movie1))
-                MovieListItemView(viewModel: MovieViewModel(movie: movie2))
+                MovieListItemView(viewModel: MovieViewModel(movie: movie1), isLoading: true)
+                MovieListItemView(viewModel: MovieViewModel(movie: movie2), isLoading: false)
             }
             .preferredColorScheme(.light)
         }

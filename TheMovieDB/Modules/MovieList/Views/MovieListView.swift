@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SkeletonUI
 
 struct MovieListView: View {
     
@@ -73,38 +74,30 @@ struct MovieListView: View {
     
     private var movieList: some View {
         Group {
-            if let movies = viewModel.moviesList?.results {
-                if movies.isEmpty {
-                    VStack {
-                        Spacer()
-                        Text("Nothing found 🔎 👀")
-                        Spacer()
-                    }
-                } else {
-                    ScrollView {
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                            ForEach(movies) { movie in
-                                let viewModel = MovieViewModel(movie: movie)
-                                NavigationLink(destination: MovieDetailView(viewModel: viewModel)) {
-                                    MovieListItemView(viewModel: viewModel)
-                                }
-                            }
-                        }
-                    }
-                    .simultaneousGesture(
-                        DragGesture().onChanged { _ in focusedField = nil }
-                    )
+            if viewModel.movies.isEmpty {
+                VStack {
+                    Spacer()
+                    Text("Nothing found 🔎 👀")
+                    Spacer()
                 }
             } else {
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                        ForEach(0..<6, id: \.self) { _ in
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.gray)
-                                .frame(minHeight: 287.016)
+                        ForEach(viewModel.movies) { movie in
+                            let itemViewModel = MovieViewModel(movie: movie)
+                            NavigationLink(destination: MovieDetailView(viewModel: itemViewModel)) {
+                                MovieListItemView(
+                                    viewModel: itemViewModel,
+                                    isLoading: viewModel.isLoading
+                                )
+                                .onAppear { viewModel.checkToLoadMoreItems(with: movie) }
+                            }
                         }
                     }
                 }
+                .simultaneousGesture(
+                    DragGesture().onChanged { _ in focusedField = nil }
+                )
             }
         }
     }
@@ -196,7 +189,7 @@ struct MovieListView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = MovieListViewModel()
         
-        viewModel.moviesList = MovieListResponse.fromLocalJSON
+        viewModel.movies = MovieListResponse.fromLocalJSON.results
         
         return MovieListView(viewModel: viewModel)
             .preferredColorScheme(.light)

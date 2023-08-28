@@ -8,6 +8,6 @@
 import Foundation
 
 enum Parameter {
-    case dict([String: Any])
+    case dict([String: String])
     case encodable(_ encodable: Encodable)
 }
