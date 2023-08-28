@@ -15,6 +15,7 @@
 		5219AC592A86860600A677AE /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219AC582A86860600A677AE /* AuthService.swift */; };
 		5219AC5D2A86862A00A677AE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219AC5C2A86862A00A677AE /* LoginView.swift */; };
 		5219AC5F2A86865000A677AE /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219AC5E2A86865000A677AE /* LoginViewModel.swift */; };
+		52285D412A9D1F8D007F22A3 /* Stackoverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D402A9D1F8D007F22A3 /* Stackoverflow.swift */; };
 		525A8EEF2A8BAA5E00B29C36 /* AuthPluginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EEE2A8BAA5E00B29C36 /* AuthPluginType.swift */; };
 		525A8EF12A8BC8BC00B29C36 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EF02A8BC8BC00B29C36 /* HTTPHeader.swift */; };
 		525A8EF92A8C1FBD00B29C36 /* MovieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EF82A8C1FBD00B29C36 /* MovieListView.swift */; };
@@ -106,6 +107,7 @@
 		5219AC582A86860600A677AE /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		5219AC5C2A86862A00A677AE /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5219AC5E2A86865000A677AE /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		52285D402A9D1F8D007F22A3 /* Stackoverflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stackoverflow.swift; sourceTree = "<group>"; };
 		525A8EEE2A8BAA5E00B29C36 /* AuthPluginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPluginType.swift; sourceTree = "<group>"; };
 		525A8EF02A8BC8BC00B29C36 /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		525A8EF82A8C1FBD00B29C36 /* MovieListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListView.swift; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 			children = (
 				525A8EF82A8C1FBD00B29C36 /* MovieListView.swift */,
 				52ECAD2A2A93CE740042D1C2 /* MovieListItemView.swift */,
+				52285D402A9D1F8D007F22A3 /* Stackoverflow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -603,6 +606,7 @@
 				52A676EF2A8EAE7F00A33AE1 /* KeychainWrapper.swift in Sources */,
 				52ECAD2B2A93CE740042D1C2 /* MovieListItemView.swift in Sources */,
 				52A676F12A8EB00100A33AE1 /* KeychainItemAccessibility.swift in Sources */,
+				52285D412A9D1F8D007F22A3 /* Stackoverflow.swift in Sources */,
 				525A8EFF2A8C213000B29C36 /* MovieListResponse.swift in Sources */,
 				528B2F562A8A5C490055F4FA /* RequestType.swift in Sources */,
 				52ECAD432A94F2EE0042D1C2 /* FiveStarRating.swift in Sources */,

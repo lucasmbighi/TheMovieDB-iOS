@@ -19,7 +19,7 @@ protocol MovieViewModelProtocol {
         imageService: ImageService
     )
     
-    func fetchPosterData() async -> Data
+    func fetchPosterData(size: ImageRequest.ImageType.PosterSize) async -> Data
     func fetchBackdropData() async -> Data
     func getMoviesGenres() async
 }
@@ -43,8 +43,8 @@ final class MovieViewModel: ObservableObject, MovieViewModelProtocol {
         self.imageService = imageService
     }
     
-    func fetchPosterData() async -> Data {
-        let posterData = try? await imageService.imageData(ofType: .poster(.w185), atPath: movie.posterPath)
+    func fetchPosterData(size: ImageRequest.ImageType.PosterSize) async -> Data {
+        let posterData = try? await imageService.imageData(ofType: .poster(size), atPath: movie.posterPath)
         return posterData ?? Data.fromAsset(withName: "poster-placeholder")
     }
     
@@ -67,7 +67,7 @@ final class MovieViewModel: ObservableObject, MovieViewModelProtocol {
 extension MovieViewModel {
     var movieTitle: String { movie.title }
     var movieReleaseDate: Date { movie.releaseDate.toDate() ?? .now }
-    var movieReleaseYear: String { " (\(movieReleaseDate.formatted(.dateTime.year())))" }
+    var movieReleaseYear: String { movieReleaseDate.formatted(.dateTime.year()) }
     var movieRating: Double { movie.voteAverage / 2 }
     var movieOverview: String { movie.overview }
 }

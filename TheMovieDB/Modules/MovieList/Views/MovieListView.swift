@@ -16,41 +16,58 @@ struct MovieListView: View {
     
     @ObservedObject private var viewModel: MovieListViewModel
     @FocusState private var focusedField: FocusedField?
+    @Namespace private var namespace
     
     init(viewModel: MovieListViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        NavigationView {
-            movieList
-                .navigationTitle("Watch Now")
-                .navigationBarTitleDisplayMode(.large)
-                .toolbar {
-                    Button {
-                        withAnimation {
-                            viewModel.isSearching.toggle()
+        ZStack {
+            NavigationView {
+                movieList
+                    .navigationTitle("Watch Now")
+                    .navigationBarTitleDisplayMode(.large)
+                    .toolbar {
+                        Button {
+                            withAnimation {
+                                viewModel.isSearching.toggle()
+                            }
+                        } label: {
+                            Image(systemName: "magnifyingglass")
                         }
-                    } label: {
-                        Image(systemName: "magnifyingglass")
-                    }
-                    .onChange(of: viewModel.isSearching) { isSearching in
-                        focusedField = viewModel.isSearching ? .search : nil
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { //Force to show animation
-                            Task {
-                                await isSearching ? viewModel.search() : viewModel.fetchMovieList()
+                        .onChange(of: viewModel.isSearching) { isSearching in
+                            focusedField = viewModel.isSearching ? .search : nil
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { //Force to show animation
+                                Task {
+                                    await isSearching ? viewModel.search() : viewModel.fetchMovieList()
+                                }
                             }
                         }
                     }
-                }
-                .safeAreaInset(edge: .top) {
-                    safeAreaInset
-                }
-        }
-        .task {
-            viewModel.searchQuery = ""
-            viewModel.isSearching = false
-            await viewModel.fetchMovieList()
+                    .safeAreaInset(edge: .top) {
+                        safeAreaInset
+                    }
+            }
+            .zIndex(0)
+            .task {
+                viewModel.searchQuery = ""
+                viewModel.isSearching = false
+                await viewModel.fetchMovieList()
+            }
+            
+            if let selectedMovie = viewModel.selectedMovie {
+                MovieDetailView(
+                    viewModel: MovieViewModel(movie: selectedMovie),
+                    onClose: {
+                        withAnimation(.easeInOut(duration: 1)) {
+                            viewModel.selectedMovie = nil
+                        }
+                    }
+                )
+                .matchedGeometryEffect(id: selectedMovie.id, in: namespace)
+                .zIndex(1)
+            }
         }
     }
     
@@ -85,13 +102,17 @@ struct MovieListView: View {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                         ForEach(viewModel.movies) { movie in
                             let itemViewModel = MovieViewModel(movie: movie)
-                            NavigationLink(destination: MovieDetailView(viewModel: itemViewModel)) {
-                                MovieListItemView(
-                                    viewModel: itemViewModel,
-                                    isLoading: viewModel.isLoading
-                                )
-                                .onAppear { viewModel.checkToLoadMoreItems(with: movie) }
+                            MovieListItemView(
+                                viewModel: itemViewModel,
+                                isLoading: viewModel.isLoading
+                            )
+                            .matchedGeometryEffect(id: movie.id, in: namespace)
+                            .onTapGesture {
+                                withAnimation(.easeInOut(duration: 1)) {
+                                    viewModel.selectedMovie = movie
+                                }
                             }
+                            .onAppear { viewModel.checkToLoadMoreItems(with: movie) }
                         }
                     }
                 }
@@ -191,7 +212,9 @@ struct MovieListView_Previews: PreviewProvider {
         
         viewModel.movies = MovieListResponse.fromLocalJSON.results
         
-        return MovieListView(viewModel: viewModel)
-            .preferredColorScheme(.light)
+        return VStack {
+            MovieListView(viewModel: viewModel)
+        }
+        .preferredColorScheme(.light)
     }
 }

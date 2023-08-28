@@ -24,7 +24,7 @@ struct MovieListItemView: View {
     var body: some View {
         ImageAsync(
             placeholder: Image("poster-placeholder"),
-            fetcher: viewModel.fetchPosterData
+            fetcher: { await viewModel.fetchPosterData(size: .w185) }
         )
         .overlay(alignment: .bottom, content: {
             VStack(alignment: .leading) {
