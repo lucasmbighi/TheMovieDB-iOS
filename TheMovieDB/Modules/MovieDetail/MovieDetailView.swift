@@ -21,39 +21,48 @@ struct MovieDetailView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                ImageAsync(
-                    placeholder: Image("backdrop-w300-placeholder"),
-                    fetcher: viewModel.fetchBackdropData
-                )
-                VStack {
-                    HStack {
-                        ImageAsync(
-                            placeholder: Image("poster-placeholder"),
-                            fetcher: { await viewModel.fetchPosterData(size: .w154) }
-                        )
-                        .cornerRadius(10)
-                        .frame(width: 100)
-                        .padding(.top, -50)
-                        
+        ZStack(alignment: .top) {
+            ImageAsync(
+                placeholder: Image("backdrop-w300-placeholder"),
+                fetcher: viewModel.fetchBackdropData
+            )
+            ScrollView {
+                Spacer(minLength: 200)
+                ZStack(alignment: .top) {
+                    VStack {
                         Text("**\(viewModel.movieTitle)** (\(viewModel.movieReleaseYear))")
                             .font(.system(size: 18))
                             .padding(20)
+                            .frame(width: 200, height: 135, alignment: .trailing)
+                        genres
+                        overview
                     }
-                    genres
-                    overview
-                    overview
-                    overview
-                    overview
-                    overview
+                    .frame(maxWidth: .infinity)
+                    .background(Color("moviedetail.background"))
+                    .cornerRadius(20)
+                    .padding(.top, -25)
+                    
+                    ImageAsync(
+                        placeholder: Image("poster-placeholder"),
+                        fetcher: { await viewModel.fetchPosterData(size: .w154) }
+                    )
+                    .cornerRadius(10)
+                    .frame(width: 100)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 20)
+                    .padding(.top, -50)
                 }
-                .frame(maxWidth: .infinity)
-                .background(.green)
-                .cornerRadius(20)
-                .padding(.top, -25)
             }
+            Button(action: onClose) {
+                Image(systemName: "xmark.circle.fill")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.white)
+                    .padding(10)
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
         }
+        .background(Color("moviedetail.background"))
         .ignoresSafeArea()
     }
     
