@@ -24,11 +24,11 @@ struct MovieListItemView: View {
     var body: some View {
         ImageAsync(
             placeholder: Image("poster-placeholder"),
-            fetcher: viewModel.fetchPosterData
+            fetcher: { await viewModel.fetchPosterData(size: .w185) }
         )
         .overlay(alignment: .bottom, content: {
             VStack(alignment: .leading) {
-                (text(viewModel.movieTitle, weight: .bold) + text(viewModel.movieReleaseYear))
+                (text(viewModel.movieTitle, weight: .bold) + text(" \(viewModel.movieReleaseYear)"))
                     .skeleton(with: isLoading, lines: 1)
                     .frame(height: isLoading ? 24 : nil)
                 FiveStarView(rating: Decimal(viewModel.movieRating))
@@ -54,8 +54,8 @@ struct MovieListItemView: View {
 
 struct MovieListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        let movie1 = MovieListResponse.fromLocalJSON.results[1]
-        let movie2 = MovieListResponse.fromLocalJSON.results[3]
+        let movie1 = MovieListResponse.fromLocalJSON?.results[1] ?? .empty
+        let movie2 = MovieListResponse.fromLocalJSON?.results[3] ?? .empty
         
         return ScrollView {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {

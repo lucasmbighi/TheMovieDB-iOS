@@ -18,6 +18,21 @@ struct MovieResponse: Identifiable, Hashable {
     let voteAverage: Double
 }
 
+//MARK: Static properties
+extension MovieResponse {
+    static let empty = MovieResponse(
+        backdropPath: nil,
+        genreIds: [Int](),
+        id: 0,
+        overview: "",
+        posterPath: "",
+        releaseDate: "",
+        title: "",
+        voteAverage: 0
+    )
+}
+
+//MARK: Decodable
 extension MovieResponse: Decodable {
     enum CodingKeys: String, CodingKey {
         case genreIds = "genre_ids"

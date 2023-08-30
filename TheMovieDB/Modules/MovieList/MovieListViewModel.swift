@@ -50,6 +50,7 @@ final class MovieListViewModel: MovieListViewModelProtocol, ObservableObject {
     var currentPage: Int = 1
     @Published var movies: [MovieResponse] = []
     @Published var errorMessage: String?
+    @Published var selectedMovie: MovieResponse?
     
     var service: any MovieListServiceProtocol
     

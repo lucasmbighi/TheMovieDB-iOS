@@ -72,16 +72,16 @@ final class APIClient<Request: RequestType> {
         return data
     }
     
-    func stubRequest<Model: Decodable>(_ request: Request) async throws -> Model {
+    func stubRequest<Model: Decodable>(_ request: Request) async -> Model? {
         return Model.fromLocalJSON
     }
 }
 
 extension APIClient {
-    func request<Model: Decodable>(_ request: Request) async throws -> Model {
+    func request<Model: Decodable>(_ request: Request, decoder: JSONDecoder = JSONDecoder()) async throws -> Model {
         let data = try await retrieve(from: request)
         do {
-            let responseObject = try JSONDecoder().decode(Model.self, from: data)
+            let responseObject = try decoder.decode(Model.self, from: data)
             return responseObject
         } catch {
             print(error)

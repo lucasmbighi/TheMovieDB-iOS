@@ -49,8 +49,8 @@ struct ImageAsync: View {
 struct ImageAsync_Previews: PreviewProvider {
     static var previews: some View {
         ImageAsync(
-            placeholder: Image("backdrop-w780-example"),
-            fetcher: { Data.fromAsset(withName: "backdrop-w780-example") }
+            placeholder: Image("Carrie Fisher"),
+            fetcher: { Data.fromAsset(withName: "Carrie Fisher") }
         )
     }
 }

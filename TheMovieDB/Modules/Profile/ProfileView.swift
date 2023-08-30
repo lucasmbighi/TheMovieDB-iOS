@@ -29,6 +29,7 @@ struct ProfileView: View {
                 .padding(.horizontal, 60)
                 Text(viewModel.name)
                     .font(.system(size: 20, weight: .medium))
+                Spacer()
                 ButtonView(
                     isLoading: $viewModel.isLoading,
                     text: "Logout",
@@ -37,7 +38,6 @@ struct ProfileView: View {
                     }
                 )
                 .padding(20)
-                Spacer()
             }
             .navigationTitle("Profile")
         }

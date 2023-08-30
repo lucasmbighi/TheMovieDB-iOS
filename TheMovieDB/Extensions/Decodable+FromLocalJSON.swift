@@ -8,17 +8,19 @@
 import Foundation
 
 extension Decodable {
-    static var fromLocalJSON: Self {
+    static var fromLocalJSON: Self? {
         let jsonName = String(describing: self)
         guard let path = Bundle.main.path(forResource: jsonName, ofType: "json") else {
-            fatalError("Unable to find a file named \(jsonName)")
+            print("Unable to find a file named \(jsonName)")
+            return nil
         }
         
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
             return try JSONDecoder().decode(Self.self, from: data)
         } catch {
-            fatalError("Unable to get the file named \(jsonName).\n\(error)")
+            print("Unable to get the file named \(jsonName).\n\(error)")
+            return nil
         }
     }
 }
