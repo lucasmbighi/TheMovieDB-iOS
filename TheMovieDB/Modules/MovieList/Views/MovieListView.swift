@@ -60,7 +60,7 @@ struct MovieListView: View {
                 MovieDetailView(
                     viewModel: MovieViewModel(movie: selectedMovie),
                     onClose: {
-                        withAnimation(.easeInOut(duration: 1)) {
+                        withAnimation(.easeInOut(duration: 0.3)) {
                             viewModel.selectedMovie = nil
                         }
                     }
@@ -108,7 +108,7 @@ struct MovieListView: View {
                             )
                             .matchedGeometryEffect(id: movie.id, in: namespace)
                             .onTapGesture {
-                                withAnimation(.easeInOut(duration: 1)) {
+                                withAnimation(.easeInOut(duration: 0.3)) {
                                     viewModel.selectedMovie = movie
                                 }
                             }
@@ -210,7 +210,7 @@ struct MovieListView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = MovieListViewModel()
         
-        viewModel.movies = MovieListResponse.fromLocalJSON.results
+//        viewModel.movies = MovieListResponse.fromLocalJSON?.results ?? []
         
         return VStack {
             MovieListView(viewModel: viewModel)

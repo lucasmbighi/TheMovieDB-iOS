@@ -16,12 +16,12 @@ struct ButtonView: View {
     var body: some View {
         Button(action: action) {
             content
-                .font(.system(size: 18, weight: .heavy))
+                .font(.system(size: 18, weight: .medium))
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(.blue)
-                .cornerRadius(20)
+                .cornerRadius(10)
         }
     }
     

@@ -16,6 +16,11 @@
 		5219AC5D2A86862A00A677AE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219AC5C2A86862A00A677AE /* LoginView.swift */; };
 		5219AC5F2A86865000A677AE /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219AC5E2A86865000A677AE /* LoginViewModel.swift */; };
 		52285D412A9D1F8D007F22A3 /* Stackoverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D402A9D1F8D007F22A3 /* Stackoverflow.swift */; };
+		52285D472A9F77D2007F22A3 /* CreditListResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 52285D462A9F77D2007F22A3 /* CreditListResponse.json */; };
+		52285D492A9F78EB007F22A3 /* CreditListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D482A9F78EB007F22A3 /* CreditListResponse.swift */; };
+		52285D4B2A9F7917007F22A3 /* CastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D4A2A9F7917007F22A3 /* CastResponse.swift */; };
+		52285D4D2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D4C2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift */; };
+		52285D4F2A9F83BE007F22A3 /* APIClient+RequestWithDefaulDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D4E2A9F83BE007F22A3 /* APIClient+RequestWithDefaulDecoder.swift */; };
 		525A8EEF2A8BAA5E00B29C36 /* AuthPluginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EEE2A8BAA5E00B29C36 /* AuthPluginType.swift */; };
 		525A8EF12A8BC8BC00B29C36 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EF02A8BC8BC00B29C36 /* HTTPHeader.swift */; };
 		525A8EF92A8C1FBD00B29C36 /* MovieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EF82A8C1FBD00B29C36 /* MovieListView.swift */; };
@@ -108,6 +113,11 @@
 		5219AC5C2A86862A00A677AE /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5219AC5E2A86865000A677AE /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		52285D402A9D1F8D007F22A3 /* Stackoverflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stackoverflow.swift; sourceTree = "<group>"; };
+		52285D462A9F77D2007F22A3 /* CreditListResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CreditListResponse.json; sourceTree = "<group>"; };
+		52285D482A9F78EB007F22A3 /* CreditListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditListResponse.swift; sourceTree = "<group>"; };
+		52285D4A2A9F7917007F22A3 /* CastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastResponse.swift; sourceTree = "<group>"; };
+		52285D4C2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+InitWithStrategy.swift"; sourceTree = "<group>"; };
+		52285D4E2A9F83BE007F22A3 /* APIClient+RequestWithDefaulDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIClient+RequestWithDefaulDecoder.swift"; sourceTree = "<group>"; };
 		525A8EEE2A8BAA5E00B29C36 /* AuthPluginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPluginType.swift; sourceTree = "<group>"; };
 		525A8EF02A8BC8BC00B29C36 /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		525A8EF82A8C1FBD00B29C36 /* MovieListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListView.swift; sourceTree = "<group>"; };
@@ -275,6 +285,8 @@
 				52ECAD232A93BAFF0042D1C2 /* MovieListSection.swift */,
 				52ECAD512A9510280042D1C2 /* GenreListResponse.swift */,
 				52ECAD532A9510440042D1C2 /* GenreResponse.swift */,
+				52285D482A9F78EB007F22A3 /* CreditListResponse.swift */,
+				52285D4A2A9F7917007F22A3 /* CastResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -333,6 +345,8 @@
 				52ECAD312A93DE380042D1C2 /* Data+fromAsset.swift */,
 				528872E32A98DC5600F23405 /* DateExtensions.swift */,
 				528872E72A98FE2900F23405 /* ArrayExtensions.swift */,
+				52285D4C2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift */,
+				52285D4E2A9F83BE007F22A3 /* APIClient+RequestWithDefaulDecoder.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -356,6 +370,7 @@
 				52ECAD252A93BF910042D1C2 /* MovieListResponse.json */,
 				52ECAD592A9521D70042D1C2 /* GenreListResponse.json */,
 				52E5EB822A96D8EC0015C658 /* AccountDetailResponse.json */,
+				52285D462A9F77D2007F22A3 /* CreditListResponse.json */,
 			);
 			path = JSONs;
 			sourceTree = "<group>";
@@ -546,6 +561,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52285D472A9F77D2007F22A3 /* CreditListResponse.json in Resources */,
 				52B89AA62A8D37610089E802 /* RequestTokenResponse.json in Resources */,
 				52E5EB832A96D8EC0015C658 /* AccountDetailResponse.json in Resources */,
 				52ECAD262A93BF910042D1C2 /* MovieListResponse.json in Resources */,
@@ -584,6 +600,7 @@
 				52ECAD562A9518800042D1C2 /* MovieListRequest.swift in Sources */,
 				52985FDE2A955690001A721D /* BiometryHelper.swift in Sources */,
 				52ECAD322A93DE380042D1C2 /* Data+fromAsset.swift in Sources */,
+				52285D4B2A9F7917007F22A3 /* CastResponse.swift in Sources */,
 				528B2F4F2A8A5A8F0055F4FA /* HTTPMethod.swift in Sources */,
 				528D55122A97D79900A28947 /* ToggleButtonView.swift in Sources */,
 				528B2F3F2A86BD170055F4FA /* RequestTokenRequest.swift in Sources */,
@@ -619,8 +636,10 @@
 				52ECAD302A93D2F20042D1C2 /* ImageRequest.swift in Sources */,
 				528872E82A98FE2900F23405 /* ArrayExtensions.swift in Sources */,
 				52ECAD542A9510440042D1C2 /* GenreResponse.swift in Sources */,
+				52285D4D2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift in Sources */,
 				525A8EEF2A8BAA5E00B29C36 /* AuthPluginType.swift in Sources */,
 				528B2F462A86D82C0055F4FA /* ProfileViewModel.swift in Sources */,
+				52285D4F2A9F83BE007F22A3 /* APIClient+RequestWithDefaulDecoder.swift in Sources */,
 				52ECAD4C2A950D670042D1C2 /* ServiceType.swift in Sources */,
 				5219AC542A8663E300A677AE /* APIClient.swift in Sources */,
 				528B2F4D2A8A5A7C0055F4FA /* NetworkError.swift in Sources */,
@@ -628,6 +647,7 @@
 				528B2F622A8AB0650055F4FA /* StringExtensions.swift in Sources */,
 				52ECAD462A95009B0042D1C2 /* MovieDetailView.swift in Sources */,
 				5219AC292A86636D00A677AE /* TheMovieDBApp.swift in Sources */,
+				52285D492A9F78EB007F22A3 /* CreditListResponse.swift in Sources */,
 				528B2F662A8AB8B00055F4FA /* ProfileRequest.swift in Sources */,
 				528872E62A98DE4200F23405 /* DropdownButtonView.swift in Sources */,
 				52B5E1932A958CAC0049EE31 /* TabBarView.swift in Sources */,
