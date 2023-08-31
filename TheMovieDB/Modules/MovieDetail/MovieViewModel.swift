@@ -1,5 +1,5 @@
 //
-//  MovieListItemViewModel.swift
+//  HomeListItemViewModel.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 21/08/23.
@@ -9,6 +9,7 @@ import Foundation
 
 protocol MovieViewModelProtocol {
     var movie: MovieResponse { get set }
+    var type: HomeListType { get set }
     var movieService: any MovieServiceProtocol { get set }
     var imageService: ImageService { get set }
     var genres: [GenreResponse] { get set }
@@ -16,13 +17,14 @@ protocol MovieViewModelProtocol {
     
     init(
         movie: MovieResponse,
+        type: HomeListType,
         movieService: any MovieServiceProtocol,
         imageService: ImageService
     )
     
     func fetchPosterData(size: ImageRequest.ImageType.PosterSize) async -> Data
     func fetchBackdropData() async -> Data
-    func getMoviesGenres() async
+    func getGenres() async
     func getCredits() async
     func fetchProfileImageData(of cast: CastResponse) async -> Data
 }
@@ -30,6 +32,7 @@ protocol MovieViewModelProtocol {
 final class MovieViewModel: ObservableObject, MovieViewModelProtocol {
     //MARK: Public properties
     var movie: MovieResponse
+    var type: HomeListType
     var movieService: any MovieServiceProtocol
     var imageService: ImageService
     
@@ -39,17 +42,23 @@ final class MovieViewModel: ObservableObject, MovieViewModelProtocol {
     
     init(
         movie: MovieResponse,
+        type: HomeListType,
         movieService: any MovieServiceProtocol = MovieService(),
         imageService: ImageService = .init()
     ) {
         self.movie = movie
+        self.type = type
         self.movieService = movieService
         self.imageService = imageService
     }
     
     func fetchPosterData(size: ImageRequest.ImageType.PosterSize) async -> Data {
-        let posterData = try? await imageService.imageData(ofType: .poster(size), atPath: movie.posterPath)
-        return posterData ?? Data.fromAsset(withName: "poster-placeholder")
+        let placeholderData = Data.fromAsset(withName: "poster-placeholder")
+        if let posterPath = movie.posterPath {
+            let posterData = try? await imageService.imageData(ofType: .poster(size), atPath: posterPath)
+            return posterData ?? Data.fromAsset(withName: "poster-placeholder")
+        }
+        return placeholderData
     }
     
     func fetchBackdropData() async -> Data {
@@ -62,14 +71,14 @@ final class MovieViewModel: ObservableObject, MovieViewModelProtocol {
     }
     
     @MainActor
-    func getMoviesGenres() async {
-        let genreList = try? await movieService.getMovieGenreList()
+    func getGenres() async {
+        let genreList = try? await type == .movie ? movieService.getMovieGenreList() : movieService.getSerieGenreList()
         genres = genreList?.genres.filter { movie.genreIds.contains($0.id) } ?? []
     }
     
     @MainActor
     func getCredits() async {
-        let creditList = try? await movieService.getCredits(ofMovie: movie)
+        let creditList = try? await type == .movie ? movieService.getCredits(ofMovie: movie) : movieService.getCredits(ofSerie: movie)
         credits = creditList ?? .empty
     }
     
@@ -81,8 +90,8 @@ final class MovieViewModel: ObservableObject, MovieViewModelProtocol {
 
 //MARK: Computed properties
 extension MovieViewModel {
-    var movieTitle: String { movie.title }
-    var movieReleaseDate: Date { movie.releaseDate.toDate() ?? .now }
+    var movieTitle: String { movie.title ?? movie.name ?? "" }
+    var movieReleaseDate: Date { movie.releaseDate?.toDate() ?? movie.firstAirDate?.toDate() ?? .now }
     var movieReleaseYear: String { movieReleaseDate.formatted(.dateTime.year()) }
     var movieRating: Double { movie.voteAverage / 2 }
     var movieOverview: String { movie.overview }

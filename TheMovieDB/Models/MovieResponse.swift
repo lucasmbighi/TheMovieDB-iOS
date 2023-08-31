@@ -9,12 +9,14 @@ import Foundation
 
 struct MovieResponse: Identifiable, Hashable {
     let backdropPath: String?
+    let firstAirDate: String?
     let genreIds: [Int]
     let id: Int
+    let name: String?
     let overview: String
-    let posterPath: String
-    let releaseDate: String
-    let title: String
+    let posterPath: String?
+    let releaseDate: String?
+    let title: String?
     let voteAverage: Double
 }
 
@@ -22,8 +24,10 @@ struct MovieResponse: Identifiable, Hashable {
 extension MovieResponse {
     static let empty = MovieResponse(
         backdropPath: nil,
+        firstAirDate: nil,
         genreIds: [Int](),
         id: 0,
+        name: nil,
         overview: "",
         posterPath: "",
         releaseDate: "",
@@ -35,8 +39,9 @@ extension MovieResponse {
 //MARK: Decodable
 extension MovieResponse: Decodable {
     enum CodingKeys: String, CodingKey {
+        case firstAirDate = "first_air_date"
         case genreIds = "genre_ids"
-        case id, title, overview
+        case id, title, name, overview
         case voteAverage = "vote_average"
         case posterPath = "poster_path"
         case releaseDate = "release_date"

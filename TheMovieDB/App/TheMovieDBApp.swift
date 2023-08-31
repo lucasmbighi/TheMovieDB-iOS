@@ -19,14 +19,13 @@ struct TheMovieDBApp: App {
     var body: some Scene {
         WindowGroup {
             if authService.isLoggedIn {
-//                MovieListView(viewModel: .init())
                 TabBarView(items: [
                     TabBarItem(
                         name: "Home",
                         icon: Image(systemName: "house"),
                         selectedIcon: Image(systemName: "house.fill"),
                         color: .blue,
-                        content: MovieListView(viewModel: .init())
+                        content: HomeListView(viewModel: .init())
                     ),
                     TabBarItem(
                         name: "My Lists",

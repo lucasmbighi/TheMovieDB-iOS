@@ -13,7 +13,9 @@ protocol MovieServiceProtocol: ServiceType {
     var client: APIClient<Request> { get set }
     
     func getMovieGenreList() async throws -> GenreListResponse
+    func getSerieGenreList() async throws -> GenreListResponse
     func getCredits(ofMovie movie: MovieResponse) async throws -> CreditListResponse
+    func getCredits(ofSerie serie: MovieResponse) async throws -> CreditListResponse
 }
 
 final class MovieService: MovieServiceProtocol {
@@ -24,10 +26,18 @@ final class MovieService: MovieServiceProtocol {
     }
     
     func getMovieGenreList() async throws -> GenreListResponse {
-        return try await client.request(.genreList)
+        return try await client.request(.movieGenreList)
+    }
+    
+    func getSerieGenreList() async throws -> GenreListResponse {
+        return try await client.request(.serieGenreList)
     }
     
     func getCredits(ofMovie movie: MovieResponse) async throws -> CreditListResponse {
-        return try await client.request(.credits(movieId: movie.id), keyDecodingStrategy: .convertFromSnakeCase)
+        return try await client.request(.movieCredits(movieId: movie.id), keyDecodingStrategy: .convertFromSnakeCase)
+    }
+    
+    func getCredits(ofSerie serie: MovieResponse) async throws -> CreditListResponse {
+        return try await client.request(.serieCredits(serieId: serie.id), keyDecodingStrategy: .convertFromSnakeCase)
     }
 }
