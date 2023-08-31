@@ -8,17 +8,17 @@
 import Foundation
 
 enum MovieRequest {
-    case genreList
-    case credits(movieId: Int)
+    case movieGenreList, serieGenreList
+    case movieCredits(movieId: Int), serieCredits(serieId: Int)
 }
 
 extension MovieRequest: RequestType {
     var urlPath: String {
         switch self {
-        case .genreList:
-            return "/3/genre/movie/list"
-        case .credits(let movieId):
-            return "/3/movie/\(movieId)/credits"
+        case .movieGenreList: return "/3/genre/movie/list"
+        case .serieGenreList: return "/3/genre/tv/list"
+        case .movieCredits(let movieId): return "/3/movie/\(movieId)/credits"
+        case .serieCredits(let serieId): return "/3/tv/\(serieId)/credits"
         }
     }
     

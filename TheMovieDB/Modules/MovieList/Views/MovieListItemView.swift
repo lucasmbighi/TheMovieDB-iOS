@@ -1,5 +1,5 @@
 //
-//  MovieListItemView.swift
+//  HomeListItemView.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 21/08/23.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SkeletonUI
 
-struct MovieListItemView: View {
+struct HomeListItemView: View {
     
     @ObservedObject private var viewModel: MovieViewModel
     private let isLoading: Bool
@@ -43,6 +43,14 @@ struct MovieListItemView: View {
             .background(.black.opacity(0.7))
         })
         .cornerRadius(20)
+        .contextMenu {
+            Group {
+                menuButton("Add to list", image: "list.and.film", action: { })
+                menuButton("Favorite", image: "heart", action: { })
+                menuButton("Watchlist", image: "bookmark", action: { })
+                menuButton("Your rating", image: "star", action: { })
+            }
+        }
     }
     
     private func text(_ text: String, weight: Font.Weight? = nil, size: CGFloat = 16) -> Text {
@@ -50,17 +58,29 @@ struct MovieListItemView: View {
             .font(.system(size: size, weight: weight))
             .foregroundColor(.white)
     }
+    
+    private func menuButton(
+        _ title: String,
+        image: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) { Label(title, systemImage: image) }
+    }
 }
 
-struct MovieListItemView_Previews: PreviewProvider {
+struct HomeListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        let movie1 = MovieListResponse.fromLocalJSON?.results[1] ?? .empty
-        let movie2 = MovieListResponse.fromLocalJSON?.results[3] ?? .empty
+        let movie1 = HomeListResponse.fromLocalJSON?.results[1] ?? .empty
+        let movie2 = HomeListResponse.fromLocalJSON?.results[3] ?? .empty
         
         return ScrollView {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                MovieListItemView(viewModel: MovieViewModel(movie: movie1), isLoading: true)
-                MovieListItemView(viewModel: MovieViewModel(movie: movie2), isLoading: false)
+                HomeListItemView(
+                    viewModel: MovieViewModel(movie: movie1, type: .movie), isLoading: true
+                )
+                HomeListItemView(
+                    viewModel: MovieViewModel(movie: movie2, type: .serie), isLoading: false
+                )
             }
             .preferredColorScheme(.light)
         }

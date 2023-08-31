@@ -74,7 +74,7 @@ struct MovieDetailView: View {
         .background(Color("moviedetail.background"))
         .ignoresSafeArea()
         .task {
-            await viewModel.getMoviesGenres()
+            await viewModel.getGenres()
             await viewModel.getCredits()
         }
     }
@@ -172,8 +172,8 @@ struct MovieDetailView: View {
 
 struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let movie = MovieListResponse.fromLocalJSON?.results[1]
-        let viewModel = MovieViewModel(movie: movie ?? .empty)
+        let movie = HomeListResponse.fromLocalJSON?.results[1]
+        let viewModel = MovieViewModel(movie: movie ?? .empty, type: .movie)
         viewModel.genres = GenreListResponse.fromLocalJSON?.genres ?? []
         viewModel.credits = CreditListResponse.fromLocalJSON ?? .empty
         return MovieDetailView(viewModel: viewModel, onClose: { })

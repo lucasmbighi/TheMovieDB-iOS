@@ -1,5 +1,5 @@
 //
-//  MovieListView.swift
+//  HomeListView.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 15/08/23.
@@ -8,17 +8,17 @@
 import SwiftUI
 import SkeletonUI
 
-struct MovieListView: View {
+struct HomeListView: View {
     
     enum FocusedField {
         case search
     }
     
-    @ObservedObject private var viewModel: MovieListViewModel
+    @ObservedObject private var viewModel: HomeListViewModel
     @FocusState private var focusedField: FocusedField?
     @Namespace private var namespace
     
-    init(viewModel: MovieListViewModel) {
+    init(viewModel: HomeListViewModel) {
         self.viewModel = viewModel
     }
     
@@ -34,13 +34,17 @@ struct MovieListView: View {
                                 viewModel.isSearching.toggle()
                             }
                         } label: {
-                            Image(systemName: "magnifyingglass")
+                            if viewModel.isSearching {
+                                Text("Cancel")
+                            } else {
+                                Image(systemName: "magnifyingglass")
+                            }
                         }
                         .onChange(of: viewModel.isSearching) { isSearching in
                             focusedField = viewModel.isSearching ? .search : nil
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { //Force to show animation
                                 Task {
-                                    await isSearching ? viewModel.search() : viewModel.fetchMovieList()
+                                    await isSearching ? viewModel.search() : viewModel.fetchList()
                                 }
                             }
                         }
@@ -53,12 +57,12 @@ struct MovieListView: View {
             .task {
                 viewModel.searchQuery = ""
                 viewModel.isSearching = false
-                await viewModel.fetchMovieList()
+                await viewModel.fetchList()
             }
             
             if let selectedMovie = viewModel.selectedMovie {
                 MovieDetailView(
-                    viewModel: MovieViewModel(movie: selectedMovie),
+                    viewModel: MovieViewModel(movie: selectedMovie, type: viewModel.listType),
                     onClose: {
                         withAnimation(.easeInOut(duration: 0.3)) {
                             viewModel.selectedMovie = nil
@@ -71,20 +75,38 @@ struct MovieListView: View {
         }
     }
     
-    private func sectionButton(_ section: MovieListSection) -> some View {
+    private func movieSectionButton(_ section: MovieListSection) -> some View {
         Button {
-            viewModel.selectedSection = section
+            viewModel.selectedMovieSection = section
         } label: {
             Text(section.title)
                 .bold()
                 .foregroundColor(.white)
                 .padding(12)
-                .background(viewModel.isSelected(section) ? .green : .gray)
+                .background(viewModel.selectedMovieSection == section ? .green : .gray)
                 .cornerRadius(40)
         }
-        .onChange(of: viewModel.selectedSection) { _ in
+        .onChange(of: viewModel.selectedMovieSection) { _ in
             Task {
-                await viewModel.fetchMovieList()
+                await viewModel.fetchList()
+            }
+        }
+    }
+    
+    private func serieSectionButton(_ section: SerieListSection) -> some View {
+        Button {
+            viewModel.selectedSerieSection = section
+        } label: {
+            Text(section.title)
+                .bold()
+                .foregroundColor(.white)
+                .padding(12)
+                .background(viewModel.selectedSerieSection == section ? .green : .gray)
+                .cornerRadius(40)
+        }
+        .onChange(of: viewModel.selectedSerieSection) { _ in
+            Task {
+                await viewModel.fetchList()
             }
         }
     }
@@ -101,8 +123,11 @@ struct MovieListView: View {
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                         ForEach(viewModel.movies) { movie in
-                            let itemViewModel = MovieViewModel(movie: movie)
-                            MovieListItemView(
+                            let itemViewModel = MovieViewModel(
+                                movie: movie,
+                                type: viewModel.listType
+                            )
+                            HomeListItemView(
                                 viewModel: itemViewModel,
                                 isLoading: viewModel.isLoading
                             )
@@ -124,7 +149,22 @@ struct MovieListView: View {
     }
     
     private var safeAreaInset: some View {
-        Group {
+        VStack {
+            HStack {
+                Picker(selection: $viewModel.listType, label: EmptyView()) {
+                    ForEach(HomeListType.allCases) { listType in
+                        Text(listType.rawValue)
+                            .tag(listType)
+                    }
+                }
+                .onChange(of: viewModel.listType) { _ in
+                    Task {
+                        await viewModel.fetchList()
+                    }
+                }
+            }
+            .pickerStyle(.segmented)
+            
             if viewModel.isSearching {
                 VStack {
                     TextField("", text: $viewModel.searchQuery)
@@ -185,35 +225,41 @@ struct MovieListView: View {
             } else {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(viewModel.sections) { section in
-                            sectionButton(section)
+                        if viewModel.listType == .movie {
+                            ForEach(MovieListSection.allCases) { movieSection in
+                                movieSectionButton(movieSection)
+                            }
+                        } else {
+                            ForEach(SerieListSection.allCases) { serieSection in
+                                serieSectionButton(serieSection)
+                            }
                         }
                     }
-                    .padding(20)
-                    .background(
-                        LinearGradient(
-                            colors: [
-                                Color("movielist.section.background").opacity(0.66),
-                                Color("movielist.section.background").opacity(0.33),
-                                .clear],
-                            startPoint: .top, endPoint: .bottom
-                        )
-                    )
+                    .padding(.leading, 10)
                 }
                 .transition(.opacity)
             }
         }
+        .background(
+            LinearGradient(
+                colors: [
+                    Color("movielist.section.background").opacity(0.66),
+                    Color("movielist.section.background").opacity(0.33),
+                    .clear],
+                startPoint: .top, endPoint: .bottom
+            )
+        )
     }
 }
 
-struct MovieListView_Previews: PreviewProvider {
+struct HomeListView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = MovieListViewModel()
+        let viewModel = HomeListViewModel()
         
-//        viewModel.movies = MovieListResponse.fromLocalJSON?.results ?? []
+        //        viewModel.movies = HomeListResponse.fromLocalJSON?.results ?? []
         
         return VStack {
-            MovieListView(viewModel: viewModel)
+            HomeListView(viewModel: viewModel)
         }
         .preferredColorScheme(.light)
     }
