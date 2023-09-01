@@ -16,7 +16,7 @@ struct ProfileView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Image(
                     uiImage: UIImage(data: viewModel.avatarData)
@@ -29,7 +29,12 @@ struct ProfileView: View {
                 .padding(.horizontal, 60)
                 Text(viewModel.name)
                     .font(.system(size: 20, weight: .medium))
-                Spacer()
+                
+                List(ProfileSection.allCases) { section in
+                    NavigationLink(section.title, destination: section.destination)
+                }
+                .listStyle(.plain)
+                
                 ButtonView(
                     isLoading: $viewModel.isLoading,
                     text: "Logout",

@@ -63,4 +63,6 @@ extension ImageRequest: RequestType {
     var urlPath: String { "/t/p/\(type.size)\(path)" }
     var method: HTTPMethod { .get }
     var parameters: Parameter? { nil }
+    var encoder: JSONEncoder { JSONEncoder() }
+    var decoder: JSONDecoder { JSONDecoder() }
 }

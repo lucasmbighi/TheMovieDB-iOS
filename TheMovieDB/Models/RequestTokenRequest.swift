@@ -7,15 +7,8 @@
 
 import Foundation
 
-struct RequestTokenRequest {
+struct RequestTokenRequest: Encodable {
     let username: String
     let password: String
     let requestToken: String
-}
-
-extension RequestTokenRequest: Encodable {
-    enum CodingKeys: String, CodingKey {
-        case username, password
-        case requestToken = "request_token"
-    }
 }

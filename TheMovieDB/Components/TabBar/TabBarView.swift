@@ -82,7 +82,7 @@ struct TabBarView_Previews: PreviewProvider {
                     icon: Image(systemName: "house"),
                     selectedIcon: Image(systemName: "house.fill"),
                     color: .blue,
-                    content: HomeListView(viewModel: .init())
+                    content: MediaListView(viewModel: .init())
                 ),
                 TabBarItem(
                     name: "My Lists",

@@ -1,5 +1,5 @@
 //
-//  HomeListRequest.swift
+//  MediaListRequest.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 22/08/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum HomeListRequest {
+enum MediaListRequest {
     case nowPlayingMovies(page: Int),
          popularMovies(page: Int),
          topRatedMovies(page: Int),
@@ -16,7 +16,7 @@ enum HomeListRequest {
          onTheAirSeries(page: Int),
          popularSeries(page: Int),
          topRatedSeries(page: Int),
-         search(type: HomeListType, request: HomeListSearchRequest)
+         search(type: MediaType, request: MediaListSearchRequest)
     
     var path: String {
         switch self {
@@ -51,7 +51,7 @@ enum HomeListRequest {
     }
 }
 
-extension HomeListRequest: RequestType {
+extension MediaListRequest: RequestType {
     var urlPath: String { path }
     var method: HTTPMethod { .get }
     var parameters: Parameter? {
@@ -66,7 +66,7 @@ extension HomeListRequest: RequestType {
                 .topRatedSeries(let page):
             return .dict(["page": String(page)])
         case .search(_, let request):
-            return .dict(request.toDict)
+            return .dict(request.asDictionary() ?? ["": ""])
         }
     }
 }

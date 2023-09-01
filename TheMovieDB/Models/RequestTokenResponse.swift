@@ -7,16 +7,8 @@
 
 import Foundation
 
-struct RequestTokenResponse {
+struct RequestTokenResponse: Decodable {
     let success: Bool
     let expiresAt: String
     let requestToken: String
-}
-
-extension RequestTokenResponse: Decodable {
-    enum CodingKeys: String, CodingKey {
-        case success
-        case expiresAt = "expires_at"
-        case requestToken = "request_token"
-    }
 }

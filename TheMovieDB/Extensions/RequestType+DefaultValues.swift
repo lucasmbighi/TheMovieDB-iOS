@@ -12,4 +12,6 @@ extension RequestType {
     var urlScheme: String { "https" }
     var urlHost: String { "api.themoviedb.org" }
     var headers: [HTTPHeader] { [.acceptApplicationJson, .contentTypeApplicationJson, .authorization(.bearer)] }
+    var encoder: JSONEncoder { JSONEncoder(keyEncodingStrategy: .convertToSnakeCase) }
+    var decoder: JSONDecoder { JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase) }
 }

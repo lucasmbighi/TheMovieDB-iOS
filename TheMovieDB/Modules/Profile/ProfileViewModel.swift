@@ -71,6 +71,57 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
         isLoading = true
         try await authService.logout()
     }
+    
+    @MainActor
+    func favorite(mediaRequest: SaveMediaRequest) async {
+        do {
+            let response: RequestResponse = try await service.favorite(mediaRequest: mediaRequest)
+            if !response.success {
+                errorMessage = response.statusMessage
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    @MainActor
+    func addToWatchList(mediaRequest: SaveMediaRequest) async {
+        do {
+            let response: RequestResponse = try await service.addToWatchList(mediaRequest: mediaRequest)
+            if !response.success {
+                errorMessage = response.statusMessage
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    @MainActor
+    func getFavoriteMovies() async {
+        do {
+            let response: RequestResponse = try await service.getFavoriteMovies()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    @MainActor
+    func getFavoriteSeries() async {
+        do {
+            let response: RequestResponse = try await service.getFavoriteMovies()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    @MainActor
+    func getLists() async {
+        do {
+            let response: RequestResponse = try await service.getFavoriteMovies()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
 }
 
 //MARK: Computed properties

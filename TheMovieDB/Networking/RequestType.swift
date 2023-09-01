@@ -14,6 +14,8 @@ protocol RequestType {
     var headers: [HTTPHeader] { get }
     var method: HTTPMethod { get }
     var parameters: Parameter? { get }
+    var encoder: JSONEncoder { get }
+    var decoder: JSONDecoder { get }
 }
 
 //MARK: Make properties optionals

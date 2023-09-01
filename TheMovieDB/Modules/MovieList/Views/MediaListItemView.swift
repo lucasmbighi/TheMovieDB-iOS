@@ -1,5 +1,5 @@
 //
-//  HomeListItemView.swift
+//  MediaListItemView.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 21/08/23.
@@ -8,13 +8,13 @@
 import SwiftUI
 import SkeletonUI
 
-struct HomeListItemView: View {
+struct MediaListItemView: View {
     
-    @ObservedObject private var viewModel: MovieViewModel
+    @ObservedObject private var viewModel: MediaViewModel
     private let isLoading: Bool
     
     init(
-        viewModel: MovieViewModel,
+        viewModel: MediaViewModel,
         isLoading: Bool
     ) {
         self.viewModel = viewModel
@@ -28,13 +28,13 @@ struct HomeListItemView: View {
         )
         .overlay(alignment: .bottom, content: {
             VStack(alignment: .leading) {
-                (text(viewModel.movieTitle, weight: .bold) + text(" \(viewModel.movieReleaseYear)"))
+                (text(viewModel.mediaTitle, weight: .bold) + text(" \(viewModel.mediaReleaseYear)"))
                     .skeleton(with: isLoading, lines: 1)
                     .frame(height: isLoading ? 24 : nil)
-                FiveStarView(rating: Decimal(viewModel.movieRating))
+                FiveStarView(rating: Decimal(viewModel.mediaRating))
                     .skeleton(with: isLoading)
                     .frame(width: 80, height: 15, alignment: .leading)
-                text(viewModel.movieOverview, size: 14)
+                text(viewModel.mediaOverview, size: 14)
                     .skeleton(with: isLoading, lines: 3)
                     .frame(height: 60)
             }
@@ -45,7 +45,15 @@ struct HomeListItemView: View {
         .cornerRadius(20)
         .contextMenu {
             Group {
-                menuButton("Add to list", image: "list.and.film", action: { })
+                Button {
+                    Task {
+                        await viewModel.favorite(true)
+                    }
+                } label: {
+                    Text("Favorite")
+                }
+
+                menuButton("Add to list", image: "list.and.film") { Task { await viewModel.favorite(true) } }
                 menuButton("Favorite", image: "heart", action: { })
                 menuButton("Watchlist", image: "bookmark", action: { })
                 menuButton("Your rating", image: "star", action: { })
@@ -62,24 +70,28 @@ struct HomeListItemView: View {
     private func menuButton(
         _ title: String,
         image: String,
-        action: @escaping () -> Void
+        action: @escaping () -> ()
     ) -> some View {
-        Button(action: action) { Label(title, systemImage: image) }
+        Button {
+            action()
+        } label: {
+            Label(title, systemImage: image)
+        }
     }
 }
 
-struct HomeListItemView_Previews: PreviewProvider {
+struct MediaListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        let movie1 = HomeListResponse.fromLocalJSON?.results[1] ?? .empty
-        let movie2 = HomeListResponse.fromLocalJSON?.results[3] ?? .empty
+        let media1 = MediaListResponse.fromLocalJSON?.results[1] ?? .empty
+        let media2 = MediaListResponse.fromLocalJSON?.results[3] ?? .empty
         
         return ScrollView {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                HomeListItemView(
-                    viewModel: MovieViewModel(movie: movie1, type: .movie), isLoading: true
+                MediaListItemView(
+                    viewModel: MediaViewModel(media: media1, type: .movie), isLoading: true
                 )
-                HomeListItemView(
-                    viewModel: MovieViewModel(movie: movie2, type: .serie), isLoading: false
+                MediaListItemView(
+                    viewModel: MediaViewModel(media: media2, type: .serie), isLoading: false
                 )
             }
             .preferredColorScheme(.light)

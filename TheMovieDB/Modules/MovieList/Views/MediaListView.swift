@@ -1,5 +1,5 @@
 //
-//  HomeListView.swift
+//  MediaListView.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 15/08/23.
@@ -8,24 +8,24 @@
 import SwiftUI
 import SkeletonUI
 
-struct HomeListView: View {
+struct MediaListView: View {
     
     enum FocusedField {
         case search
     }
     
-    @ObservedObject private var viewModel: HomeListViewModel
+    @ObservedObject private var viewModel: MediaListViewModel
     @FocusState private var focusedField: FocusedField?
     @Namespace private var namespace
     
-    init(viewModel: HomeListViewModel) {
+    init(viewModel: MediaListViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
         ZStack {
             NavigationView {
-                movieList
+                mediaList
                     .navigationTitle("Watch Now")
                     .navigationBarTitleDisplayMode(.large)
                     .toolbar {
@@ -60,16 +60,16 @@ struct HomeListView: View {
                 await viewModel.fetchList()
             }
             
-            if let selectedMovie = viewModel.selectedMovie {
-                MovieDetailView(
-                    viewModel: MovieViewModel(movie: selectedMovie, type: viewModel.listType),
+            if let selectedMedia = viewModel.selectedMedia {
+                MediaDetailView(
+                    viewModel: MediaViewModel(media: selectedMedia, type: viewModel.listType),
                     onClose: {
                         withAnimation(.easeInOut(duration: 0.3)) {
-                            viewModel.selectedMovie = nil
+                            viewModel.selectedMedia = nil
                         }
                     }
                 )
-                .matchedGeometryEffect(id: selectedMovie.id, in: namespace)
+                .matchedGeometryEffect(id: selectedMedia.id, in: namespace)
                 .zIndex(1)
             }
         }
@@ -111,9 +111,9 @@ struct HomeListView: View {
         }
     }
     
-    private var movieList: some View {
+    private var mediaList: some View {
         Group {
-            if viewModel.movies.isEmpty {
+            if viewModel.medias.isEmpty {
                 VStack {
                     Spacer()
                     Text("Nothing found 🔎 👀")
@@ -122,22 +122,22 @@ struct HomeListView: View {
             } else {
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                        ForEach(viewModel.movies) { movie in
-                            let itemViewModel = MovieViewModel(
-                                movie: movie,
+                        ForEach(viewModel.medias) { media in
+                            let itemViewModel = MediaViewModel(
+                                media: media,
                                 type: viewModel.listType
                             )
-                            HomeListItemView(
+                            MediaListItemView(
                                 viewModel: itemViewModel,
                                 isLoading: viewModel.isLoading
                             )
-                            .matchedGeometryEffect(id: movie.id, in: namespace)
+                            .matchedGeometryEffect(id: media.id, in: namespace)
                             .onTapGesture {
                                 withAnimation(.easeInOut(duration: 0.3)) {
-                                    viewModel.selectedMovie = movie
+                                    viewModel.selectedMedia = media
                                 }
                             }
-                            .onAppear { viewModel.checkToLoadMoreItems(with: movie) }
+                            .onAppear { viewModel.checkToLoadMoreItems(with: media) }
                         }
                     }
                 }
@@ -152,7 +152,7 @@ struct HomeListView: View {
         VStack {
             HStack {
                 Picker(selection: $viewModel.listType, label: EmptyView()) {
-                    ForEach(HomeListType.allCases) { listType in
+                    ForEach(MediaType.allCases) { listType in
                         Text(listType.rawValue)
                             .tag(listType)
                     }
@@ -243,8 +243,8 @@ struct HomeListView: View {
         .background(
             LinearGradient(
                 colors: [
-                    Color("movielist.section.background").opacity(0.66),
-                    Color("movielist.section.background").opacity(0.33),
+                    Color("medialist.section.background").opacity(0.66),
+                    Color("medialist.section.background").opacity(0.33),
                     .clear],
                 startPoint: .top, endPoint: .bottom
             )
@@ -252,14 +252,14 @@ struct HomeListView: View {
     }
 }
 
-struct HomeListView_Previews: PreviewProvider {
+struct MediaListView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = HomeListViewModel()
+        let viewModel = MediaListViewModel()
         
-        //        viewModel.movies = HomeListResponse.fromLocalJSON?.results ?? []
+        //        viewModel.medias = MediaListResponse.fromLocalJSON?.results ?? []
         
         return VStack {
-            HomeListView(viewModel: viewModel)
+            MediaListView(viewModel: viewModel)
         }
         .preferredColorScheme(.light)
     }

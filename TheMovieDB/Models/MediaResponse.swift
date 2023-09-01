@@ -1,5 +1,5 @@
 //
-//  Movie.swift
+//  MediaResponse.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 15/08/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieResponse: Identifiable, Hashable {
+struct MediaResponse: Identifiable, Hashable, Decodable {
     let backdropPath: String?
     let firstAirDate: String?
     let genreIds: [Int]
@@ -21,8 +21,8 @@ struct MovieResponse: Identifiable, Hashable {
 }
 
 //MARK: Static properties
-extension MovieResponse {
-    static let empty = MovieResponse(
+extension MediaResponse {
+    static let empty = MediaResponse(
         backdropPath: nil,
         firstAirDate: nil,
         genreIds: [Int](),
@@ -34,17 +34,4 @@ extension MovieResponse {
         title: "",
         voteAverage: 0
     )
-}
-
-//MARK: Decodable
-extension MovieResponse: Decodable {
-    enum CodingKeys: String, CodingKey {
-        case firstAirDate = "first_air_date"
-        case genreIds = "genre_ids"
-        case id, title, name, overview
-        case voteAverage = "vote_average"
-        case posterPath = "poster_path"
-        case releaseDate = "release_date"
-        case backdropPath = "backdrop_path"
-    }
 }
