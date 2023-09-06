@@ -13,18 +13,21 @@ protocol ProfileServiceProtocol: ServiceType {
     var client: APIClient<Request> { get set }
     
     func getAccountDetails(sessionId: String) async throws -> AccountDetailResponse
-    func favorite(mediaRequest: SaveMediaRequest) async throws -> RequestResponse
-    func addToWatchList(mediaRequest: SaveMediaRequest) async throws -> RequestResponse
-    func getFavoriteMovies() async throws -> RequestResponse
-    func getFavoriteSeries() async throws -> RequestResponse
-    func getLists() async throws -> RequestResponse
+    func favorite(accountId: Int, mediaRequest: SaveMediaRequest) async throws -> RequestResponse
+    func getFavoriteMovies(accountId: Int) async throws -> MediaListResponse
+    func getFavoriteSeries(accountId: Int) async throws -> MediaListResponse
+    func createList(sessionId: String, request: CreateListRequest) async throws -> CreateListResponse
+    func addToWatchList(accountId: Int, mediaRequest: SaveMediaRequest) async throws -> RequestResponse
+    func getLists(accountId: Int) async throws -> ListsResponse
+    func addToList(_ list: ListResponse, media: MediaResponse, sessionId: String) async throws -> RequestResponse
+    func deleteList(_ list: ListResponse, sessionId: String) async throws -> RequestResponse
 }
 
 final class ProfileService: ProfileServiceProtocol {
     
     var client: APIClient<ProfileRequest>
     
-    init(client: APIClient<Request> = .init(authPlugin: ProfilePlugin.shared)) {
+    init(client: APIClient<Request> = .init()) {
         self.client = client
     }
     
@@ -33,28 +36,35 @@ final class ProfileService: ProfileServiceProtocol {
         return details
     }
     
-    func favorite(mediaRequest: SaveMediaRequest) async throws -> RequestResponse {
-        try await client.request(.favorite(mediaRequest: mediaRequest)) as RequestResponse
+    func favorite(accountId: Int, mediaRequest: SaveMediaRequest) async throws -> RequestResponse {
+        try await client.request(.favorite(accountId: accountId, mediaRequest: mediaRequest)) as RequestResponse
     }
     
-    func addToWatchList(mediaRequest: SaveMediaRequest) async throws -> RequestResponse {
-        try await client.request(.addToWatchList(mediaRequest: mediaRequest)) as RequestResponse
+    func getFavoriteMovies(accountId: Int) async throws -> MediaListResponse {
+        try await client.request(.favoriteMovies(accountId: accountId)) as MediaListResponse
     }
     
-    func getFavoriteMovies() async throws -> RequestResponse {
-        try await client.request(.favoriteMovies) as RequestResponse
+    func getFavoriteSeries(accountId: Int) async throws -> MediaListResponse {
+        try await client.request(.favoriteSeries(accountId: accountId)) as MediaListResponse
     }
     
-    func getFavoriteSeries() async throws -> RequestResponse {
-        try await client.request(.favoriteSeries) as RequestResponse
+    func createList(sessionId: String, request: CreateListRequest) async throws -> CreateListResponse {
+        try await client.request(.createList(sessionId: sessionId, request: request)) as CreateListResponse
     }
     
-    func getLists() async throws -> RequestResponse {
-        try await client.request(.lists) as RequestResponse
+    func addToWatchList(accountId: Int, mediaRequest: SaveMediaRequest) async throws -> RequestResponse {
+        try await client.request(.addToWatchList(accountId: accountId, mediaRequest: mediaRequest)) as RequestResponse
     }
-}
-
-final class ProfilePlugin: AuthPluginType {
     
-    static let shared = ProfilePlugin()
+    func getLists(accountId: Int) async throws -> ListsResponse {
+        try await client.request(.lists(accountId: accountId)) as ListsResponse
+    }
+    
+    func addToList(_ list: ListResponse, media: MediaResponse, sessionId: String) async throws -> RequestResponse {
+        try await client.request(.addToList(list, media: media, sessionId: sessionId)) as RequestResponse
+    }
+    
+    func deleteList(_ list: ListResponse, sessionId: String) async throws -> RequestResponse {
+        try await client.request(.deleteList(list, sessionId: sessionId)) as RequestResponse
+    }
 }

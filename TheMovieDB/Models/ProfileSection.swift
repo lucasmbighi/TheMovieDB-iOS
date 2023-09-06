@@ -20,13 +20,15 @@ enum ProfileSection: CaseIterable {
     }
     
     var destination: some View {
-        switch self {
-        case .favoriteMovies:
-            return Text(title)
-        case .favoriteSeries:
-            return Text(title)
-        case .myLists:
-            return Text(title)
+        Group {
+            switch self {
+            case .favoriteMovies:
+                FavoriteListView(viewModel: .init(mediaType: .movie))
+            case .favoriteSeries:
+                FavoriteListView(viewModel: .init(mediaType: .serie))
+            case .myLists:
+                Text(title)
+            }
         }
     }
 }

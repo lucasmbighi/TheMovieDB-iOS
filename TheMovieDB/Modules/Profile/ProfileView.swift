@@ -11,7 +11,7 @@ struct ProfileView: View {
     
     @ObservedObject private var viewModel: ProfileViewModel
     
-    init(viewModel: ProfileViewModel) {
+    init(viewModel: ProfileViewModel = .init()) {
         self.viewModel = viewModel
     }
     

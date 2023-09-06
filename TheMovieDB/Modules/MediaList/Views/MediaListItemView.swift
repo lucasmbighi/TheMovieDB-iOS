@@ -53,11 +53,19 @@ struct MediaListItemView: View {
                     Text("Favorite")
                 }
 
-                menuButton("Add to list", image: "list.and.film") { Task { await viewModel.favorite(true) } }
+                menuButton("Add to list", image: "list.and.film") {
+                    viewModel.showListsAlert = true
+                }
                 menuButton("Favorite", image: "heart", action: { })
                 menuButton("Watchlist", image: "bookmark", action: { })
                 menuButton("Your rating", image: "star", action: { })
             }
+        }
+        .overFullScreen(isPresented: $viewModel.showListsAlert, content: {
+            AddMediaToListView(viewModel: .init(media: viewModel.media))
+        })
+        .task {
+            await viewModel.getLists()
         }
     }
     

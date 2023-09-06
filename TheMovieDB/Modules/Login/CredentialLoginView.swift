@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  CredentialLoginView.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 11/08/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct CredentialLoginView: View {
     
     enum FocusedField {
         case username, password
@@ -16,7 +16,7 @@ struct LoginView: View {
     @ObservedObject private var viewModel: LoginViewModel
     @FocusState private var focusedField: FocusedField?
     
-    init(viewModel: LoginViewModel) {
+    init(viewModel: LoginViewModel = .init()) {
         self.viewModel = viewModel
     }
     
@@ -54,23 +54,19 @@ struct LoginView: View {
             }
             .navigationTitle("Login")
             .task {
-                if viewModel.hasBiometry {
-                    viewModel.fillCredentials()
-                } else {
-                    focusedField = .username
-                }
+                focusedField = .username
             }
         }
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
+struct CredentialLoginView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = LoginViewModel()
         
 //        viewModel.isLoading = false
 //        viewModel.errorMessage = "Erro ao carregar objeto"
         
-        return LoginView(viewModel: viewModel)
+        return CredentialLoginView(viewModel: viewModel)
     }
 }

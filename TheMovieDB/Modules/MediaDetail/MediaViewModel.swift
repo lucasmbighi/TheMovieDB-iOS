@@ -13,15 +13,21 @@ protocol MediaViewModelProtocol {
     var mediaService: any MediaServiceProtocol { get set }
     var profileService: any ProfileServiceProtocol { get set }
     var imageService: ImageService { get set }
+    var authenticator: Authenticator { get set }
     var genres: [GenreResponse] { get set }
     var credits: CreditListResponse { get set }
+    var showListsAlert: Bool { get set }
+    var lists: [ListResponse] { get set }
+    var newListName: String { get set }
+    var newListDescription: String { get set }
     
     init(
         media: MediaResponse,
         type: MediaType,
         mediaService: any MediaServiceProtocol,
         profileService: any ProfileServiceProtocol,
-        imageService: ImageService
+        imageService: ImageService,
+        authenticator: Authenticator
     )
     
     func fetchPosterData(size: ImageRequest.ImageType.PosterSize) async -> Data
@@ -30,6 +36,9 @@ protocol MediaViewModelProtocol {
     func getCredits() async
     func fetchProfileImageData(of cast: CastResponse) async -> Data
     func favorite(_ favorite: Bool) async
+    func getLists() async
+    func createList() async
+    func addToList(_ list: ListResponse) async
 }
 
 final class MediaViewModel: ObservableObject, MediaViewModelProtocol {
@@ -39,23 +48,30 @@ final class MediaViewModel: ObservableObject, MediaViewModelProtocol {
     var mediaService: any MediaServiceProtocol
     var profileService: any ProfileServiceProtocol
     var imageService: ImageService
+    var authenticator: Authenticator
     
     //MARK: Published properties
     @Published var genres: [GenreResponse] = []
     @Published var credits: CreditListResponse = .empty
+    @Published var showListsAlert: Bool = false
+    @Published var lists: [ListResponse] = []
+    @Published var newListName: String = ""
+    @Published var newListDescription: String = ""
     
     init(
         media: MediaResponse,
         type: MediaType,
         mediaService: any MediaServiceProtocol = MediaService(),
         profileService: any ProfileServiceProtocol = ProfileService(),
-        imageService: ImageService = .init()
+        imageService: ImageService = .init(),
+        authenticator: Authenticator = .shared
     ) {
         self.media = media
         self.type = type
         self.mediaService = mediaService
         self.profileService = profileService
         self.imageService = imageService
+        self.authenticator = authenticator
     }
     
     func fetchPosterData(size: ImageRequest.ImageType.PosterSize) async -> Data {
@@ -96,7 +112,43 @@ final class MediaViewModel: ObservableObject, MediaViewModelProtocol {
     func favorite(_ favorite: Bool) async {
         let mediaRequest = SaveMediaRequest(mediaId: media.id, mediaType: type, favorite: favorite)
         do {
-            let response: RequestResponse = try await profileService.favorite(mediaRequest: mediaRequest)
+            let accountId = try await authenticator.getAccountDetails().id
+            let response: RequestResponse = try await profileService.favorite(accountId: accountId, mediaRequest: mediaRequest)
+            if !response.success {
+//                errorMessage = response.statusMessage
+            }
+        } catch {
+//            errorMessage = error.localizedDescription
+        }
+    }
+    
+    @MainActor
+    func getLists() async {
+        do {
+            let accountId = try await authenticator.getAccountDetails().id
+            lists = try await profileService.getLists(accountId: accountId).results
+        } catch {
+            
+        }
+    }
+    
+    func createList() async {
+        do {
+            guard let sessionId = authenticator.sessionId else { return }
+            let request = CreateListRequest(name: newListName, description: newListDescription)
+            let response: CreateListResponse = try await profileService.createList(sessionId: sessionId, request: request)
+            if !response.success {
+//                errorMessage = response.statusMessage
+            }
+        } catch {
+//            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func addToList(_ list: ListResponse) async {
+        do {
+            guard let sessionId = authenticator.sessionId else { return }
+            let response: RequestResponse = try await profileService.addToList(list, media: media, sessionId: sessionId)
             if !response.success {
 //                errorMessage = response.statusMessage
             }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MediaType: String, Encodable, Identifiable, CaseIterable {
+enum MediaType: String, Codable, Identifiable, CaseIterable {
     case movie, serie
     
     var title: String { self == .movie ? "Movies" : "Series" }

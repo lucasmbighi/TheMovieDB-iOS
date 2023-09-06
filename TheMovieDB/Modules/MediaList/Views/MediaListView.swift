@@ -18,7 +18,7 @@ struct MediaListView: View {
     @FocusState private var focusedField: FocusedField?
     @Namespace private var namespace
     
-    init(viewModel: MediaListViewModel) {
+    init(viewModel: MediaListViewModel = .init()) {
         self.viewModel = viewModel
     }
     
@@ -62,7 +62,7 @@ struct MediaListView: View {
             
             if let selectedMedia = viewModel.selectedMedia {
                 MediaDetailView(
-                    viewModel: MediaViewModel(media: selectedMedia, type: viewModel.listType),
+                    viewModel: MediaViewModel(media: selectedMedia, type: viewModel.mediaType),
                     onClose: {
                         withAnimation(.easeInOut(duration: 0.3)) {
                             viewModel.selectedMedia = nil
@@ -125,7 +125,7 @@ struct MediaListView: View {
                         ForEach(viewModel.medias) { media in
                             let itemViewModel = MediaViewModel(
                                 media: media,
-                                type: viewModel.listType
+                                type: viewModel.mediaType
                             )
                             MediaListItemView(
                                 viewModel: itemViewModel,
@@ -151,13 +151,13 @@ struct MediaListView: View {
     private var safeAreaInset: some View {
         VStack {
             HStack {
-                Picker(selection: $viewModel.listType, label: EmptyView()) {
-                    ForEach(MediaType.allCases) { listType in
-                        Text(listType.rawValue)
-                            .tag(listType)
+                Picker(selection: $viewModel.mediaType, label: EmptyView()) {
+                    ForEach(MediaType.allCases) { mediaType in
+                        Text(mediaType.rawValue)
+                            .tag(mediaType)
                     }
                 }
-                .onChange(of: viewModel.listType) { _ in
+                .onChange(of: viewModel.mediaType) { _ in
                     Task {
                         await viewModel.fetchList()
                     }
@@ -225,7 +225,7 @@ struct MediaListView: View {
             } else {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        if viewModel.listType == .movie {
+                        if viewModel.mediaType == .movie {
                             ForEach(MovieListSection.allCases) { movieSection in
                                 movieSectionButton(movieSection)
                             }

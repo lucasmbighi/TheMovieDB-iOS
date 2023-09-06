@@ -42,6 +42,9 @@ final class APIClient<Request: RequestType> {
             } else if case let .encodable(object) = request.parameters {
                 let httpBodyData = try? request.encoder.encode(object)
                 urlRequest.httpBody = httpBodyData
+            } else if case let .both(_, body) = request.parameters {
+                let httpBodyData = try? request.encoder.encode(body)
+                urlRequest.httpBody = httpBodyData
             }
         default:
             break

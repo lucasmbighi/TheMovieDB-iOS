@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MediaListViewModelProtocol {
-    var listType: MediaType { get set }
+    var mediaType: MediaType { get set }
     var selectedMovieSection: MovieListSection { get set }
     var selectedSerieSection: SerieListSection { get set }
     var isSearching: Bool { get set }
@@ -26,15 +26,15 @@ protocol MediaListViewModelProtocol {
     
     init(service: any MediaListServiceProtocol)
     
-    @MainActor func fetchList() async
-    @MainActor func search() async
+    func fetchList() async
+    func search() async
     func checkToLoadMoreItems(with media: MediaResponse)
-    @MainActor func loadMoreItems() async
+    func loadMoreItems() async
 }
 
 final class MediaListViewModel: MediaListViewModelProtocol, ObservableObject {
     
-    @Published var listType: MediaType = .movie
+    @Published var mediaType: MediaType = .movie
     @Published var selectedMovieSection: MovieListSection = .nowPlaying
     @Published var selectedSerieSection: SerieListSection = .airingToday
     @Published var isSearching: Bool = false
@@ -62,7 +62,7 @@ final class MediaListViewModel: MediaListViewModelProtocol, ObservableObject {
         isLoading = true
         currentPage = 1
         do {
-            let mediaListResponse = try await listType == .movie
+            let mediaListResponse = try await mediaType == .movie
             ? service.fetchMovieList(of: selectedMovieSection, atPage: currentPage)
             : service.fetchSerieList(of: selectedSerieSection, atPage: currentPage)
             medias = mediaListResponse.results
@@ -82,7 +82,7 @@ final class MediaListViewModel: MediaListViewModelProtocol, ObservableObject {
             year: year
         )
         do {
-            let mediaListResponse = try await service.search(type: listType, request: request)
+            let mediaListResponse = try await service.search(type: mediaType, request: request)
             medias = mediaListResponse.results
         } catch {
             errorMessage = (error as? NetworkError)?.errorDescription
@@ -104,7 +104,7 @@ final class MediaListViewModel: MediaListViewModelProtocol, ObservableObject {
     func loadMoreItems() async {
         isLoading = true
         do {
-            let mediaListResponse = try await listType == .movie
+            let mediaListResponse = try await mediaType == .movie
             ? service.fetchMovieList(of: selectedMovieSection, atPage: currentPage)
             : service.fetchSerieList(of: selectedSerieSection, atPage: currentPage)
             medias.append(contentsOf: mediaListResponse.results)

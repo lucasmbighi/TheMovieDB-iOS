@@ -8,6 +8,19 @@
 import Foundation
 
 enum Parameter {
-    case dict([String: String])
-    case encodable(_ encodable: Encodable)
+    case dict([String: Any]),
+         encodable(_ encodable: Encodable),
+         both(queryItems: [String: Any], body: Encodable)
+}
+
+// MARK: Computed properties
+extension Parameter {
+    var queryItems: [URLQueryItem]? {
+        switch self {
+        case .dict(let dictionary), .both(let dictionary, _):
+            return dictionary.map { URLQueryItem(name: $0.key, value: $0.value as? String) }
+        default:
+            return nil
+        }
+    }
 }

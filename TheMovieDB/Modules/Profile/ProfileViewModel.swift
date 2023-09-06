@@ -9,8 +9,8 @@ import Foundation
 
 protocol ProfileViewModelProtocol {
     var service: ProfileService { get set }
-    var authService: any AuthServiceProtocol { get set }
     var imageService: ImageService { get set }
+    var authenticator: Authenticator { get set }
     var accountDetails: AccountDetailResponse? { get set }
     var avatarData: Data { get set }
     var errorMessage: String? { get set }
@@ -19,8 +19,8 @@ protocol ProfileViewModelProtocol {
     
     init(
         service: ProfileService,
-        authService: any AuthServiceProtocol,
-        imageService: ImageService
+        imageService: ImageService,
+        authenticator: Authenticator
     )
     
     @MainActor func getAccountDetails() async
@@ -31,29 +31,30 @@ protocol ProfileViewModelProtocol {
 final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
     
     var service: ProfileService
-    var authService: any AuthServiceProtocol
     var imageService: ImageService
+    var authenticator: Authenticator
     
     @Published var accountDetails: AccountDetailResponse?
     @Published var avatarData: Data = Data.fromAsset(withName: "avatar-w200-placeholder")
     @Published var errorMessage: String?
     @Published var showLogoutAlert: Bool = false
     @Published var isLoading: Bool = false
+    @Published var favorites: [MediaResponse] = []
     
     init(
         service: ProfileService = .init(),
-        authService: any AuthServiceProtocol = AuthService.shared,
-        imageService: ImageService = .init()
+        imageService: ImageService = .init(),
+        authenticator: Authenticator = .shared
     ) {
         self.service = service
-        self.authService = authService
         self.imageService = imageService
+        self.authenticator = authenticator
     }
     
     @MainActor
     func getAccountDetails() async {
         do {
-            accountDetails = try await authService.getAccountDetails()
+            accountDetails = try await authenticator.getAccountDetails()
             await fetchAvatarData()
         } catch {
             errorMessage = (error as? NetworkError)?.errorDescription
@@ -69,13 +70,14 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
     @MainActor
     func logout() async throws {
         isLoading = true
-        try await authService.logout()
+        try await authenticator.logout()
     }
     
     @MainActor
     func favorite(mediaRequest: SaveMediaRequest) async {
         do {
-            let response: RequestResponse = try await service.favorite(mediaRequest: mediaRequest)
+            let accountId = try await authenticator.getAccountDetails().id
+            let response: RequestResponse = try await service.favorite(accountId: accountId, mediaRequest: mediaRequest)
             if !response.success {
                 errorMessage = response.statusMessage
             }
@@ -87,7 +89,8 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
     @MainActor
     func addToWatchList(mediaRequest: SaveMediaRequest) async {
         do {
-            let response: RequestResponse = try await service.addToWatchList(mediaRequest: mediaRequest)
+            let accountId = try await authenticator.getAccountDetails().id
+            let response: RequestResponse = try await service.addToWatchList(accountId: accountId, mediaRequest: mediaRequest)
             if !response.success {
                 errorMessage = response.statusMessage
             }
@@ -99,7 +102,8 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
     @MainActor
     func getFavoriteMovies() async {
         do {
-            let response: RequestResponse = try await service.getFavoriteMovies()
+            let accountId = try await authenticator.getAccountDetails().id
+            favorites = try await service.getFavoriteMovies(accountId: accountId).results
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -108,7 +112,8 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
     @MainActor
     func getFavoriteSeries() async {
         do {
-            let response: RequestResponse = try await service.getFavoriteMovies()
+            let accountId = try await authenticator.getAccountDetails().id
+            favorites = try await service.getFavoriteMovies(accountId: accountId).results
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -117,7 +122,8 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
     @MainActor
     func getLists() async {
         do {
-            let response: RequestResponse = try await service.getFavoriteMovies()
+            let accountId = try await authenticator.getAccountDetails().id
+            let response: ListsResponse = try await service.getLists(accountId: accountId)
         } catch {
             errorMessage = error.localizedDescription
         }
