@@ -11,12 +11,12 @@ struct ProfileView: View {
     
     @ObservedObject private var viewModel: ProfileViewModel
     
-    init(viewModel: ProfileViewModel) {
+    init(viewModel: ProfileViewModel = .init()) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Image(
                     uiImage: UIImage(data: viewModel.avatarData)
@@ -29,7 +29,12 @@ struct ProfileView: View {
                 .padding(.horizontal, 60)
                 Text(viewModel.name)
                     .font(.system(size: 20, weight: .medium))
-                Spacer()
+                
+                List(ProfileSection.allCases) { section in
+                    NavigationLink(section.title, destination: section.destination)
+                }
+                .listStyle(.plain)
+                
                 ButtonView(
                     isLoading: $viewModel.isLoading,
                     text: "Logout",
@@ -40,12 +45,6 @@ struct ProfileView: View {
                 .padding(20)
             }
             .navigationTitle("Profile")
-        }
-        .sheet(item: $viewModel.errorMessage) { errorMessage in
-            Text(errorMessage)
-            Button("OK") {
-                viewModel.errorMessage = nil
-            }
         }
         .alert(
             "Exit from your account?",
@@ -63,6 +62,7 @@ struct ProfileView: View {
         .task {
             await viewModel.getAccountDetails()
         }
+        .globalMessage($viewModel.globalMessage)
     }
 }
 

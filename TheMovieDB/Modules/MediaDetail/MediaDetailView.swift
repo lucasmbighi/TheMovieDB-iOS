@@ -1,5 +1,5 @@
 //
-//  MovieDetailView.swift
+//  MediaDetailView.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 22/08/23.
@@ -8,13 +8,13 @@
 import SwiftUI
 import SkeletonUI
 
-struct MovieDetailView: View {
+struct MediaDetailView: View {
     
-    @ObservedObject private var viewModel: MovieViewModel
+    @ObservedObject private var viewModel: MediaViewModel
     private let onClose: () -> Void
     
     init(
-        viewModel: MovieViewModel,
+        viewModel: MediaViewModel,
         onClose: @escaping () -> Void
     ) {
         self.viewModel = viewModel
@@ -31,7 +31,7 @@ struct MovieDetailView: View {
                 Spacer(minLength: 200)
                 ZStack(alignment: .top) {
                     VStack {
-                        Text("**\(viewModel.movieTitle)** (\(viewModel.movieReleaseYear))")
+                        Text("**\(viewModel.mediaTitle)** (\(viewModel.mediaReleaseYear))")
                             .font(.system(size: 18))
                             .padding(20)
                             .frame(maxWidth: .infinity, minHeight: 90, alignment: .center)
@@ -44,7 +44,7 @@ struct MovieDetailView: View {
                         Spacer(minLength: 100)
                     }
                     .frame(maxWidth: .infinity)
-                    .background(Color("moviedetail.background"))
+                    .background(Color("mediadetail.background"))
                     .cornerRadius(20)
                     .padding(.top, -25)
                     
@@ -71,7 +71,7 @@ struct MovieDetailView: View {
             .padding(.trailing, 20)
             .padding(.top, 40)
         }
-        .background(Color("moviedetail.background"))
+        .background(Color("mediadetail.background"))
         .ignoresSafeArea()
         .task {
             await viewModel.getGenres()
@@ -84,7 +84,7 @@ struct MovieDetailView: View {
             .font(.system(size: 14, weight: .bold))
             .foregroundColor(.white)
             .padding(10)
-            .background(Color("moviedetail.genre.foreground"))
+            .background(Color("mediadetail.genre.foreground"))
             .cornerRadius(40)
     }
     
@@ -106,7 +106,7 @@ struct MovieDetailView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 20)
             
-            Text(viewModel.movieOverview)
+            Text(viewModel.mediaOverview)
                 .font(.system(size: 16))
                 .padding(.horizontal, 20)
                 .padding(.vertical, 5)
@@ -170,13 +170,18 @@ struct MovieDetailView: View {
     }
 }
 
-struct MovieDetailView_Previews: PreviewProvider {
+struct MediaDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let movie = HomeListResponse.fromLocalJSON?.results[1]
-        let viewModel = MovieViewModel(movie: movie ?? .empty, type: .movie)
+        let media = MediaListResponse.fromLocalJSON?.results[1]
+        let viewModel = MediaViewModel(
+            media: media ?? .empty,
+            type: .movie,
+            globalMessage: .constant(.init(message: "Message", success: false)
+                                    )
+        )
         viewModel.genres = GenreListResponse.fromLocalJSON?.genres ?? []
         viewModel.credits = CreditListResponse.fromLocalJSON ?? .empty
-        return MovieDetailView(viewModel: viewModel, onClose: { })
+        return MediaDetailView(viewModel: viewModel, onClose: { })
         //            .preferredColorScheme(.dark)
     }
 }

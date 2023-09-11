@@ -1,5 +1,5 @@
 //
-//  MovieRequest.swift
+//  MediaRequest.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 22/08/23.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-enum MovieRequest {
+enum MediaRequest {
     case movieGenreList, serieGenreList
     case movieCredits(movieId: Int), serieCredits(serieId: Int)
 }
 
-extension MovieRequest: RequestType {
+extension MediaRequest: RequestType {
     var urlPath: String {
         switch self {
         case .movieGenreList: return "/3/genre/movie/list"

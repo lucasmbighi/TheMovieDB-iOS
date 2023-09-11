@@ -15,13 +15,6 @@ struct CastResponse: Identifiable, Decodable {
     let character: String
 }
 
-////MARK: enum Department
-//extension CastResponse: Decodable {
-//    enum CodingKeys: String, CodingKey {
-//        case id, knownForDepartment, name, profilePath, charac
-//    }
-//}
-
 //MARK: enum Department
 extension CastResponse {
     enum Department: String, Decodable {

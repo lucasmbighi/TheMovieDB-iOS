@@ -1,5 +1,5 @@
 //
-//  HomeListViewModel.swift
+//  MediaListViewModel.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 15/08/23.
@@ -7,12 +7,13 @@
 
 import Foundation
 
-protocol HomeListViewModelProtocol {
-    var listType: HomeListType { get set }
+protocol MediaListViewModelProtocol {
+    var mediaType: MediaType { get set }
     var selectedMovieSection: MovieListSection { get set }
     var selectedSerieSection: SerieListSection { get set }
     var isSearching: Bool { get set }
     var isLoading: Bool { get set }
+    var globalMessage: GlobalMessage? { get set }
     var searchQuery: String { get set }
     var adult: Bool { get set }
     var availableYears: [String] { get set }
@@ -20,39 +21,38 @@ protocol HomeListViewModelProtocol {
     var year: String? { get set }
     
     var currentPage: Int { get set }
-    var movies: [MovieResponse] { get set }
-    var errorMessage: String? { get set }
-    var service: any HomeListServiceProtocol { get set }
+    var medias: [MediaResponse] { get set }
+    var service: any MediaListServiceProtocol { get set }
     
-    init(service: any HomeListServiceProtocol)
+    init(service: any MediaListServiceProtocol)
     
-    @MainActor func fetchList() async
-    @MainActor func search() async
-    func checkToLoadMoreItems(with movie: MovieResponse)
-    @MainActor func loadMoreItems() async
+    func fetchList() async
+    func search() async
+    func checkToLoadMoreItems(with media: MediaResponse)
+    func loadMoreItems() async
 }
 
-final class HomeListViewModel: HomeListViewModelProtocol, ObservableObject {
+final class MediaListViewModel: MediaListViewModelProtocol, ObservableObject {
     
-    @Published var listType: HomeListType = .movie
+    @Published var mediaType: MediaType = .movie
     @Published var selectedMovieSection: MovieListSection = .nowPlaying
     @Published var selectedSerieSection: SerieListSection = .airingToday
     @Published var isSearching: Bool = false
     @Published var isLoading: Bool = false
+    @Published var globalMessage: GlobalMessage?
     @Published var searchQuery: String = ""
     @Published var adult: Bool = false
     var availableYears: [String] = Date.now.years(from: 1980).map { "\($0)" }
     var primaryReleaseYear: String? = nil
     @Published var year: String? = nil
     var currentPage: Int = 1
-    @Published var movies: [MovieResponse] = []
-    @Published var errorMessage: String?
-    @Published var selectedMovie: MovieResponse?
+    @Published var medias: [MediaResponse] = []
+    @Published var selectedMedia: MediaResponse?
     
-    var service: any HomeListServiceProtocol
+    var service: any MediaListServiceProtocol
     
     init(
-        service: any HomeListServiceProtocol = HomeListService()
+        service: any MediaListServiceProtocol = MediaListService()
     ) {
         self.service = service
     }
@@ -62,12 +62,12 @@ final class HomeListViewModel: HomeListViewModelProtocol, ObservableObject {
         isLoading = true
         currentPage = 1
         do {
-            let movieListResponse = try await listType == .movie
+            let mediaListResponse = try await mediaType == .movie
             ? service.fetchMovieList(of: selectedMovieSection, atPage: currentPage)
             : service.fetchSerieList(of: selectedSerieSection, atPage: currentPage)
-            movies = movieListResponse.results
+            medias = mediaListResponse.results
         } catch {
-            errorMessage = (error as? NetworkError)?.errorDescription
+            globalMessage = .init(from: error)
         }
         isLoading = false
     }
@@ -75,24 +75,24 @@ final class HomeListViewModel: HomeListViewModelProtocol, ObservableObject {
     @MainActor
     func search() async {
         isLoading = true
-        let request = HomeListSearchRequest(
+        let request = MediaListSearchRequest(
             query: searchQuery,
             adult: adult,
             primaryReleaseYear: primaryReleaseYear,
             year: year
         )
         do {
-            let movieListResponse = try await service.search(type: listType, request: request)
-            movies = movieListResponse.results
+            let mediaListResponse = try await service.search(type: mediaType, request: request)
+            medias = mediaListResponse.results
         } catch {
-            errorMessage = (error as? NetworkError)?.errorDescription
+            globalMessage = .init(from: error)
         }
         isLoading = false
     }
     
-    func checkToLoadMoreItems(with movie: MovieResponse) {
-        if let movieIndex = movies.firstIndex(of: movie),
-           movieIndex == (movies.count - 1) {
+    func checkToLoadMoreItems(with media: MediaResponse) {
+        if let mediaIndex = medias.firstIndex(of: media),
+           mediaIndex == (medias.count - 1) {
             Task {
                 currentPage += 1
                 await loadMoreItems()
@@ -104,12 +104,12 @@ final class HomeListViewModel: HomeListViewModelProtocol, ObservableObject {
     func loadMoreItems() async {
         isLoading = true
         do {
-            let movieListResponse = try await listType == .movie
+            let mediaListResponse = try await mediaType == .movie
             ? service.fetchMovieList(of: selectedMovieSection, atPage: currentPage)
             : service.fetchSerieList(of: selectedSerieSection, atPage: currentPage)
-            movies.append(contentsOf: movieListResponse.results)
+            medias.append(contentsOf: mediaListResponse.results)
         } catch {
-            errorMessage = (error as? NetworkError)?.errorDescription
+            globalMessage = .init(from: error)
         }
         isLoading = false
     }

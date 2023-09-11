@@ -40,7 +40,10 @@ final class APIClient<Request: RequestType> {
                 let httpBodyData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
                 urlRequest.httpBody = httpBodyData
             } else if case let .encodable(object) = request.parameters {
-                let httpBodyData = try? JSONEncoder().encode(object)
+                let httpBodyData = try? request.encoder.encode(object)
+                urlRequest.httpBody = httpBodyData
+            } else if case let .both(_, body) = request.parameters {
+                let httpBodyData = try? request.encoder.encode(body)
                 urlRequest.httpBody = httpBodyData
             }
         default:
@@ -78,10 +81,10 @@ final class APIClient<Request: RequestType> {
 }
 
 extension APIClient {
-    func request<Model: Decodable>(_ request: Request, decoder: JSONDecoder = JSONDecoder()) async throws -> Model {
+    func request<Model: Decodable>(_ request: Request) async throws -> Model {
         let data = try await retrieve(from: request)
         do {
-            let responseObject = try decoder.decode(Model.self, from: data)
+            let responseObject = try request.decoder.decode(Model.self, from: data)
             return responseObject
         } catch {
             print(error)

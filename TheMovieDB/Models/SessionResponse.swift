@@ -7,13 +7,7 @@
 
 import Foundation
 
-struct SessionResponse {
+struct SessionResponse: Decodable {
     let success: Bool
     let sessionId: String
-}
-
-extension SessionResponse: Decodable {
-    enum CodingKeys: String, CodingKey {
-        case success, sessionId = "session_id"
-    }
 }

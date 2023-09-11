@@ -3,4 +3,69 @@
    uuid = "E768D3B4-FE9C-4A45-9A7C-18103E2DB2EE"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "184D2114-0027-436A-8AD2-48B7A38BC55D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMovieDB/Modules/MovieList/Views/MediaListItemView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "menuButton(_:image:action:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "184D2114-0027-436A-8AD2-48B7A38BC55D - dd76c1ac3db20733"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static TheMovieDB.MediaListItemView_Previews.previews.getter : some"
+                  moduleName = "TheMovieDB"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucasbighi/Documents/Projetos/TheMovieDB/TheMovieDB/Modules/MovieList/Views/MediaListItemView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "27">
+               </Location>
+               <Location
+                  uuid = "184D2114-0027-436A-8AD2-48B7A38BC55D - dd76c1ac3db20750"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static TheMovieDB.MediaListItemView_Previews.previews.getter : some"
+                  moduleName = "TheMovieDB"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucasbighi/Documents/Projetos/TheMovieDB/TheMovieDB/Modules/MovieList/Views/MediaListItemView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "4500">
+               </Location>
+               <Location
+                  uuid = "184D2114-0027-436A-8AD2-48B7A38BC55D - 5dece439b7f30b3a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in TheMovieDB.MediaListItemView.menuButton(_: Swift.String, image: Swift.String, action: () -&gt; ()) -&gt; some"
+                  moduleName = "TheMovieDB"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucasbighi/Documents/Projetos/TheMovieDB/TheMovieDB/Modules/MovieList/Views/MediaListItemView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

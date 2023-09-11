@@ -1,5 +1,5 @@
 //
-//  LoginRequest.swift
+//  AuthenticatorRequest.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 14/08/23.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum LoginRequest {
+enum AuthenticatorRequest {
     case newToken
     case validateToken(request: RequestTokenRequest)
     case newSession(requestToken: String)
     case accountDetails(sessionId: String)
 }
 
-extension LoginRequest: RequestType {
+extension AuthenticatorRequest: RequestType {
     var urlPath: String {
         switch self {
         case .newToken:

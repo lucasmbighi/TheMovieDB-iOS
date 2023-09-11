@@ -1,5 +1,5 @@
 //
-//  SearchRequest.swift
+//  MediaListSearchRequest.swift
 //  TheMovieDB
 //
 //  Created by Lucas Bighi on 31/08/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HomeListSearchRequest {
+struct MediaListSearchRequest: Encodable {
     let query: String
     let adult: Bool
     let language: String
@@ -33,16 +33,5 @@ struct HomeListSearchRequest {
             region: Locale.current.language.region?.identifier ?? "",
             year: year ?? ""
         )
-    }
-    
-    var toDict: [String: String] {
-        [
-            "query": query,
-            "adult": String(adult),
-            "language": language,
-            "primary_release_year": primaryReleaseYear,
-            "region": region,
-            "year": year
-        ]
     }
 }

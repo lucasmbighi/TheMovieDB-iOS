@@ -10,41 +10,49 @@ import SwiftUI
 @main
 struct TheMovieDBApp: App {
     
-    @ObservedObject private var authService: AuthService
+    @ObservedObject private var authenticator: Authenticator
     
     init() {
-        self.authService = .shared
+        self.authenticator = .shared
     }
     
     var body: some Scene {
         WindowGroup {
-            if authService.isLoggedIn {
-                TabBarView(items: [
-                    TabBarItem(
-                        name: "Home",
-                        icon: Image(systemName: "house"),
-                        selectedIcon: Image(systemName: "house.fill"),
-                        color: .blue,
-                        content: HomeListView(viewModel: .init())
-                    ),
-                    TabBarItem(
-                        name: "My Lists",
-                        icon: Image(systemName: "bookmark"),
-                        selectedIcon: Image(systemName: "bookmark.fill"),
-                        color: .yellow,
-                        content: Text("My Lists will appear here")
-                    ),
-                    TabBarItem(
-                        name: "Profile",
-                        icon: Image(systemName: "person"),
-                        selectedIcon: Image(systemName: "person.fill"),
-                        color: .green,
-                        content: ProfileView(viewModel: .init())
-                    )
-                ])
+            if authenticator.isLoggedIn {
+                rootView
             } else {
-                LoginView(viewModel: .init())
+                if authenticator.hasBiometry {
+                    BiometryLoginView()
+                } else {
+                    CredentialLoginView()
+                }
             }
         }
+    }
+    
+    private var rootView: some View {
+        TabBarView(items: [
+            TabBarItem(
+                name: "Home",
+                icon: Image(systemName: "house"),
+                selectedIcon: Image(systemName: "house.fill"),
+                color: .blue,
+                content: MediaListView()
+            ),
+            TabBarItem(
+                name: "My Lists",
+                icon: Image(systemName: "bookmark"),
+                selectedIcon: Image(systemName: "bookmark.fill"),
+                color: .yellow,
+                content: ListsView()
+            ),
+            TabBarItem(
+                name: "Profile",
+                icon: Image(systemName: "person"),
+                selectedIcon: Image(systemName: "person.fill"),
+                color: .green,
+                content: ProfileView()
+            )
+        ])
     }
 }

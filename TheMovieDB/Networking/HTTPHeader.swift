@@ -12,6 +12,7 @@ struct HTTPHeader {
     let value: String
 }
 
+// MARK: Static properties
 extension HTTPHeader {
     static let acceptApplicationJson = HTTPHeader(name: "accept", value: "application/json")
     static let contentTypeApplicationJson = HTTPHeader(name: "content-type", value: "application/json")

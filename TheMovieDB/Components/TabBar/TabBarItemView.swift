@@ -46,7 +46,7 @@ struct TabBarItemView_Previews: PreviewProvider {
                 icon: Image(systemName: "person"),
                 selectedIcon: Image(systemName: "person.fill"),
                 color: .green,
-                content: ProfileView(viewModel: .init())
+                content: ProfileView()
             ),
             index: 0,
             isSelected: true,

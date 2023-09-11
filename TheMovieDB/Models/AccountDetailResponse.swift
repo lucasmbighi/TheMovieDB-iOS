@@ -18,10 +18,6 @@ extension AccountDetailResponse {
     struct Avatar: Decodable {
         struct TMDB: Decodable {
             let avatarPath: String
-            
-            enum CodingKeys: String, CodingKey {
-                case avatarPath = "avatar_path"
-            }
         }
         
         let tmdb: TMDB

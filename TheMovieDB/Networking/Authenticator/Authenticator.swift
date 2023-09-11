@@ -1,75 +1,41 @@
 //
-//  AuthService.swift
+//  Authenticator.swift
 //  TheMovieDB
 //
-//  Created by Lucas Bighi on 11/08/23.
+//  Created by Lucas Bighi on 01/09/23.
 //
 
 import Foundation
-import SwiftUI
 
-protocol AuthServiceProtocol: ServiceType {
+final class Authenticator: ObservableObject {
     
-    associatedtype Request = LoginRequest
-    
-    var sessionId: String? { get set }
-    
-    var client: APIClient<Request> { get set }
-    var biometryHelper: BiometryHelper { get set }
-    var keychainWrapper: KeychainWrapper { get set }
-    
-    var username: String? { get set }
-    var password: String? { get set }
-    var hasBiometry: Bool { get }
-    var accountDetails: AccountDetailResponse? { get set }
-    
-    func getRequestToken() async throws -> RequestTokenResponse
-    func validateToken(token: String, username: String, password: String) async throws -> RequestTokenResponse
-    func newSession(_ requestToken: String) async throws -> SessionResponse
-    
-    @MainActor
-    @discardableResult
-    func authenticate(username: String, password: String) async throws -> SessionResponse
-    
-    func authenticateWithBiometry() async throws
-    func getAccountDetails() async throws -> AccountDetailResponse
-    func logout() async throws
-}
-
-final class AuthService: ObservableObject, AuthServiceProtocol {
+    static let shared = Authenticator()
     
     @Published var sessionId: String?
+    @Published private var accountDetails: AccountDetailResponse?
     
-    var client: APIClient<LoginRequest>
+    var client: APIClient<AuthenticatorRequest>
     var biometryHelper: BiometryHelper
     var keychainWrapper: KeychainWrapper
     
-    static let shared = AuthService()
-    
-    var accountDetails: AccountDetailResponse?
-    
-    init(
-        client: APIClient<LoginRequest> = .init(),
-        biometryHelper: BiometryHelper = .init(),
-        keychainWrapper: KeychainWrapper = .standard
-    ) {
-        self.client = client
-        self.biometryHelper = biometryHelper
-        self.keychainWrapper = keychainWrapper
+    private init() {
+        self.client = .init()
+        self.biometryHelper = .init()
+        self.keychainWrapper = .standard
     }
     
-    func getRequestToken() async throws -> RequestTokenResponse {
+    private func getRequestToken() async throws -> RequestTokenResponse {
         let requestToken: RequestTokenResponse = try await client.request(.newToken)
         return requestToken
     }
     
-    func validateToken(token: String, username: String, password: String) async throws -> RequestTokenResponse {
+    private func validateToken(token: String, username: String, password: String) async throws -> RequestTokenResponse {
         let request = RequestTokenRequest(username: username, password: password, requestToken: token)
         let validatedToken: RequestTokenResponse = try await client.request(.validateToken(request: request))
         return validatedToken
     }
     
-    func newSession(_ requestToken: String) async throws -> SessionResponse {
+    private func newSession(_ requestToken: String) async throws -> SessionResponse {
         let response: SessionResponse = try await client.request(.newSession(requestToken: requestToken))
         return response
     }
@@ -86,8 +52,10 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
         if !hasBiometry {
             let hasSuccessOnBiometry = try await biometryHelper.authenticate()
             if hasSuccessOnBiometry {
+                let accountDetails = try await getAccountDetails()
                 self.username = username
                 self.password = password
+                self.name = accountDetails.name.isEmpty ? accountDetails.username : accountDetails.name
             }
         }
         return session
@@ -113,7 +81,7 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
 }
 
 //MARK: Computed properties
-extension AuthService {
+extension Authenticator {
     var isLoggedIn: Bool { sessionId != nil }
     
     var username: String? {
@@ -124,6 +92,11 @@ extension AuthService {
     var password: String? {
         get { keychainWrapper.string(forKey: "password") }
         set { keychainWrapper.set(newValue ?? "", forKey: "password") }
+    }
+    
+    var name: String? {
+        get { keychainWrapper.string(forKey: "name") }
+        set { keychainWrapper.set(newValue ?? "", forKey: "name") }
     }
     
     var hasBiometry: Bool { username != nil && password != nil }
