@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import Network
 
 typealias CachePolicy = URLRequest.CachePolicy
 
 final class APIClient<Request: RequestType> {
     
     private let session: URLSession
+    private let monitor: NWPathMonitor
     private var authPlugin: AuthPluginType?
     private var cachePlugin: CachePluginType?
     
@@ -22,12 +24,18 @@ final class APIClient<Request: RequestType> {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = ["Content-Type": "application/json"]
         self.session = URLSession(configuration: configuration)
+        self.monitor = NWPathMonitor()
+        monitor.start(queue: DispatchQueue(label: "Monitor"))
         
         self.authPlugin = authPlugin
         self.cachePlugin = cachePlugin
     }
     
     private func retrieve(from request: Request) async throws -> Data {
+        guard monitor.currentPath.status == .satisfied else {
+            throw NetworkError.noInternet
+        }
+        
         guard let url = request.url else {
             throw NetworkError.malformatedURL
         }
