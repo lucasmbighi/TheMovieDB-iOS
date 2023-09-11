@@ -12,6 +12,7 @@ enum NetworkError: Error {
     case decodeError
     case invalidResponse
     case httpError(Int)
+    case noInternet
 }
 
 extension NetworkError: LocalizedError {
@@ -32,6 +33,8 @@ extension NetworkError: LocalizedError {
             default:
                 return NSLocalizedString("Unknown error", comment: "Unknown error")
             }
+        case .noInternet:
+            return NSLocalizedString("No internet", comment: "No internet")
         }
     }
 }
