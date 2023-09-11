@@ -52,7 +52,7 @@ struct MediaListItemView: View {
                 } label: {
                     Text("Favorite")
                 }
-
+                
                 menuButton("Add to list", image: "list.and.film") {
                     viewModel.showListsAlert = true
                 }
@@ -89,20 +89,36 @@ struct MediaListItemView: View {
 }
 
 struct MediaListItemView_Previews: PreviewProvider {
-    static var previews: some View {
+    
+    struct Preview: View {
+        
+        @State var globalMessage: GlobalMessage?
+        
         let media1 = MediaListResponse.fromLocalJSON?.results[1] ?? .empty
         let media2 = MediaListResponse.fromLocalJSON?.results[3] ?? .empty
         
-        return ScrollView {
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                MediaListItemView(
-                    viewModel: MediaViewModel(media: media1, type: .movie), isLoading: true
-                )
-                MediaListItemView(
-                    viewModel: MediaViewModel(media: media2, type: .serie), isLoading: false
-                )
+        var body: some View {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                    ForEach([media1, media2]) { media in
+                        let viewModel = MediaViewModel(
+                            media: media,
+                            type: .movie,
+                            globalMessage: $globalMessage
+                        )
+                        MediaListItemView(
+                            viewModel: viewModel,
+                            isLoading: true
+                        )
+                    }
+                }
             }
-            .preferredColorScheme(.light)
+            .globalMessage($globalMessage)
         }
+    }
+    
+    static var previews: some View {
+        Preview()
+            .preferredColorScheme(.light)
     }
 }

@@ -46,12 +46,6 @@ struct ProfileView: View {
             }
             .navigationTitle("Profile")
         }
-        .sheet(item: $viewModel.errorMessage) { errorMessage in
-            Text(errorMessage)
-            Button("OK") {
-                viewModel.errorMessage = nil
-            }
-        }
         .alert(
             "Exit from your account?",
             isPresented: $viewModel.showLogoutAlert,
@@ -68,6 +62,7 @@ struct ProfileView: View {
         .task {
             await viewModel.getAccountDetails()
         }
+        .globalMessage($viewModel.globalMessage)
     }
 }
 

@@ -173,7 +173,12 @@ struct MediaDetailView: View {
 struct MediaDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let media = MediaListResponse.fromLocalJSON?.results[1]
-        let viewModel = MediaViewModel(media: media ?? .empty, type: .movie)
+        let viewModel = MediaViewModel(
+            media: media ?? .empty,
+            type: .movie,
+            globalMessage: .constant(.init(message: "Message", success: false)
+                                    )
+        )
         viewModel.genres = GenreListResponse.fromLocalJSON?.genres ?? []
         viewModel.credits = CreditListResponse.fromLocalJSON ?? .empty
         return MediaDetailView(viewModel: viewModel, onClose: { })

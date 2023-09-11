@@ -14,6 +14,7 @@ protocol ListViewModelProtocol {
     var newListName: String { get set }
     var newListDescription: String { get set }
     var isLoading: Bool { get set }
+    var globalMessage: GlobalMessage? { get set }
     var selectedList: ListResponse? { get set }
     
     var profileService: any ProfileServiceProtocol { get set }
@@ -41,6 +42,7 @@ final class ListViewModel: ListViewModelProtocol, ObservableObject {
     @Published var newListName: String = ""
     @Published var newListDescription: String = ""
     @Published var isLoading: Bool = false
+    @Published var globalMessage: GlobalMessage?
     @Published var selectedList: ListResponse? = nil
     
     var profileService: any ProfileServiceProtocol
@@ -67,7 +69,7 @@ final class ListViewModel: ListViewModelProtocol, ObservableObject {
             let accountId = try await authenticator.getAccountDetails().id
             lists = try await profileService.getLists(accountId: accountId).results
         } catch {
-            
+            globalMessage = .init(from: error)
         }
         isLoading = false
     }
@@ -80,37 +82,33 @@ final class ListViewModel: ListViewModelProtocol, ObservableObject {
             let request = CreateListRequest(name: newListName, description: newListDescription)
             let response: CreateListResponse = try await profileService.createList(sessionId: sessionId, request: request)
             onCreateList?(response.success)
-            if !response.success {
-                //                errorMessage = response.statusMessage
-            }
+            globalMessage = .init(message: response.statusMessage, success: response.success)
         } catch {
-            //            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
         isLoading = false
     }
     
+    @MainActor
     func addToSelectedList() async {
         guard let selectedList, let media else { return }
         do {
             guard let sessionId = authenticator.sessionId else { return }
             let response: RequestResponse = try await profileService.addToList(selectedList, media: media, sessionId: sessionId)
-            if !response.success {
-                //                errorMessage = response.statusMessage
-            }
+            globalMessage = .init(message: response.statusMessage, success: response.success)
         } catch {
-            //            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
     }
     
+    @MainActor
     func delete(_ list: ListResponse) async {
         do {
             guard let sessionId = authenticator.sessionId else { return }
             let response: RequestResponse = try await profileService.deleteList(list, sessionId: sessionId)
-            if !response.success {
-                //                errorMessage = response.statusMessage
-            }
+            globalMessage = .init(message: response.statusMessage, success: response.success)
         } catch {
-            //            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
     }
     

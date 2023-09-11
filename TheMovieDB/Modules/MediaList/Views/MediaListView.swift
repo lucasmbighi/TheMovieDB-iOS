@@ -59,10 +59,15 @@ struct MediaListView: View {
                 viewModel.isSearching = false
                 await viewModel.fetchList()
             }
+            .globalMessage($viewModel.globalMessage)
             
             if let selectedMedia = viewModel.selectedMedia {
                 MediaDetailView(
-                    viewModel: MediaViewModel(media: selectedMedia, type: viewModel.mediaType),
+                    viewModel: MediaViewModel(
+                        media: selectedMedia,
+                        type: viewModel.mediaType,
+                        globalMessage: $viewModel.globalMessage
+                    ),
                     onClose: {
                         withAnimation(.easeInOut(duration: 0.3)) {
                             viewModel.selectedMedia = nil
@@ -125,7 +130,8 @@ struct MediaListView: View {
                         ForEach(viewModel.medias) { media in
                             let itemViewModel = MediaViewModel(
                                 media: media,
-                                type: viewModel.mediaType
+                                type: viewModel.mediaType,
+                                globalMessage: $viewModel.globalMessage
                             )
                             MediaListItemView(
                                 viewModel: itemViewModel,
@@ -256,7 +262,7 @@ struct MediaListView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = MediaListViewModel()
         
-        //        viewModel.medias = MediaListResponse.fromLocalJSON?.results ?? []
+        viewModel.medias = MediaListResponse.fromLocalJSON?.results ?? []
         
         return VStack {
             MediaListView(viewModel: viewModel)

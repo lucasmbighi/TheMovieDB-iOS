@@ -13,9 +13,10 @@ protocol ProfileViewModelProtocol {
     var authenticator: Authenticator { get set }
     var accountDetails: AccountDetailResponse? { get set }
     var avatarData: Data { get set }
-    var errorMessage: String? { get set }
     var showLogoutAlert: Bool { get set }
     var isLoading: Bool { get set }
+    var favorites: [MediaResponse] { get set }
+    var globalMessage: GlobalMessage? { get set }
     
     init(
         service: ProfileService,
@@ -23,9 +24,9 @@ protocol ProfileViewModelProtocol {
         authenticator: Authenticator
     )
     
-    @MainActor func getAccountDetails() async
-    @MainActor func fetchAvatarData() async
-    @MainActor func logout() async throws
+    func getAccountDetails() async
+    func fetchAvatarData() async
+    func logout() async throws
 }
 
 final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
@@ -36,10 +37,10 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
     
     @Published var accountDetails: AccountDetailResponse?
     @Published var avatarData: Data = Data.fromAsset(withName: "avatar-w200-placeholder")
-    @Published var errorMessage: String?
     @Published var showLogoutAlert: Bool = false
     @Published var isLoading: Bool = false
     @Published var favorites: [MediaResponse] = []
+    @Published var globalMessage: GlobalMessage?
     
     init(
         service: ProfileService = .init(),
@@ -57,7 +58,7 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
             accountDetails = try await authenticator.getAccountDetails()
             await fetchAvatarData()
         } catch {
-            errorMessage = (error as? NetworkError)?.errorDescription
+            globalMessage = .init(from: error)
         }
     }
     
@@ -78,11 +79,9 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
         do {
             let accountId = try await authenticator.getAccountDetails().id
             let response: RequestResponse = try await service.favorite(accountId: accountId, mediaRequest: mediaRequest)
-            if !response.success {
-                errorMessage = response.statusMessage
-            }
+            globalMessage = .init(message: response.statusMessage, success: response.success)
         } catch {
-            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
     }
     
@@ -91,11 +90,9 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
         do {
             let accountId = try await authenticator.getAccountDetails().id
             let response: RequestResponse = try await service.addToWatchList(accountId: accountId, mediaRequest: mediaRequest)
-            if !response.success {
-                errorMessage = response.statusMessage
-            }
+            globalMessage = .init(message: response.statusMessage, success: response.success)
         } catch {
-            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
     }
     
@@ -105,7 +102,7 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
             let accountId = try await authenticator.getAccountDetails().id
             favorites = try await service.getFavoriteMovies(accountId: accountId).results
         } catch {
-            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
     }
     
@@ -115,7 +112,7 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
             let accountId = try await authenticator.getAccountDetails().id
             favorites = try await service.getFavoriteMovies(accountId: accountId).results
         } catch {
-            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
     }
     
@@ -125,7 +122,7 @@ final class ProfileViewModel: ProfileViewModelProtocol, ObservableObject {
             let accountId = try await authenticator.getAccountDetails().id
             let response: ListsResponse = try await service.getLists(accountId: accountId)
         } catch {
-            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
     }
 }

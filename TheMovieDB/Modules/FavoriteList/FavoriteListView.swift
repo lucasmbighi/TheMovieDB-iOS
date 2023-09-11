@@ -32,7 +32,8 @@ struct FavoriteListView: View {
                                 ForEach(viewModel.favorites) { media in
                                     let itemViewModel = MediaViewModel(
                                         media: media,
-                                        type: viewModel.mediaType
+                                        type: viewModel.mediaType,
+                                        globalMessage: $viewModel.globalMessage
                                     )
                                     MediaListItemView(
                                         viewModel: itemViewModel,
@@ -52,7 +53,11 @@ struct FavoriteListView: View {
                 
                 if let selectedFavorite = viewModel.selectedFavorite {
                     MediaDetailView(
-                        viewModel: MediaViewModel(media: selectedFavorite, type: viewModel.mediaType),
+                        viewModel: MediaViewModel(
+                            media: selectedFavorite,
+                            type: viewModel.mediaType,
+                            globalMessage: $viewModel.globalMessage
+                        ),
                         onClose: {
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 viewModel.selectedFavorite = nil

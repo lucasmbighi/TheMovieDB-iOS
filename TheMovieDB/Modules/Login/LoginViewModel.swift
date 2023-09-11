@@ -11,9 +11,9 @@ protocol LoginViewModelProtocol {
     var isLoading: Bool { get set }
     var username: String { get set }
     var password: String { get set }
-    var errorMessage: String? { get set }
     var showCredentialView: Bool { get set }
     var authenticator: Authenticator { get set }
+    var globalMessage: GlobalMessage? { get set }
     
     init(authenticator: Authenticator)
     
@@ -26,8 +26,8 @@ final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
     @Published var isLoading: Bool = false
     @Published var username: String = ""
     @Published var password: String = ""
-    @Published var errorMessage: String? = nil
     @Published var showCredentialView: Bool = false
+    @Published var globalMessage: GlobalMessage?
     
     var authenticator: Authenticator
     
@@ -41,7 +41,7 @@ final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
         do {
             try await authenticator.authenticate(username: username, password: password)
         } catch {
-            errorMessage = (error as? NetworkError)?.errorDescription
+            globalMessage = .init(from: error)
         }
         isLoading = false
     }
@@ -52,7 +52,7 @@ final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
         do {
             try await authenticator.authenticateWithBiometry()
         } catch {
-            errorMessage = (error as? NetworkError)?.errorDescription
+            globalMessage = .init(from: error)
         }
         isLoading = false
     }

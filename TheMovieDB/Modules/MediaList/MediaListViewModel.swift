@@ -13,6 +13,7 @@ protocol MediaListViewModelProtocol {
     var selectedSerieSection: SerieListSection { get set }
     var isSearching: Bool { get set }
     var isLoading: Bool { get set }
+    var globalMessage: GlobalMessage? { get set }
     var searchQuery: String { get set }
     var adult: Bool { get set }
     var availableYears: [String] { get set }
@@ -21,7 +22,6 @@ protocol MediaListViewModelProtocol {
     
     var currentPage: Int { get set }
     var medias: [MediaResponse] { get set }
-    var errorMessage: String? { get set }
     var service: any MediaListServiceProtocol { get set }
     
     init(service: any MediaListServiceProtocol)
@@ -39,6 +39,7 @@ final class MediaListViewModel: MediaListViewModelProtocol, ObservableObject {
     @Published var selectedSerieSection: SerieListSection = .airingToday
     @Published var isSearching: Bool = false
     @Published var isLoading: Bool = false
+    @Published var globalMessage: GlobalMessage?
     @Published var searchQuery: String = ""
     @Published var adult: Bool = false
     var availableYears: [String] = Date.now.years(from: 1980).map { "\($0)" }
@@ -46,7 +47,6 @@ final class MediaListViewModel: MediaListViewModelProtocol, ObservableObject {
     @Published var year: String? = nil
     var currentPage: Int = 1
     @Published var medias: [MediaResponse] = []
-    @Published var errorMessage: String?
     @Published var selectedMedia: MediaResponse?
     
     var service: any MediaListServiceProtocol
@@ -67,7 +67,7 @@ final class MediaListViewModel: MediaListViewModelProtocol, ObservableObject {
             : service.fetchSerieList(of: selectedSerieSection, atPage: currentPage)
             medias = mediaListResponse.results
         } catch {
-            errorMessage = (error as? NetworkError)?.errorDescription
+            globalMessage = .init(from: error)
         }
         isLoading = false
     }
@@ -85,7 +85,7 @@ final class MediaListViewModel: MediaListViewModelProtocol, ObservableObject {
             let mediaListResponse = try await service.search(type: mediaType, request: request)
             medias = mediaListResponse.results
         } catch {
-            errorMessage = (error as? NetworkError)?.errorDescription
+            globalMessage = .init(from: error)
         }
         isLoading = false
     }
@@ -109,7 +109,7 @@ final class MediaListViewModel: MediaListViewModelProtocol, ObservableObject {
             : service.fetchSerieList(of: selectedSerieSection, atPage: currentPage)
             medias.append(contentsOf: mediaListResponse.results)
         } catch {
-            errorMessage = (error as? NetworkError)?.errorDescription
+            globalMessage = .init(from: error)
         }
         isLoading = false
     }

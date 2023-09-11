@@ -61,6 +61,7 @@ struct ListsView: View {
                 }
             }))
         }
+        .globalMessage($viewModel.globalMessage)
     }
 }
 

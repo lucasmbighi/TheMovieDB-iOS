@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol MediaViewModelProtocol {
     var media: MediaResponse { get set }
@@ -14,6 +15,7 @@ protocol MediaViewModelProtocol {
     var profileService: any ProfileServiceProtocol { get set }
     var imageService: ImageService { get set }
     var authenticator: Authenticator { get set }
+    var globalMessage: GlobalMessage? { get set }
     var genres: [GenreResponse] { get set }
     var credits: CreditListResponse { get set }
     var showListsAlert: Bool { get set }
@@ -27,7 +29,8 @@ protocol MediaViewModelProtocol {
         mediaService: any MediaServiceProtocol,
         profileService: any ProfileServiceProtocol,
         imageService: ImageService,
-        authenticator: Authenticator
+        authenticator: Authenticator,
+        globalMessage: Binding<GlobalMessage?>
     )
     
     func fetchPosterData(size: ImageRequest.ImageType.PosterSize) async -> Data
@@ -50,6 +53,9 @@ final class MediaViewModel: ObservableObject, MediaViewModelProtocol {
     var imageService: ImageService
     var authenticator: Authenticator
     
+    //MARK: Binding properties
+    @Binding var globalMessage: GlobalMessage?
+    
     //MARK: Published properties
     @Published var genres: [GenreResponse] = []
     @Published var credits: CreditListResponse = .empty
@@ -64,7 +70,8 @@ final class MediaViewModel: ObservableObject, MediaViewModelProtocol {
         mediaService: any MediaServiceProtocol = MediaService(),
         profileService: any ProfileServiceProtocol = ProfileService(),
         imageService: ImageService = .init(),
-        authenticator: Authenticator = .shared
+        authenticator: Authenticator = .shared,
+        globalMessage: Binding<GlobalMessage?>
     ) {
         self.media = media
         self.type = type
@@ -72,6 +79,7 @@ final class MediaViewModel: ObservableObject, MediaViewModelProtocol {
         self.profileService = profileService
         self.imageService = imageService
         self.authenticator = authenticator
+        self._globalMessage = globalMessage
     }
     
     func fetchPosterData(size: ImageRequest.ImageType.PosterSize) async -> Data {
@@ -109,16 +117,15 @@ final class MediaViewModel: ObservableObject, MediaViewModelProtocol {
         return profileData ?? Data.fromAsset(withName: "")
     }
     
+    @MainActor
     func favorite(_ favorite: Bool) async {
         let mediaRequest = SaveMediaRequest(mediaId: media.id, mediaType: type, favorite: favorite)
         do {
             let accountId = try await authenticator.getAccountDetails().id
             let response: RequestResponse = try await profileService.favorite(accountId: accountId, mediaRequest: mediaRequest)
-            if !response.success {
-//                errorMessage = response.statusMessage
-            }
+            globalMessage = .init(message: response.statusMessage, success: response.success)
         } catch {
-//            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
     }
     
@@ -128,7 +135,7 @@ final class MediaViewModel: ObservableObject, MediaViewModelProtocol {
             let accountId = try await authenticator.getAccountDetails().id
             lists = try await profileService.getLists(accountId: accountId).results
         } catch {
-            
+            globalMessage = .init(from: error)
         }
     }
     
@@ -137,11 +144,9 @@ final class MediaViewModel: ObservableObject, MediaViewModelProtocol {
             guard let sessionId = authenticator.sessionId else { return }
             let request = CreateListRequest(name: newListName, description: newListDescription)
             let response: CreateListResponse = try await profileService.createList(sessionId: sessionId, request: request)
-            if !response.success {
-//                errorMessage = response.statusMessage
-            }
+            globalMessage = .init(message: response.statusMessage, success: response.success)
         } catch {
-//            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
     }
     
@@ -149,11 +154,9 @@ final class MediaViewModel: ObservableObject, MediaViewModelProtocol {
         do {
             guard let sessionId = authenticator.sessionId else { return }
             let response: RequestResponse = try await profileService.addToList(list, media: media, sessionId: sessionId)
-            if !response.success {
-//                errorMessage = response.statusMessage
-            }
+            globalMessage = .init(message: response.statusMessage, success: response.success)
         } catch {
-//            errorMessage = error.localizedDescription
+            globalMessage = .init(from: error)
         }
     }
 }

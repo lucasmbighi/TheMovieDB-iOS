@@ -12,6 +12,7 @@ protocol FavoriteListViewModelProtocol {
     var favorites: [MediaResponse] { get set }
     var selectedFavorite: MediaResponse? { get set }
     var isLoading: Bool { get set }
+    var globalMessage: GlobalMessage? { get set }
     var mediaType: MediaType { get set }
     var service: any ProfileServiceProtocol { get set }
     var authenticator: Authenticator { get set }
@@ -31,6 +32,7 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol, ObservableObje
     @Published var favorites: [MediaResponse] = []
     @Published var selectedFavorite: MediaResponse?
     @Published var isLoading: Bool = false
+    @Published var globalMessage: GlobalMessage?
     
     var mediaType: MediaType
     var service: any ProfileServiceProtocol

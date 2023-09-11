@@ -46,12 +46,7 @@ struct CredentialLoginView: View {
                 .disabled(viewModel.username.isEmpty || viewModel.password.isEmpty)
             }
             .padding()
-            .sheet(item: $viewModel.errorMessage) { errorMessage in
-                Text(errorMessage)
-                Button("OK") {
-                    viewModel.errorMessage = nil
-                }
-            }
+            .globalMessage($viewModel.globalMessage)
             .navigationTitle("Login")
             .task {
                 focusedField = .username
@@ -64,8 +59,8 @@ struct CredentialLoginView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = LoginViewModel()
         
-//        viewModel.isLoading = false
-//        viewModel.errorMessage = "Erro ao carregar objeto"
+        viewModel.isLoading = false
+        viewModel.globalMessage = .init(message: "Test error", success: false)
         
         return CredentialLoginView(viewModel: viewModel)
     }

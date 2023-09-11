@@ -36,6 +36,7 @@ struct BiometryLoginView: View {
         .fullScreenCover(isPresented: $viewModel.showCredentialView) {
             CredentialLoginView()
         }
+        .globalMessage($viewModel.globalMessage)
     }
 }
 
