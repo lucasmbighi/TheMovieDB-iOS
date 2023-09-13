@@ -22,7 +22,7 @@ struct BiometryLoginView: View {
                 Button(viewModel.buttonTitle, action: viewModel.showCredentialLoginView)
                 ButtonView(
                     isLoading: $viewModel.isLoading,
-                    text: "Login",
+                    text: "login.title".localized,
                     action: {
                         Task {
                             await viewModel.loginWithBiometry()

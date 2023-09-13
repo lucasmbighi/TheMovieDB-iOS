@@ -18,17 +18,17 @@ struct CreateListView: View {
     
     var body: some View {
         VStack {
-            TextField("List name", text: $viewModel.newListName)
-            TextField("List description", text: $viewModel.newListDescription)
+            TextField("lists.list_name".localized, text: $viewModel.newListName)
+            TextField("lists.list_description".localized, text: $viewModel.newListDescription)
             ButtonView(
                 isLoading: $viewModel.isLoading,
-                text: "Create") {
+                text: "lists.create_list".localized) {
                     Task {
                         await viewModel.createList()
                     }
                 }
             Button(role: .cancel, action: dismiss.callAsFunction) {
-                Text("Cancel")
+                Text("lists.cancel".localized)
             }
         }
     }
@@ -37,7 +37,7 @@ struct CreateListView: View {
 struct CreateListView_Previews: PreviewProvider {
     static var previews: some View {
         Text("")
-            .alert("Create list", isPresented: .constant(true)) {
+            .alert("lists.create_list".localized, isPresented: .constant(true)) {
                 CreateListView()
             }
     }

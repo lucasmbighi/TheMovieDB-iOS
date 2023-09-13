@@ -26,7 +26,7 @@ struct MediaListView: View {
         ZStack {
             NavigationView {
                 mediaList
-                    .navigationTitle("Watch Now")
+                    .navigationTitle("medialist.watch_now".localized)
                     .navigationBarTitleDisplayMode(.large)
                     .toolbar {
                         Button {
@@ -35,7 +35,7 @@ struct MediaListView: View {
                             }
                         } label: {
                             if viewModel.isSearching {
-                                Text("Cancel")
+                                Text("medialist.cancel".localized)
                             } else {
                                 Image(systemName: "magnifyingglass")
                             }
@@ -84,7 +84,7 @@ struct MediaListView: View {
         Button {
             viewModel.selectedMovieSection = section
         } label: {
-            Text(section.title)
+            Text(section.localizedTitle)
                 .bold()
                 .foregroundColor(.white)
                 .padding(12)
@@ -102,7 +102,7 @@ struct MediaListView: View {
         Button {
             viewModel.selectedSerieSection = section
         } label: {
-            Text(section.title)
+            Text(section.localizedTitle)
                 .bold()
                 .foregroundColor(.white)
                 .padding(12)
@@ -121,7 +121,7 @@ struct MediaListView: View {
             if viewModel.medias.isEmpty {
                 VStack {
                     Spacer()
-                    Text("Nothing found 🔎 👀")
+                    Text("medialist.nothing_found".localized)
                     Spacer()
                 }
             } else {
@@ -159,7 +159,7 @@ struct MediaListView: View {
             HStack {
                 Picker(selection: $viewModel.mediaType, label: EmptyView()) {
                     ForEach(MediaType.allCases) { mediaType in
-                        Text(mediaType.rawValue)
+                        Text(mediaType.localizedTitle)
                             .tag(mediaType)
                     }
                 }
@@ -193,7 +193,7 @@ struct MediaListView: View {
                         HStack {
                             ToggleButtonView(
                                 isOn: $viewModel.adult,
-                                text: "Adult",
+                                text: "medialist.adult".localized,
                                 onColor: .blue,
                                 offColor: .gray
                             )
@@ -204,7 +204,7 @@ struct MediaListView: View {
                             }
                             
                             DropdownButtonView(
-                                placeholder: "Year",
+                                placeholder: "medialist.year".localized,
                                 selection: $viewModel.year,
                                 options: $viewModel.availableYears
                             )
@@ -215,7 +215,7 @@ struct MediaListView: View {
                             }
                             
                             DropdownButtonView(
-                                placeholder: "Primary Release Year",
+                                placeholder: "medialist.primary_release_year".localized,
                                 selection: $viewModel.primaryReleaseYear,
                                 options: $viewModel.availableYears
                             )

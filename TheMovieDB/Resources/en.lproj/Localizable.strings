@@ -1,0 +1,76 @@
+/* 
+  Strings.strings
+  TheMovieDB
+
+  Created by Lucas Bighi on 11/09/23.
+  
+*/
+
+//MARK: Lists
+"lists.my_lists" = "My lists";
+"lists.delete" = "Delete";
+"lists.create_list" = "Create list";
+"lists.list_name" = "List name";
+"lists.list_description" = "List description";
+"lists.cancel" = "Cancel";
+"lists.select_a_list" = "select a list";
+"lists.new_list" = "New list";
+
+//MARK: Favorite List
+"favorite.nothing_found" = "Nothing found 🔎 👀";
+"favorite.title" = "Favorite %@";
+
+//MARK: Media Detail
+"mediadetail.storyline" = "Storyline";
+"mediadetail.cast" = "Cast";
+"mediadetail.crew" = "Crew";
+"mediadetail.acting" = "Acting";
+"mediadetail.visual_effects" = "Visual Effects";
+"mediadetail.writing" = "Writing";
+"mediadetail.production" = "Production";
+"mediadetail.directing" = "Directing";
+"mediadetail.sound" = "Sound";
+"mediadetail.art" = "Art";
+"mediadetail.costume_and_make_up" = "Costume & Make-Up";
+"mediadetail.camera" = "Camera";
+"mediadetail.editing" = "Editing";
+
+//MARK: Media List
+"medialist.watch_now" = "Watch Now";
+"medialist.movies" = "Movies";
+"medialist.series" = "Series";
+"medialist.now_playing_movie" = "Now Playing";
+"medialist.popular_movie" = "Watch Now";
+"medialist.top_rated_movie" = "Top Rated";
+"medialist.upcoming_movie" = "Upcoming";
+"medialist.airing_today_serie" = "Airing Today";
+"medialist.on_the_air_serie" = "On The Air";
+"medialist.popular_serie" = "Popular";
+"medialist.top_rated_serie" = "Top Rated";
+"medialist.cancel" = "Cancel";
+"medialist.nothing_found" = "Nothing found 🔎 👀";
+"medialist.adult" = "Adult";
+"medialist.year" = "Year";
+"medialist.primary_release_year" = "Primary Release Year";
+"medialist.favorite" = "Favorite";
+"medialist.add_to_list" = "Add to list";
+"medialist.watchlist" = "Watchlist";
+"medialist.your_rating" = "Your rating";
+
+//MARK: Profile
+"profile.title" = "Profile";
+"profile.exit_from_your_account" = "Exit from your account?";
+"profile.yes" = "Yes";
+"profile.cancel" = "Cancel";
+"profile.favorite_movies" = "Favorite movies";
+"profile.favorite_series" = "Favorite series";
+"profile.my_lists" = "My lists";
+
+//MARK: Login
+"login.username" = "Username";
+"login.password" = "Password";
+"login.title" = "Login";
+"login.login_with_another_account" = "Login with another account";
+"login.im_not" = "I'm not %@";
+"login.hello" = "Hello";
+"login.hello_name" = "Hello, %@";

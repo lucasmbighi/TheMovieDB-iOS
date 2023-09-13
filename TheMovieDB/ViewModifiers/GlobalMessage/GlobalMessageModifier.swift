@@ -49,10 +49,8 @@ struct GlobalMessageModifier: ViewModifier {
     }
     
     private var background: Color {
-        if let message {
-            return message.success ? .green : .red
-        }
-        return .clear
+        guard let message else { return .clear }
+        return message.success ? .green : .red
     }
 }
 

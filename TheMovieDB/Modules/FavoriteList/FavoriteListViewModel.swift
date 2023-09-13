@@ -65,5 +65,5 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol, ObservableObje
 
 //MARK: Get-only properties
 extension FavoriteListViewModel {
-    var viewTitle: String { "Favorite \(mediaType.title.lowercased())" }
+    var viewTitle: String { "favorite.title".localized(mediaType.localizedTitle) }
 }

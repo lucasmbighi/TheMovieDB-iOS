@@ -101,7 +101,7 @@ struct MediaDetailView: View {
     
     private var overview: some View {
         Group {
-            Text("Storyline")
+            Text("mediadetail.storyline".localized)
                 .font(.system(size: 18, weight: .heavy))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 20)
@@ -115,7 +115,7 @@ struct MediaDetailView: View {
 
     private var actorsList: some View {
         Group {
-            Text("Cast")
+            Text("mediadetail.cast".localized)
                 .font(.system(size: 18, weight: .heavy))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 20)
@@ -147,7 +147,7 @@ struct MediaDetailView: View {
     
     private var crewList: some View {
         Group {
-            Text("Crew")
+            Text("mediadetail.crew".localized)
                 .font(.system(size: 18, weight: .heavy))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 20)

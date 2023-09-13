@@ -32,7 +32,7 @@ struct ListsView: View {
                                             await viewModel.delete(list)
                                         }
                                     } label: {
-                                        Label("Delete", systemImage: "trash")
+                                        Label("lists.delete".localized, systemImage: "trash")
                                     }
                                 }
                         }
@@ -43,16 +43,16 @@ struct ListsView: View {
                 Button {
                     viewModel.showNewListAlert = true
                 } label: {
-                    Text("Create list")
+                    Text("lists.new_list".localized)
                 }
             }
-            .navigationTitle("My lists")
+            .navigationTitle("lists.my_lists".localized)
             .navigationBarTitleDisplayMode(.inline)
         }
         .task {
             await viewModel.fetchLists()
         }
-        .alert("Create list", isPresented: $viewModel.showNewListAlert) {
+        .alert("lists.new_list".localized, isPresented: $viewModel.showNewListAlert) {
             CreateListView(viewModel: .init(onCreateList: { success in
                 if success {
                     Task {

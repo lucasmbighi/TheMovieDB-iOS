@@ -31,7 +31,7 @@ struct ProfileView: View {
                     .font(.system(size: 20, weight: .medium))
                 
                 List(ProfileSection.allCases) { section in
-                    NavigationLink(section.title, destination: section.destination)
+                    NavigationLink(section.localizedTitle, destination: section.destination)
                 }
                 .listStyle(.plain)
                 
@@ -44,18 +44,18 @@ struct ProfileView: View {
                 )
                 .padding(20)
             }
-            .navigationTitle("Profile")
+            .navigationTitle("profile.title".localized)
         }
         .alert(
-            "Exit from your account?",
+            "profile.exit_from_your_account".localized,
             isPresented: $viewModel.showLogoutAlert,
             actions: {
-                Button("Yes") {
+                Button("profile.yes") {
                     Task {
                         try await viewModel.logout()
                     }
                 }
-                Button("Cancel") {
+                Button("profile.cancel") {
                     viewModel.showLogoutAlert = false
                 }
             })

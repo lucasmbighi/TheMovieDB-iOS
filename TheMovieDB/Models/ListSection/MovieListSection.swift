@@ -8,8 +8,8 @@
 import Foundation
 
 enum MovieListSection: String, ListSectionProtocol {
-    case nowPlaying = "Now Playing",
-         popular = "Popular",
-         topRated = "Top Rated",
-         upcoming = "Upcoming"
+    case nowPlaying = "medialist.now_playing_movie",
+         popular = "medialist.popular_movie",
+         topRated = "medialist.top_rated_movie",
+         upcoming = "medialist.upcoming_movie"
 }

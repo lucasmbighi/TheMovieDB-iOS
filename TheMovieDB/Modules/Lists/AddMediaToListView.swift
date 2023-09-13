@@ -24,7 +24,7 @@ struct AddMediaToListView: View {
                 VStack {
                     HStack {
                         Spacer()
-                        Text("New list").bold()
+                        Text("lists.new_list".localized).bold()
                         Spacer()
                         Button {
                             viewModel.showNewListAlert = true
@@ -36,9 +36,11 @@ struct AddMediaToListView: View {
                         ProgressView()
                     } else {
                         Picker(selection: $viewModel.selectedList, label: EmptyView()) {
-                            Text("select a list").tag(nil as ListResponse?)
+                            Text("lists.select_a_list".localized)
+                                .tag(nil as ListResponse?)
                             ForEach(viewModel.lists) { list in
-                                Text(list.name).tag(list as ListResponse?)
+                                Text(list.name)
+                                    .tag(list as ListResponse?)
                             }
                         }
                     }
@@ -55,7 +57,7 @@ struct AddMediaToListView: View {
                         }
                         Spacer()
                         Button(action: dismiss.callAsFunction) {
-                            Text("Cancel").bold()
+                            Text("lists.cancel".localized).bold()
                         }
                     }
                     .padding(.horizontal, 40)
@@ -72,7 +74,7 @@ struct AddMediaToListView: View {
             await viewModel.fetchLists()
             viewModel.checkLists()
         }
-        .alert("Create list", isPresented: $viewModel.showNewListAlert) {
+        .alert("lists.create_list".localized, isPresented: $viewModel.showNewListAlert) {
             CreateListView()
         }
     }

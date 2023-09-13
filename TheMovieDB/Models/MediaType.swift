@@ -10,7 +10,7 @@ import Foundation
 enum MediaType: String, Codable, Identifiable, CaseIterable {
     case movie, serie
     
-    var title: String { self == .movie ? "Movies" : "Series" }
+    var localizedTitle: String { "medialist.\(self == .movie ? "movies" : "series")".localized }
     
     var id: Self { self }
 }
