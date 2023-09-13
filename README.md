@@ -12,6 +12,6 @@ An iOS App that uses the The Movie Database (TMDB) API
 - [x] Dark mode treatment
 - [x] Pagination
 - [x] Reachability
-- [ ] Localization
+- [x] Localization
 
 If you will test, don't forget to paste your [TMDB API Key](https://www.themoviedb.org/settings/api) on the Info.plist in the **Api Key** field.
