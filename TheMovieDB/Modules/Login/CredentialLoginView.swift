@@ -23,20 +23,20 @@ struct CredentialLoginView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField("username", text: $viewModel.username)
+                TextField("login.username".localized, text: $viewModel.username)
                     .textInputAutocapitalization(.never)
                     .textFieldStyle(.roundedBorder)
                     .focused($focusedField, equals: .username)
                     .disabled(viewModel.isLoading)
                 
-                SecureField("password", text: $viewModel.password)
+                SecureField("login.password".localized, text: $viewModel.password)
                     .textFieldStyle(.roundedBorder)
                     .focused($focusedField, equals: .password)
                     .disabled(viewModel.isLoading)
                 Spacer()
                 ButtonView(
                     isLoading: $viewModel.isLoading,
-                    text: "Login",
+                    text: "login.title".localized,
                     action: {
                         Task {
                             await viewModel.login()
@@ -47,7 +47,7 @@ struct CredentialLoginView: View {
             }
             .padding()
             .globalMessage($viewModel.globalMessage)
-            .navigationTitle("Login")
+            .navigationTitle("login.title".localized)
             .task {
                 focusedField = .username
             }

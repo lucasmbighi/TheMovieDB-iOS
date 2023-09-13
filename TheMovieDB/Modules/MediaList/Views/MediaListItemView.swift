@@ -50,15 +50,14 @@ struct MediaListItemView: View {
                         await viewModel.favorite(true)
                     }
                 } label: {
-                    Text("Favorite")
+                    Text("medialist.favorite".localized)
                 }
                 
-                menuButton("Add to list", image: "list.and.film") {
+                menuButton("medialist.add_to_list", image: "list.and.film") {
                     viewModel.showListsAlert = true
                 }
-                menuButton("Favorite", image: "heart", action: { })
-                menuButton("Watchlist", image: "bookmark", action: { })
-                menuButton("Your rating", image: "star", action: { })
+                menuButton("medialist.watchlist".localized, image: "bookmark", action: { })
+                menuButton("medialist.your_rating", image: "star", action: { })
             }
         }
         .overFullScreen(isPresented: $viewModel.showListsAlert, content: {
@@ -83,7 +82,7 @@ struct MediaListItemView: View {
         Button {
             action()
         } label: {
-            Label(title, systemImage: image)
+            Label(title.localized, systemImage: image)
         }
     }
 }

@@ -8,8 +8,8 @@
 import Foundation
 
 enum SerieListSection: String, ListSectionProtocol {
-    case airingToday = "Airing Today",
-         onTheAir = "On The Air",
-         popular = "Popular",
-         topRated = "Top Rated"
+    case airingToday = "medialist.airing_today_serie",
+         onTheAir = "medialist.on_the_air_serie",
+         popular = "medialist.popular_serie",
+         topRated = "medialist.top_rated_serie"
 }

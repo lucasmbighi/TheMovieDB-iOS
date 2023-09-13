@@ -18,16 +18,16 @@ struct CastResponse: Identifiable, Decodable {
 //MARK: enum Department
 extension CastResponse {
     enum Department: String, Decodable {
-        case acting = "Acting",
-             visualEffects = "Visual Effects",
-             writing = "Writing",
-             production = "Production",
-             directing = "Directing",
-             sound = "Sound",
-             art = "Art",
-             costumeAndMakeUp = "Costume & Make-Up",
-             camera = "Camera",
-             editing = "Editing",
-             crew = "Crew"
+        case acting = "mediadetail.acting",
+             visualEffects = "mediadetail.visual_effects",
+             writing = "mediadetail.writing",
+             production = "mediadetail.production",
+             directing = "mediadetail.directing",
+             sound = "mediadetail.sound",
+             art = "mediadetail.art",
+             costumeAndMakeUp = "mediadetail.costume_and_make_up",
+             camera = "mediadetail.camera",
+             editing = "mediadetail.editing",
+             crew = "mediadetail.crew"
     }
 }

@@ -8,11 +8,11 @@
 import Foundation
 
 protocol ListSectionProtocol: RawRepresentable, CaseIterable, Identifiable, Equatable {
-    var title: String { get }
+    var localizedTitle: String { get }
 }
 
 extension ListSectionProtocol where Self.RawValue == String {
-    var title: String { rawValue }
+    var localizedTitle: String { rawValue.localized }
 }
 
 extension ListSectionProtocol {

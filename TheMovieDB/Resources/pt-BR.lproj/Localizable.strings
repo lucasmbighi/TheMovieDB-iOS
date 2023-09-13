@@ -1,0 +1,76 @@
+/* 
+  Strings.strings
+  TheMovieDB
+
+  Created by Lucas Bighi on 11/09/23.
+  
+*/
+
+//MARK: Lists
+"lists.my_lists" = "Minhas listas";
+"lists.delete" = "Apagar";
+"lists.create_list" = "Criar lista";
+"lists.list_name" = "Nome da lista";
+"lists.list_description" = "Descrição da lista";
+"lists.cancel" = "Cancelar";
+"lists.select_a_list" = "selecione uma lista";
+"lists.new_list" = "Nova lista";
+
+//MARK: Favorite List
+"favorite.nothing_found" = "Nada encontrado 🔎 👀";
+"favorite.title" = "%@ favoritos";
+
+//MARK: Media Detail
+"mediadetail.storyline" = "Enredo";
+"mediadetail.cast" = "Elenco";
+"mediadetail.crew" = "Equipe";
+"mediadetail.acting" = "Atuação";
+"mediadetail.visual_effects" = "Efeitos Visuais";
+"mediadetail.writing" = "Writing";
+"mediadetail.production" = "Produção";
+"mediadetail.directing" = "Direção";
+"mediadetail.sound" = "Som";
+"mediadetail.art" = "Arte";
+"mediadetail.costume_and_make_up" = "Figurino & Maquiagem";
+"mediadetail.camera" = "Câmera";
+"mediadetail.editing" = "Edição";
+
+//MARK: Media List
+"medialist.watch_now" = "Assista agora";
+"medialist.movies" = "Filmes";
+"medialist.series" = "Sêries";
+"medialist.now_playing_movie" = "Tocando Agora";
+"medialist.popular_movie" = "Assista Agora";
+"medialist.top_rated_movie" = "Mais Votado";
+"medialist.upcoming_movie" = "Em breve";
+"medialist.airing_today_serie" = "Indo Ao Ar Hoje";
+"medialist.on_the_air_serie" = "No Ar";
+"medialist.popular_serie" = "Popular";
+"medialist.top_rated_serie" = "Mais Votado";
+"medialist.cancel" = "Cancelar";
+"medialist.nothing_found" = "Nada encontrado 🔎 👀";
+"medialist.adult" = "Adulto";
+"medialist.year" = "Ano";
+"medialist.primary_release_year" = "Primeiro Ano de Lançamento";
+"medialist.favorite" = "Favorito";
+"medialist.add_to_list" = "Adicionar à lista";
+"medialist.watchlist" = "Watchlist";
+"medialist.your_rating" = "Sua avaliação";
+
+//MARK: Profile
+"profile.title" = "Perfil";
+"profile.exit_from_your_account" = "Sair da sua conta?";
+"profile.yes" = "Sim";
+"profile.cancel" = "Cancelar";
+"profile.favorite_movies" = "Filmes favoritos";
+"profile.favorite_series" = "Séries favoritas";
+"profile.my_lists" = "Minhas listas";
+
+//MARK: Login
+"login.username" = "Nome de usuário";
+"login.password" = "Senha";
+"login.title" = "Login";
+"login.login_with_another_account" = "Login com outra conta";
+"login.im_not" = "Não sou %@";
+"login.hello" = "Olá";
+"login.hello_name" = "Olá, %@";

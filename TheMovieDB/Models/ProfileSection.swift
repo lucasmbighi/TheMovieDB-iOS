@@ -11,11 +11,14 @@ import SwiftUI
 enum ProfileSection: CaseIterable {
     case favoriteMovies, favoriteSeries, myLists
     
-    var title: String {
+    var localizedTitle: String {
         switch self {
-        case .favoriteMovies: return "Favorite movies"
-        case .favoriteSeries: return "Favorite series"
-        case .myLists: return "My lists"
+        case .favoriteMovies:
+            return "profile.favorite_movies".localized
+        case .favoriteSeries:
+            return "profile.favorite_series".localized
+        case .myLists:
+            return "profile.my_lists".localized
         }
     }
     
@@ -27,7 +30,7 @@ enum ProfileSection: CaseIterable {
             case .favoriteSeries:
                 FavoriteListView(viewModel: .init(mediaType: .serie))
             case .myLists:
-                Text(title)
+                Text(localizedTitle)
             }
         }
     }

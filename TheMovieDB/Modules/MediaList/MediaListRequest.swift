@@ -64,7 +64,10 @@ extension MediaListRequest: RequestType {
                 .onTheAirSeries(let page),
                 .popularSeries(let page),
                 .topRatedSeries(let page):
-            return .dict(["page": String(page)])
+            return .dict([
+                "language": Locale.current.iso3166Identifier,
+                "page": String(page)
+            ])
         case .search(_, let request):
             return .dict(request.asDictionary() ?? ["": ""])
         }

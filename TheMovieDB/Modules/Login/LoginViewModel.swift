@@ -65,12 +65,12 @@ final class LoginViewModel: LoginViewModelProtocol, ObservableObject {
 //MARK: Computed properties
 extension LoginViewModel {
     var buttonTitle: String {
-        guard let name = authenticator.name else { return "Login with another account" }
-        return "I'm not \(name)"
+        guard let name = authenticator.name else { return "login.login_with_another_account".localized }
+        return "login.im_not".localized(name)
     }
     
     var viewTitle: String {
-        guard let name = authenticator.name else { return "Hello" }
-        return "Hello, \(name)"
+        guard let name = authenticator.name else { return "login.hello".localized }
+        return "login.hello_name".localized(name)
     }
 }

@@ -14,11 +14,15 @@
 		5219AC572A8680DB00A677AE /* RequestTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219AC562A8680DB00A677AE /* RequestTokenResponse.swift */; };
 		5219AC5D2A86862A00A677AE /* CredentialLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219AC5C2A86862A00A677AE /* CredentialLoginView.swift */; };
 		5219AC5F2A86865000A677AE /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219AC5E2A86865000A677AE /* LoginViewModel.swift */; };
+		521DD2592AAFADFE005B9DFC /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521DD2582AAFADFE005B9DFC /* String+Localized.swift */; };
+		521DD25B2AAFC0DF005B9DFC /* Locale+ISO3166Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521DD25A2AAFC0DF005B9DFC /* Locale+ISO3166Identifier.swift */; };
 		52285D472A9F77D2007F22A3 /* CreditListResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 52285D462A9F77D2007F22A3 /* CreditListResponse.json */; };
 		52285D492A9F78EB007F22A3 /* CreditListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D482A9F78EB007F22A3 /* CreditListResponse.swift */; };
 		52285D4B2A9F7917007F22A3 /* CastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D4A2A9F7917007F22A3 /* CastResponse.swift */; };
 		52285D4D2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D4C2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift */; };
 		5244C7412AAF88CD00A64747 /* GlobalMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5244C7402AAF88CD00A64747 /* GlobalMessage.swift */; };
+		5244C7432AAF8DFD00A64747 /* LocalizableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5244C7422AAF8DFD00A64747 /* LocalizableText.swift */; };
+		5244C7462AAF906D00A64747 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5244C7482AAF906D00A64747 /* Localizable.strings */; };
 		525A8EEF2A8BAA5E00B29C36 /* AuthPluginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EEE2A8BAA5E00B29C36 /* AuthPluginType.swift */; };
 		525A8EF12A8BC8BC00B29C36 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EF02A8BC8BC00B29C36 /* HTTPHeader.swift */; };
 		525A8EF92A8C1FBD00B29C36 /* MediaListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A8EF82A8C1FBD00B29C36 /* MediaListView.swift */; };
@@ -66,8 +70,6 @@
 		52B89AA02A8D2CD10089E802 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B89A9F2A8D2CD10089E802 /* ViewState.swift */; };
 		52B89AA22A8D2E950089E802 /* LoginViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B89AA12A8D2E950089E802 /* LoginViewModelTest.swift */; };
 		52B89AA42A8D30640089E802 /* AuthServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B89AA32A8D30640089E802 /* AuthServiceTest.swift */; };
-		52B89AA52A8D36C90089E802 /* RequestTokenResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 528B2F5B2A8A64FF0055F4FA /* RequestTokenResponse.json */; };
-		52B89AA62A8D37610089E802 /* RequestTokenResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 528B2F5B2A8A64FF0055F4FA /* RequestTokenResponse.json */; };
 		52DA162E2AA24720005DE856 /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DA162D2AA24720005DE856 /* Authenticator.swift */; };
 		52DA16312AA2591D005DE856 /* BiometryLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DA16302AA2591D005DE856 /* BiometryLoginView.swift */; };
 		52DA16362AA27E04005DE856 /* MediaListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DA16352AA27E04005DE856 /* MediaListType.swift */; };
@@ -113,6 +115,7 @@
 		52ECAD562A9518800042D1C2 /* MediaListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ECAD552A9518800042D1C2 /* MediaListRequest.swift */; };
 		52ECAD582A9519CD0042D1C2 /* MediaListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ECAD572A9519CD0042D1C2 /* MediaListService.swift */; };
 		52ECAD5A2A9521D70042D1C2 /* GenreListResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 52ECAD592A9521D70042D1C2 /* GenreListResponse.json */; };
+		52F88DB32AAF9C91001F0FBF /* RequestTokenResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 52F88DB22AAF9C91001F0FBF /* RequestTokenResponse.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,11 +138,16 @@
 		5219AC562A8680DB00A677AE /* RequestTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTokenResponse.swift; sourceTree = "<group>"; };
 		5219AC5C2A86862A00A677AE /* CredentialLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialLoginView.swift; sourceTree = "<group>"; };
 		5219AC5E2A86865000A677AE /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		521DD2582AAFADFE005B9DFC /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
+		521DD25A2AAFC0DF005B9DFC /* Locale+ISO3166Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Locale+ISO3166Identifier.swift"; sourceTree = "<group>"; };
 		52285D462A9F77D2007F22A3 /* CreditListResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CreditListResponse.json; sourceTree = "<group>"; };
 		52285D482A9F78EB007F22A3 /* CreditListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditListResponse.swift; sourceTree = "<group>"; };
 		52285D4A2A9F7917007F22A3 /* CastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastResponse.swift; sourceTree = "<group>"; };
 		52285D4C2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+InitWithStrategy.swift"; sourceTree = "<group>"; };
 		5244C7402AAF88CD00A64747 /* GlobalMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMessage.swift; sourceTree = "<group>"; };
+		5244C7422AAF8DFD00A64747 /* LocalizableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableText.swift; sourceTree = "<group>"; };
+		5244C7492AAF909A00A64747 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		5244C74A2AAF946C00A64747 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		525A8EEE2A8BAA5E00B29C36 /* AuthPluginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPluginType.swift; sourceTree = "<group>"; };
 		525A8EF02A8BC8BC00B29C36 /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		525A8EF82A8C1FBD00B29C36 /* MediaListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListView.swift; sourceTree = "<group>"; };
@@ -160,7 +168,6 @@
 		528B2F502A8A5ACE0055F4FA /* Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
 		528B2F532A8A5AFC0055F4FA /* AuthenticatorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorRequest.swift; sourceTree = "<group>"; };
 		528B2F552A8A5C490055F4FA /* RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestType.swift; sourceTree = "<group>"; };
-		528B2F5B2A8A64FF0055F4FA /* RequestTokenResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RequestTokenResponse.json; sourceTree = "<group>"; };
 		528B2F612A8AB0650055F4FA /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		528B2F632A8AB1710055F4FA /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		528B2F652A8AB8B00055F4FA /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
@@ -230,6 +237,7 @@
 		52ECAD552A9518800042D1C2 /* MediaListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListRequest.swift; sourceTree = "<group>"; };
 		52ECAD572A9519CD0042D1C2 /* MediaListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListService.swift; sourceTree = "<group>"; };
 		52ECAD592A9521D70042D1C2 /* GenreListResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = GenreListResponse.json; sourceTree = "<group>"; };
+		52F88DB22AAF9C91001F0FBF /* RequestTokenResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RequestTokenResponse.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -419,6 +427,8 @@
 				529B008D2AA132580004AA68 /* JSONEncoder+InitWithStrategy.swift */,
 				529B008B2AA132220004AA68 /* Encodable+asDictionary.swift */,
 				52DA16902AA8D882005DE856 /* Optional+isNilOrEmpty.swift */,
+				521DD2582AAFADFE005B9DFC /* String+Localized.swift */,
+				521DD25A2AAFC0DF005B9DFC /* Locale+ISO3166Identifier.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -431,6 +441,7 @@
 				5219AC2C2A86636F00A677AE /* Assets.xcassets */,
 				52A676F02A8EB00100A33AE1 /* KeychainItemAccessibility.swift */,
 				52A676EE2A8EAE7F00A33AE1 /* KeychainWrapper.swift */,
+				5244C7482AAF906D00A64747 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -438,7 +449,7 @@
 		528B2F5A2A8A64720055F4FA /* JSONs */ = {
 			isa = PBXGroup;
 			children = (
-				528B2F5B2A8A64FF0055F4FA /* RequestTokenResponse.json */,
+				52F88DB22AAF9C91001F0FBF /* RequestTokenResponse.json */,
 				52ECAD252A93BF910042D1C2 /* MediaListResponse.json */,
 				52ECAD592A9521D70042D1C2 /* GenreListResponse.json */,
 				52E5EB822A96D8EC0015C658 /* AccountDetailResponse.json */,
@@ -577,6 +588,7 @@
 				52E5EB922A979FF80015C658 /* TabBar */,
 				528872E52A98DE4200F23405 /* DropdownButtonView.swift */,
 				52DA16852AA7C343005DE856 /* BackgroundBlurView.swift */,
+				5244C7422AAF8DFD00A64747 /* LocalizableText.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -660,7 +672,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				"pt-BR",
 			);
 			mainGroup = 5219AC1C2A86636D00A677AE;
 			packageReferences = (
@@ -681,9 +693,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52F88DB32AAF9C91001F0FBF /* RequestTokenResponse.json in Resources */,
 				52285D472A9F77D2007F22A3 /* CreditListResponse.json in Resources */,
-				52B89AA62A8D37610089E802 /* RequestTokenResponse.json in Resources */,
 				52E5EB832A96D8EC0015C658 /* AccountDetailResponse.json in Resources */,
+				5244C7462AAF906D00A64747 /* Localizable.strings in Resources */,
 				52ECAD262A93BF910042D1C2 /* MediaListResponse.json in Resources */,
 				52985FE02A9571B2001A721D /* MediaDetailAssets.xcassets in Resources */,
 				5219AC302A86636F00A677AE /* Preview Assets.xcassets in Resources */,
@@ -697,7 +710,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52B89AA52A8D36C90089E802 /* RequestTokenResponse.json in Resources */,
 				52E5EB8B2A96DEF20015C658 /* AccountDetailResponse.json in Resources */,
 				52E5EB892A96DEEC0015C658 /* MediaListResponse.json in Resources */,
 				52E5EB8A2A96DEEF0015C658 /* GenreListResponse.json in Resources */,
@@ -742,6 +754,7 @@
 				5219AC572A8680DB00A677AE /* RequestTokenResponse.swift in Sources */,
 				52ECAD342A93E1100042D1C2 /* MediaViewModel.swift in Sources */,
 				52985FE42A95753E001A721D /* ButtonView.swift in Sources */,
+				5244C7432AAF8DFD00A64747 /* LocalizableText.swift in Sources */,
 				52ECAD2E2A93D24B0042D1C2 /* ImageService.swift in Sources */,
 				52DA16392AA2800C005DE856 /* FavoriteListView.swift in Sources */,
 				529B00842AA0CEBD0004AA68 /* SerieListSection.swift in Sources */,
@@ -776,6 +789,7 @@
 				528872E82A98FE2900F23405 /* ArrayExtensions.swift in Sources */,
 				52ECAD542A9510440042D1C2 /* GenreResponse.swift in Sources */,
 				529B008A2AA131CF0004AA68 /* SaveMediaRequest.swift in Sources */,
+				521DD25B2AAFC0DF005B9DFC /* Locale+ISO3166Identifier.swift in Sources */,
 				52285D4D2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift in Sources */,
 				525A8EEF2A8BAA5E00B29C36 /* AuthPluginType.swift in Sources */,
 				528B2F462A86D82C0055F4FA /* ProfileViewModel.swift in Sources */,
@@ -791,6 +805,7 @@
 				528B2F662A8AB8B00055F4FA /* ProfileRequest.swift in Sources */,
 				528872E62A98DE4200F23405 /* DropdownButtonView.swift in Sources */,
 				52DA16792AA79A9D005DE856 /* ListsResponse.swift in Sources */,
+				521DD2592AAFADFE005B9DFC /* String+Localized.swift in Sources */,
 				529B008E2AA132580004AA68 /* JSONEncoder+InitWithStrategy.swift in Sources */,
 				52B5E1932A958CAC0049EE31 /* TabBarView.swift in Sources */,
 				52ECAD282A93BFF20042D1C2 /* Decodable+FromLocalJSON.swift in Sources */,
@@ -823,11 +838,24 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		5244C7482AAF906D00A64747 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5244C7492AAF909A00A64747 /* pt-BR */,
+				5244C74A2AAF946C00A64747 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		5219AC472A86636F00A677AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -888,6 +916,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

@@ -23,7 +23,7 @@ struct FavoriteListView: View {
                     if viewModel.favorites.isEmpty {
                         VStack {
                             Spacer()
-                            Text("Nothing found 🔎 👀")
+                            Text("favorite.nothing_found".localized)
                             Spacer()
                         }
                     } else {
