@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TabBar
 
 @main
 struct TheMovieDBApp: App {

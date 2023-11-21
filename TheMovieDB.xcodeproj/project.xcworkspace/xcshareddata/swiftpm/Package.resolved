@@ -17,6 +17,15 @@
         "revision" : "dc46eeb3928a75390651fac6c1ef7f93ad59a73b",
         "version" : "1.11.1"
       }
+    },
+    {
+      "identity" : "tabbar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lucasmbighi/TabBar.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "037224317a10bc6d1ddd535211330d40b42f20d2"
+      }
     }
   ],
   "version" : 2
