@@ -21,6 +21,7 @@
 		52285D4B2A9F7917007F22A3 /* CastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D4A2A9F7917007F22A3 /* CastResponse.swift */; };
 		52285D4D2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D4C2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift */; };
 		52374AF52B0CCC7100065E9F /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52374AF42B0CCC7100065E9F /* KeychainWrapper.swift */; };
+		52374B082B0CE0B400065E9F /* TabBar in Frameworks */ = {isa = PBXBuildFile; productRef = 52374B072B0CE0B400065E9F /* TabBar */; };
 		5244C7412AAF88CD00A64747 /* GlobalMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5244C7402AAF88CD00A64747 /* GlobalMessage.swift */; };
 		5244C7432AAF8DFD00A64747 /* LocalizableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5244C7422AAF8DFD00A64747 /* LocalizableText.swift */; };
 		5244C7462AAF906D00A64747 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5244C7482AAF906D00A64747 /* Localizable.strings */; };
@@ -64,7 +65,6 @@
 		529B00902AA1E3E20004AA68 /* RequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529B008F2AA1E3E20004AA68 /* RequestResponse.swift */; };
 		529B00922AA1E98C0004AA68 /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529B00912AA1E98C0004AA68 /* ProfileSection.swift */; };
 		52A676F12A8EB00100A33AE1 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A676F02A8EB00100A33AE1 /* KeychainItemAccessibility.swift */; };
-		52B5E1932A958CAC0049EE31 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B5E1922A958CAC0049EE31 /* TabBarView.swift */; };
 		52B5E1962A96519C0049EE31 /* HiddenModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B5E1952A96519C0049EE31 /* HiddenModifier.swift */; };
 		52B89A9C2A8D2BB50089E802 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B89A9B2A8D2BB50089E802 /* LoginTests.swift */; };
 		52B89AA02A8D2CD10089E802 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B89A9F2A8D2CD10089E802 /* ViewState.swift */; };
@@ -93,8 +93,6 @@
 		52E5EB892A96DEEC0015C658 /* MediaListResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 52ECAD252A93BF910042D1C2 /* MediaListResponse.json */; };
 		52E5EB8A2A96DEEF0015C658 /* GenreListResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 52ECAD592A9521D70042D1C2 /* GenreListResponse.json */; };
 		52E5EB8B2A96DEF20015C658 /* AccountDetailResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 52E5EB822A96D8EC0015C658 /* AccountDetailResponse.json */; };
-		52E5EB942A97A0140015C658 /* TabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E5EB932A97A0140015C658 /* TabBarItemView.swift */; };
-		52E5EB962A97A0BA0015C658 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E5EB952A97A0BA0015C658 /* TabBarItem.swift */; };
 		52ECAD242A93BAFF0042D1C2 /* MovieListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ECAD232A93BAFF0042D1C2 /* MovieListSection.swift */; };
 		52ECAD262A93BF910042D1C2 /* MediaListResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 52ECAD252A93BF910042D1C2 /* MediaListResponse.json */; };
 		52ECAD282A93BFF20042D1C2 /* Decodable+FromLocalJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ECAD272A93BFF20042D1C2 /* Decodable+FromLocalJSON.swift */; };
@@ -188,7 +186,6 @@
 		529B008F2AA1E3E20004AA68 /* RequestResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestResponse.swift; sourceTree = "<group>"; };
 		529B00912AA1E98C0004AA68 /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
 		52A676F02A8EB00100A33AE1 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
-		52B5E1922A958CAC0049EE31 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		52B5E1952A96519C0049EE31 /* HiddenModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenModifier.swift; sourceTree = "<group>"; };
 		52B89A9B2A8D2BB50089E802 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		52B89A9F2A8D2CD10089E802 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
@@ -214,8 +211,6 @@
 		52E5EB822A96D8EC0015C658 /* AccountDetailResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = AccountDetailResponse.json; sourceTree = "<group>"; };
 		52E5EB852A96DB790015C658 /* ProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
 		52E5EB872A96DC880015C658 /* ProfileViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTest.swift; sourceTree = "<group>"; };
-		52E5EB932A97A0140015C658 /* TabBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemView.swift; sourceTree = "<group>"; };
-		52E5EB952A97A0BA0015C658 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		52ECAD222A93AF3A0042D1C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52ECAD232A93BAFF0042D1C2 /* MovieListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListSection.swift; sourceTree = "<group>"; };
 		52ECAD252A93BF910042D1C2 /* MediaListResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MediaListResponse.json; sourceTree = "<group>"; };
@@ -245,6 +240,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52374B082B0CE0B400065E9F /* TabBar in Frameworks */,
 				52810C1F2A9CFCEE00455C84 /* SkeletonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,6 +261,7 @@
 				5219AC272A86636D00A677AE /* TheMovieDB */,
 				5219AC382A86636F00A677AE /* TheMovieDBTests */,
 				5219AC262A86636D00A677AE /* Products */,
+				52374B032B0CD0C700065E9F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -379,6 +376,13 @@
 				5219AC5A2A86860F00A677AE /* Login */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		52374B032B0CD0C700065E9F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		5244C73F2AAF88B000A64747 /* GlobalMessage */ = {
@@ -541,16 +545,6 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		52E5EB922A979FF80015C658 /* TabBar */ = {
-			isa = PBXGroup;
-			children = (
-				52B5E1922A958CAC0049EE31 /* TabBarView.swift */,
-				52E5EB932A97A0140015C658 /* TabBarItemView.swift */,
-				52E5EB952A97A0BA0015C658 /* TabBarItem.swift */,
-			);
-			path = TabBar;
-			sourceTree = "<group>";
-		};
 		52ECAD292A93CE600042D1C2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -577,7 +571,6 @@
 				52ECAD422A94F2EE0042D1C2 /* FiveStarRating.swift */,
 				52ECAD382A93E8990042D1C2 /* ImageAsync.swift */,
 				52985FE32A95753E001A721D /* ButtonView.swift */,
-				52E5EB922A979FF80015C658 /* TabBar */,
 				528872E52A98DE4200F23405 /* DropdownButtonView.swift */,
 				52DA16852AA7C343005DE856 /* BackgroundBlurView.swift */,
 				5244C7422AAF8DFD00A64747 /* LocalizableText.swift */,
@@ -615,6 +608,7 @@
 			name = TheMovieDB;
 			packageProductDependencies = (
 				52810C1E2A9CFCEE00455C84 /* SkeletonUI */,
+				52374B072B0CE0B400065E9F /* TabBar */,
 			);
 			productName = TheMovieDB;
 			productReference = 5219AC252A86636D00A677AE /* TheMovieDB.app */;
@@ -669,6 +663,7 @@
 			mainGroup = 5219AC1C2A86636D00A677AE;
 			packageReferences = (
 				52810C1D2A9CFCEE00455C84 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+				52374B062B0CE0B400065E9F /* XCRemoteSwiftPackageReference "TabBar" */,
 			);
 			productRefGroup = 5219AC262A86636D00A677AE /* Products */;
 			projectDirPath = "";
@@ -721,7 +716,6 @@
 				52ECAD242A93BAFF0042D1C2 /* MovieListSection.swift in Sources */,
 				52B89AA02A8D2CD10089E802 /* ViewState.swift in Sources */,
 				528B2F492A8A59F30055F4FA /* RequestType+DefaultValues.swift in Sources */,
-				52E5EB942A97A0140015C658 /* TabBarItemView.swift in Sources */,
 				52ECAD562A9518800042D1C2 /* MediaListRequest.swift in Sources */,
 				52985FDE2A955690001A721D /* BiometryHelper.swift in Sources */,
 				52374AF52B0CCC7100065E9F /* KeychainWrapper.swift in Sources */,
@@ -768,7 +762,6 @@
 				52DA16842AA7B73C005DE856 /* AddMediaToListView.swift in Sources */,
 				525A8EF12A8BC8BC00B29C36 /* HTTPHeader.swift in Sources */,
 				529B00922AA1E98C0004AA68 /* ProfileSection.swift in Sources */,
-				52E5EB962A97A0BA0015C658 /* TabBarItem.swift in Sources */,
 				52DA163F2AA288DF005DE856 /* CreateListRequest.swift in Sources */,
 				52DA16362AA27E04005DE856 /* MediaListType.swift in Sources */,
 				52DA163B2AA2801E005DE856 /* FavoriteListViewModel.swift in Sources */,
@@ -799,7 +792,6 @@
 				52DA16792AA79A9D005DE856 /* ListsResponse.swift in Sources */,
 				521DD2592AAFADFE005B9DFC /* String+Localized.swift in Sources */,
 				529B008E2AA132580004AA68 /* JSONEncoder+InitWithStrategy.swift in Sources */,
-				52B5E1932A958CAC0049EE31 /* TabBarView.swift in Sources */,
 				52ECAD282A93BFF20042D1C2 /* Decodable+FromLocalJSON.swift in Sources */,
 				52DA16822AA7A822005DE856 /* ListViewModel.swift in Sources */,
 				528872E42A98DC5600F23405 /* DateExtensions.swift in Sources */,
@@ -1097,6 +1089,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		52374B062B0CE0B400065E9F /* XCRemoteSwiftPackageReference "TabBar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lucasmbighi/TabBar.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		52810C1D2A9CFCEE00455C84 /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CSolanaM/SkeletonUI.git";
@@ -1108,6 +1108,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		52374B072B0CE0B400065E9F /* TabBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52374B062B0CE0B400065E9F /* XCRemoteSwiftPackageReference "TabBar" */;
+			productName = TabBar;
+		};
 		52810C1E2A9CFCEE00455C84 /* SkeletonUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 52810C1D2A9CFCEE00455C84 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
