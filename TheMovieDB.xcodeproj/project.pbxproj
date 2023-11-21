@@ -20,6 +20,7 @@
 		52285D492A9F78EB007F22A3 /* CreditListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D482A9F78EB007F22A3 /* CreditListResponse.swift */; };
 		52285D4B2A9F7917007F22A3 /* CastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D4A2A9F7917007F22A3 /* CastResponse.swift */; };
 		52285D4D2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52285D4C2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift */; };
+		52374AF52B0CCC7100065E9F /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52374AF42B0CCC7100065E9F /* KeychainWrapper.swift */; };
 		5244C7412AAF88CD00A64747 /* GlobalMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5244C7402AAF88CD00A64747 /* GlobalMessage.swift */; };
 		5244C7432AAF8DFD00A64747 /* LocalizableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5244C7422AAF8DFD00A64747 /* LocalizableText.swift */; };
 		5244C7462AAF906D00A64747 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5244C7482AAF906D00A64747 /* Localizable.strings */; };
@@ -62,7 +63,6 @@
 		529B008E2AA132580004AA68 /* JSONEncoder+InitWithStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529B008D2AA132580004AA68 /* JSONEncoder+InitWithStrategy.swift */; };
 		529B00902AA1E3E20004AA68 /* RequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529B008F2AA1E3E20004AA68 /* RequestResponse.swift */; };
 		529B00922AA1E98C0004AA68 /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529B00912AA1E98C0004AA68 /* ProfileSection.swift */; };
-		52A676EF2A8EAE7F00A33AE1 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A676EE2A8EAE7F00A33AE1 /* KeychainWrapper.swift */; };
 		52A676F12A8EB00100A33AE1 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A676F02A8EB00100A33AE1 /* KeychainItemAccessibility.swift */; };
 		52B5E1932A958CAC0049EE31 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B5E1922A958CAC0049EE31 /* TabBarView.swift */; };
 		52B5E1962A96519C0049EE31 /* HiddenModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B5E1952A96519C0049EE31 /* HiddenModifier.swift */; };
@@ -144,6 +144,7 @@
 		52285D482A9F78EB007F22A3 /* CreditListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditListResponse.swift; sourceTree = "<group>"; };
 		52285D4A2A9F7917007F22A3 /* CastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastResponse.swift; sourceTree = "<group>"; };
 		52285D4C2A9F8352007F22A3 /* JSONDecoder+InitWithStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+InitWithStrategy.swift"; sourceTree = "<group>"; };
+		52374AF42B0CCC7100065E9F /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		5244C7402AAF88CD00A64747 /* GlobalMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMessage.swift; sourceTree = "<group>"; };
 		5244C7422AAF8DFD00A64747 /* LocalizableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableText.swift; sourceTree = "<group>"; };
 		5244C7492AAF909A00A64747 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -186,7 +187,6 @@
 		529B008D2AA132580004AA68 /* JSONEncoder+InitWithStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONEncoder+InitWithStrategy.swift"; sourceTree = "<group>"; };
 		529B008F2AA1E3E20004AA68 /* RequestResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestResponse.swift; sourceTree = "<group>"; };
 		529B00912AA1E98C0004AA68 /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
-		52A676EE2A8EAE7F00A33AE1 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainWrapper.swift; path = ../../../../../Downloads/KeychainWrapper.swift; sourceTree = "<group>"; };
 		52A676F02A8EB00100A33AE1 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		52B5E1922A958CAC0049EE31 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		52B5E1952A96519C0049EE31 /* HiddenModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenModifier.swift; sourceTree = "<group>"; };
@@ -280,7 +280,6 @@
 		5219AC272A86636D00A677AE /* TheMovieDB */ = {
 			isa = PBXGroup;
 			children = (
-				52DA168D2AA8D18D005DE856 /* EnvironmentKeys */,
 				52B5E1942A9651830049EE31 /* ViewModifiers */,
 				52985FDC2A955684001A721D /* Helpers */,
 				52ECAD372A93E8440042D1C2 /* Components */,
@@ -440,7 +439,7 @@
 				528B2F5A2A8A64720055F4FA /* JSONs */,
 				5219AC2C2A86636F00A677AE /* Assets.xcassets */,
 				52A676F02A8EB00100A33AE1 /* KeychainItemAccessibility.swift */,
-				52A676EE2A8EAE7F00A33AE1 /* KeychainWrapper.swift */,
+				52374AF42B0CCC7100065E9F /* KeychainWrapper.swift */,
 				5244C7482AAF906D00A64747 /* Localizable.strings */,
 			);
 			path = Resources;
@@ -531,13 +530,6 @@
 				52DA16832AA7B73C005DE856 /* AddMediaToListView.swift */,
 			);
 			path = Lists;
-			sourceTree = "<group>";
-		};
-		52DA168D2AA8D18D005DE856 /* EnvironmentKeys */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = EnvironmentKeys;
 			sourceTree = "<group>";
 		};
 		52E5EB842A96DB5F0015C658 /* Profile */ = {
@@ -732,6 +724,7 @@
 				52E5EB942A97A0140015C658 /* TabBarItemView.swift in Sources */,
 				52ECAD562A9518800042D1C2 /* MediaListRequest.swift in Sources */,
 				52985FDE2A955690001A721D /* BiometryHelper.swift in Sources */,
+				52374AF52B0CCC7100065E9F /* KeychainWrapper.swift in Sources */,
 				52DA167E2AA7A7FE005DE856 /* ListsView.swift in Sources */,
 				52ECAD322A93DE380042D1C2 /* Data+fromAsset.swift in Sources */,
 				52285D4B2A9F7917007F22A3 /* CastResponse.swift in Sources */,
@@ -762,7 +755,6 @@
 				528B2F3D2A86BC700055F4FA /* SessionResponse.swift in Sources */,
 				52DA168C2AA8C8C5005DE856 /* GlobalMessageModifier.swift in Sources */,
 				52ECAD4E2A950DAC0042D1C2 /* MediaRequest.swift in Sources */,
-				52A676EF2A8EAE7F00A33AE1 /* KeychainWrapper.swift in Sources */,
 				52ECAD2B2A93CE740042D1C2 /* MediaListItemView.swift in Sources */,
 				52DA167B2AA79AC3005DE856 /* ListResponse.swift in Sources */,
 				52A676F12A8EB00100A33AE1 /* KeychainItemAccessibility.swift in Sources */,
